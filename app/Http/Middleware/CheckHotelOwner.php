@@ -17,9 +17,15 @@ class CheckHotelOwner
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $hotelId = $request->route('hotel')->id; // Récupère l'ID depuis l'URL
-        // dd($hotelId);
-        $hotel = Hotel::find($hotelId);
+        
+    // Récupère soit l'ID (string), soit l'instance de Hotel
+    $param = $request->route()->parameter('hotel');
+
+    // Si c'est une string, on convertit :
+    $hotel = $param instanceof Hotel
+        ? $param
+        : Hotel::find($param);
+
         // dd($hotel);
         // var_dump($hotel->mat_user);
         if(!$hotel || $hotel->mat_user !== Auth::id()){

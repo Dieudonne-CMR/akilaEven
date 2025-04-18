@@ -29,7 +29,11 @@
     <link rel="stylesheet" href="{{asset('assets_site/css/jquery-ui.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/flag-icon.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/style.css')}}" />
+    <link rel="stylesheet" href="{{asset('css/social-media.css')}}" />
 
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       .img-icone {width: 1.5rem; margin: 3px;}
@@ -37,7 +41,7 @@
   </head>
   <body>
     <!-- start cssload-loader -->
-    <div class="preloader" id="preloader">
+   <!--  <div class="preloader" id="preloader">
       <div class="loader">
         <svg class="spinner" viewBox="0 0 50 50">
           <circle
@@ -50,7 +54,7 @@
           ></circle>
         </svg>
       </div>
-    </div>
+    </div> -->
     <!-- end cssload-loader -->
 
     <!-- ================================
@@ -86,7 +90,7 @@
                   class="header-right d-flex align-items-center justify-content-end"
                 >
                   <div class="header-right-action">
-                    <div class="select-contain select--contain w-auto">
+                    <div class="w-auto select-contain select--contain">
                       <select class="select-contain-select">
                         <option
                           data-content='<span class="flag-icon flag-icon-id me-1"></span> Bahasa Indonesia'
@@ -178,7 +182,7 @@
                     </div>
                   </div>
                   <div class="header-right-action">
-                    <div class="select-contain select--contain w-auto">
+                    <div class="w-auto select-contain select--contain">
                       <select class="select-contain-select">
                         <option value="1">AED</option>
                         <option value="2">AUD</option>
@@ -586,7 +590,7 @@
       </div>
       <!-- end row -->
     </div>
-    <div class="section-block mt-4 mb-5"></div>
+    <div class="mt-4 mb-5 section-block"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-3 responsive-column">
@@ -600,7 +604,7 @@
             <p class="footer__desc">
               Morbi convallis bibendum urna ut viverra. Maecenas consequat
             </p>
-            <ul class="list-items pt-3">
+            <ul class="pt-3 list-items">
               <li>
                 3015 Grand Ave, Coconut Grove,<br />
                 Cerrick Way, FL 12345
@@ -615,7 +619,7 @@
         <div class="col-lg-3 responsive-column">
           <div class="footer-item">
             <h4
-              class="title curve-shape pb-3 margin-bottom-20px"
+              class="pb-3 title curve-shape margin-bottom-20px"
               data-text="curvs"
             >
               Company
@@ -634,7 +638,7 @@
         <div class="col-lg-3 responsive-column">
           <div class="footer-item">
             <h4
-              class="title curve-shape pb-3 margin-bottom-20px"
+              class="pb-3 title curve-shape margin-bottom-20px"
               data-text="curvs"
             >
               Other Links
@@ -653,12 +657,12 @@
         <div class="col-lg-3 responsive-column">
           <div class="footer-item">
             <h4
-              class="title curve-shape pb-3 margin-bottom-20px"
+              class="pb-3 title curve-shape margin-bottom-20px"
               data-text="curvs"
             >
               Payment Methods
             </h4>
-            <p class="footer__desc pb-3">
+            <p class="pb-3 footer__desc">
               Pay any way you choose, we support all payment options.
             </p>
             <img src="images/payment-img.png" alt="" />
@@ -671,7 +675,7 @@
       <div class="section-block"></div>
       <div class="row">
         <div class="col-lg-12">
-          <div class="copy-right padding-top-30px text-center">
+          <div class="text-center copy-right padding-top-30px">
             <p class="copy__desc">
               &copy; Copyright Trizen <span id="get-year"></span> . Made with
               <span class="la la-heart"></span> by
@@ -703,10 +707,13 @@
 
   <!-- Template JS Files -->
   <script src="{{asset('assets_site/js/jquery-3.7.1.min.js')}}"></script>
+ 
+ <!--  <script src="{{asset('assets_site/js/jquery-3.4.1.min.js')}}"></script> -->
   <script src="{{asset('assets_site/js/jquery-ui.js')}}"></script>
 
   <script src="{{asset('assets_site/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('assets_site/js/select2.min.js')}}"></script>
+
   <script src="{{asset('assets_site/js/moment.min.js')}}"></script>
   <script src="{{asset('assets_site/js/daterangepicker.js')}}"></script>
   <script src="{{asset('assets_site/js/owl.carousel.min.js')}}"></script>
@@ -717,9 +724,11 @@
   <script src="{{asset('assets_site/js/quantity-input.js')}}"></script>
   <script src="{{asset('assets_site/js/jquery.superslides.min.js')}}"></script>
   <script src="{{asset('assets_site/js/superslider-script.js')}}"></script>
+
   <script src="{{asset('assets_site/js/main.js')}}"></script>
   
-
+  <!-- Scripts supplémentaires -->
+  @stack('scripts')
 </body>
 
 <!-- Mirrored from techydevs.com/demos/themes/html/trizen-demo/html/index2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Mar 2025 18:49:46 GMT -->

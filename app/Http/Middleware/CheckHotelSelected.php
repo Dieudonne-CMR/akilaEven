@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use function PHPUnit\Framework\callback;
 
-class CheckHotlSelect
+class CheckHotelSelected
 {
     /**
      * Handle an incoming request.

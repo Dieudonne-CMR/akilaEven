@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('', [siteController::class, 'index'])->name('home');
 route::get('/site-sallesfetes', [siteController::class, 'salleFete'])->name('site.sallesfetes');
 route::get('/site-detail-sallesfetes-{eventHall}', [siteController::class, 'detailFallesFetes'])->name('site.detailSallesfetes');
+route::get('/about', [siteController::class, 'about'])->name('site.about');
     
     // Route::get('/dashboard', function () {
         //     return view('dashboard');
@@ -40,7 +41,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/hotels/store',[HotelController::class, 'store'])->name('hotels.store');
     // afficher la liste des hotels
     Route::get('/hotel/select',[HotelController::class, 'selectHotel'])->name('select-hotel');
-    //
+
+    // Accès uniquement aux propriétaires du hotel
     Route::middleware(['check.hotel.owner'])->group(function(){
         //
         Route::get('/hotels-{hotel}-manage',[HotelController::class, 'manageHotel'])->name('hotels.manage');

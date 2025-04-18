@@ -35,6 +35,7 @@ class EventHallController extends Controller
      */
     public function storeEventhall(Request $request, $hotel_id)
     {
+        
         // dd($request->all());
         $validated = $request->validate([
             'nom_salle' => 'required|string|max:255',
@@ -57,7 +58,7 @@ class EventHallController extends Controller
             }
         }
             
-        $validated['user_id'] = auth()->id();
+        $validated['user_id'] = Auth::id();
         $validated['hotel_id'] = $hotel_id;
     
         EventHall::create($validated);

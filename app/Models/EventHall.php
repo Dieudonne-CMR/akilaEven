@@ -33,4 +33,10 @@ class EventHall extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    protected $casts = [
+        'capacite' => 'integer',
+        'prix'     => 'decimal:2',
+    ];
+    
 }
