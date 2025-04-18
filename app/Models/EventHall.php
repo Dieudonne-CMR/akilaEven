@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class EventHall extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'nom_salle',
         'description_salle',
@@ -19,7 +20,9 @@ class EventHall extends Model
         'photo4',
         'ville_id',
         'user_id',
-        'hotel_id'
+        'hotel_id',
+        "area",
+        "event_type",
     ];
 
     public function hotel()
@@ -36,7 +39,11 @@ class EventHall extends Model
 
     protected $casts = [
         'capacite' => 'integer',
+        'area'     => 'decimal:2',
         'prix'     => 'decimal:2',
     ];
     
 }
+/* 🧠 Modèle	Ajouter les champs à $fillable ✅
+🧱 Base de données	Créer ou modifier une migration pour ajouter les colonnes
+⚙️ Commande	php artisan migrate pour appliquer les changements */

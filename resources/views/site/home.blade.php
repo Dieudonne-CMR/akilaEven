@@ -237,11 +237,8 @@ START HERO-WRAPPER AREA
                           <input
                             class="date-range form-control"
                             type="text"
-                            name="     <input
-                            class="date-range form-control"
-                            type="text"
                             name="daterange"
-                          />"
+                            placeholder="Date de l'événement"
                           />
                         
                         </div>

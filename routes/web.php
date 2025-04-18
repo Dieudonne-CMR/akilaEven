@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('', [siteController::class, 'index'])->name('home');
 route::get('/site-sallesfetes', [siteController::class, 'salleFete'])->name('site.sallesfetes');
 route::get('/site-detail-sallesfetes-{eventHall}', [siteController::class, 'detailFallesFetes'])->name('site.detailSallesfetes');
-route::get('/about', [siteController::class, 'about'])->name('site.about');
+route::get('/about', [siteController::class, 'about'])->name('site.bl-about.about');
     
     // Route::get('/dashboard', function () {
         //     return view('dashboard');
@@ -49,10 +49,11 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/hotels-{hotel}-room-create',[RoomController::class, 'createRoom'])->name('rooms.create');
         Route::get('/hotels-{hotel}-event_halls-create',[EventHallController::class, 'createEventHall'])->name('event_halls.create');
         Route::post('/hotels-{hotel}-event_halls-create',[EventHallController::class, 'storeEventhall'])->name('event_halls.store');
+        // Afficher les salles de fête pour un hôtel donné
         Route::get('/hotels-{hotel}-event-halls', [EventHallController::class, 'index']) ->name('event-halls.index');
 
     });
-    route::middleware(['aliasMiddleware'])->group(function(){
+    route::middleware(['auth'])->group(function(){
         Route::get('/hotels-event-halls-{event_hall}',[EventHallController::class, 'show'])->name('event-halls.show');
         Route::get('/event-halls-{event_hall}-edit', [EventHallController::class, 'edit'])->name('event-halls.edit');
         Route::put('/event-halls-{event_hall}', [EventHallController::class, 'update'])->name('event-halls.update');

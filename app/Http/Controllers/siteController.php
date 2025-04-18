@@ -59,7 +59,7 @@ class siteController extends Controller
      */
     public function about()
     {
-        return view('site.about');
+        return view('site.bl-about.about');
     }
 
     /**

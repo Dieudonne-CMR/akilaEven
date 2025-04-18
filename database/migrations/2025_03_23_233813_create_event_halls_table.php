@@ -25,14 +25,17 @@ return new class extends Migration
             $table->string('photo3')->nullable();
             $table->string('photo4')->nullable();
             $table->timestamps();
+        
         });
     }
-
+// php artisan migrate:rollback pour annuler ce qui a été fait dans le up
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_halls');
+     
+      
+         Schema::dropIfExists('event_halls');
     }
 };

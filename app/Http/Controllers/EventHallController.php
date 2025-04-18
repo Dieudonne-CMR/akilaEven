@@ -49,6 +49,8 @@ class EventHallController extends Controller
             'photo2' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'photo3' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'photo4' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'area' => "required|decimal:2",
+            'event_type' => "required|string",
         ]);
     
         for ($i = 0; $i <= 4; $i++) {
