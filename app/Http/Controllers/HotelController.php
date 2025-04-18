@@ -19,11 +19,21 @@ class HotelController extends Controller
          // $this->middleware('auth')->only(['create', 'store']);
      }
 
-    // afficher le formulaire de creation
+    /**
+     * Affiche le formulaire de création d'un hôtel.
+     *
+     * @return View
+     */
     public function create(){
         return view('hotels.create_hote');
     }
 
+    /**
+     * Traite la soumission du formulaire pour enregistrer un nouvel hôtel.
+     *
+     * @param  Request  $request
+     * @return RedirectResponse
+     */
     public function store(Request $request){
         // Validation des données
         $validated = $request->validate([
@@ -61,11 +71,22 @@ class HotelController extends Controller
         return redirect()->route('hotels.create')->with('success', 'Hôtel créé avec succès !');
     }
 
+    /**
+     * Affiche la liste des hôtels disponibles pour sélection.
+     *
+     * @return View
+     */
     public function selectHotel() {
         $hotels= Hotel::all();
         return view('hotels.select-hotel',compact('hotels'));
     }
 
+    /**
+     * Affiche l'interface de gestion d'un hôtel spécifique avec ses salles de fête.
+     *
+     * @param  Hotel  $hotel
+     * @return View
+     */
     public function manageHotel(Hotel $hotel){
         // dd($hotel);
         $eventHalls = $hotel->eventHalls()

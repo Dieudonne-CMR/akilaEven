@@ -26,6 +26,13 @@ class EventHallController extends Controller
         return view('hotels.eventhall-create', compact('hotel','villes'));
     }
 
+    /**
+     * Traite la soumission du formulaire pour enregistrer une nouvelle salle de fête.
+     *
+     * @param  Request  $request
+     * @param  int  $hotel_id
+     * @return RedirectResponse
+     */
     public function storeEventhall(Request $request, $hotel_id)
     {
         // dd($request->all());
@@ -57,7 +64,13 @@ class EventHallController extends Controller
     
         return redirect()->route('event-halls.index',$hotel_id)->with('success', 'Salle créée !');
     }
-    // Afichier les lies de salles de fete d'un hotel
+    
+    /**
+     * Affiche la liste des salles de fête d'un hôtel donné avec pagination.
+     *
+     * @param  Hotel  $hotel
+     * @return View
+     */
     public function index(Hotel $hotel)
         {
             $eventHalls = $hotel->eventHalls()
@@ -66,12 +79,25 @@ class EventHallController extends Controller
             return view('hotels.voir-eventhall',['hotel' => $hotel,'eventHalls' => $eventHalls ]);
 
         }
-        // affichier le detail d'une salle de fete
+    
+    /**
+     * Affiche les détails d'une salle de fête spécifique.
+     *
+     * @param  EventHall  $event_hall
+     * @return View
+     */
     public function show(EventHall $event_hall){
 
         $eventhall=$event_hall->load('hotel','ville','user');
         return view('hotels.eventhallshow',['eventHall'=>$eventhall]);
     }
+    
+    /**
+     * Affiche le formulaire d'édition d'une salle de fête.
+     *
+     * @param  EventHall  $event_hall
+     * @return View
+     */
     public function edit(EventHall $event_hall){
 
        
@@ -79,6 +105,14 @@ class EventHallController extends Controller
         $eventhall=$event_hall->load('hotel','ville');
         return view('hotels.eventhall-edit',['eventHall'=>$eventhall,'villes'=>$villes]);
     }
+    
+    /**
+     * Traite la mise à jour des informations d'une salle de fête existante.
+     *
+     * @param  Request  $request
+     * @param  EventHall  $event_hall
+     * @return RedirectResponse
+     */
     public function update(Request $request, EventHall $event_hall){
 
         $validated = $request->validate([
