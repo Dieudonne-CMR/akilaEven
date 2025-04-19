@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         // Enregistrer le seeder
        
         $this->call([
-            
+            /* VilleSeeder::class, */
             EventHallSeeder::class,
         ]);
          /* User::factory()->create([

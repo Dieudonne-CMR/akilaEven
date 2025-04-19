@@ -11,22 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_halls', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
-            $table->string('nom_salle');
-            $table->text('description_salle');
-            $table->text('localisation');
-            $table->integer('capacite');
-            $table->decimal('prix', 10, 2);
-            $table->string('photo')->nullable();
-            $table->string('photo1')->nullable();
-            $table->string('photo2')->nullable();
-            $table->string('photo3')->nullable();
-            $table->string('photo4')->nullable();
-            $table->timestamps();
-        
-        });
+        if(!Schema::hasTable('event_halls')){
+            Schema::create('event_halls', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
+                $table->string('nom_salle');
+                $table->text('description_salle');
+                $table->text('localisation');
+                $table->integer('capacite');
+                $table->decimal('prix', 10, 2);
+                $table->string('photo')->nullable();
+                $table->string('photo1')->nullable();
+                $table->string('photo2')->nullable();
+                $table->string('photo3')->nullable();
+                $table->string('photo4')->nullable();
+                $table->timestamps();
+            
+            });
+        }
     }
 // php artisan migrate:rollback pour annuler ce qui a été fait dans le up
     /**

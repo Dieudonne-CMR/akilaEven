@@ -11,7 +11,7 @@ class EventHallSeeder extends Seeder
     {
         // Crée 20 salles d’événements
         EventHall::factory()
-            ->count(5)
+            ->count(2)
             ->create();
     }
 }

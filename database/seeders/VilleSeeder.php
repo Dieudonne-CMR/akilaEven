@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use App\Models\Ville;
 class VilleSeeder extends Seeder
 {
     /**
@@ -14,15 +14,11 @@ class VilleSeeder extends Seeder
     {
         $villes = [
             'Douala',
-            'Yamoussoukro',
-            'Bouaké',
-            'Daloa',
-            'San-Pédro',
-            'Korhogo',
-            'Man',
-            'Gagnoa',
-            'Abengourou',
-            'Divo'
+            'Yaoundé',
+            'Buéa',
+            'Kribi',
+            'Bafoussam',
+            
         ];
 
         foreach ($villes as $nom) {

@@ -7,9 +7,10 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\siteController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VilleController;
 
-
-
+Route::get('/villes', [VilleController::class, 'index'])->name('villes.index');
+Route::post('/soumettre-ville', [VilleController::class, 'store'])->name('villes.store');
 Route::get('', [siteController::class, 'index'])->name('home');
 route::get('/site-sallesfetes', [siteController::class, 'salleFete'])->name('site.sallesfetes');
 route::get('/site-detail-sallesfetes-{eventHall}', [siteController::class, 'detailFallesFetes'])->name('site.detailSallesfetes');

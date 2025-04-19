@@ -11,20 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rooms', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
-        $table->string('nom_chambre');
-        $table->text('description_chambre');
-        $table->text('localisation');
-        $table->integer('capacite');
-        $table->decimal('prix', 10, 2);
-        $table->string('photo')->nullable();
-        $table->string('photo1')->nullable();
-        $table->string('photo2')->nullable();
-        $table->string('photo3')->nullable();
-        $table->timestamps();
-        });
+          // On ne crée la table que si elle n'existe pas déjà
+          if (!Schema::hasTable('rooms')) {
+            Schema::create('rooms', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('hotel_id')
+                      ->constrained()
+                      ->onDelete('cascade');
+                $table->string('nom_chambre');
+                $table->text('description_chambre');
+                $table->text('localisation');
+                $table->integer('capacite');
+                $table->decimal('prix', 10, 2);
+                $table->string('photo')->nullable();
+                $table->string('photo1')->nullable();
+                $table->string('photo2')->nullable();
+                $table->string('photo3')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**
