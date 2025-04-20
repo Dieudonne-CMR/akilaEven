@@ -42,7 +42,7 @@ class EventHallFactory extends Factory
             'photo2'             => null,
             'photo3'             => null,
             'photo4'             => null,
-            'event_type'         => $this->faker->randomElement(['conference', 'mariage', 'concert', 'cocktail']),
+            'event_type'         => $this->faker->randomElement(['conférence', 'mariage', 'concert', 'cocktail']),
             'ville_id'           => $villeId,
             'hotel_id'           => $hotelId,
             'user_id'            => $userId,

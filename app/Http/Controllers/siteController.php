@@ -30,7 +30,7 @@ class siteController extends Controller
         $eventHalls = EventHall::with(['ville','hotel'])->paginate(6);
         // $eventHalls= $eventHall->Load('hotel', 'ville');
         // dd($eventHalls);
-        return view('site.salleFete', compact('eventHalls'));
+        return view('site.bl-eventHall.salleFete', compact('eventHalls'));
     }
   
     /**

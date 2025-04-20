@@ -7,9 +7,9 @@ START HERO-WRAPPER AREA
   <div class="pb-0 hero-box">
     <div id="fullscreen-slide-contain">
       <ul class="slides-container">
-        <li><img src="assets_site/images/hero-bg2.jpg" alt="" /></li>
-        <li><img src="assets_site/images/hero--bg2.jpg" alt="" /></li>
-        <li><img src="assets_site/images/hero--bg3.jpg" alt="" /></li>
+        <li><img src="{{asset('assets_site/images_site/event_halls/event-halls-1.jpg')}}" alt="Salle de fêtes" /></li>
+        <li><img src="{{asset('assets_site/images_site/event_halls/event-halls-2.jpg')}}" alt="Mariage" /></li>
+        <li><img src="{{asset('assets_site/images_site/rooms/rooms-1.jpg')}}" alt="Chambre d'hôtel" /></li>
       </ul>
     </div>
     <!-- End background slider -->
@@ -18,27 +18,29 @@ START HERO-WRAPPER AREA
         <div class="col-lg-12">
           <div class="pb-5 hero-content">
             <div class="section-heading">
-              <p class="pb-2 sec__desc">Partout au cameroun</p>
-              <h2 class="sec__title">
-              Trouvez l'espace idéal pour tous vos événements            
+              <span class="mb-3 badge text-bg-primary fw-500">Réservations Faciles & Rapides</span>
+              <h2 class="text-white sec__title text-shadow-lg">
+                Trouvez l'espace idéal<br>pour tous vos événements            
               </h2>
-              <p style="color: white;font-size: 20px;">
-            Salles de fêtes, chambres d'hôtel et espaces de réception <br /> pour vos mariages, séminaires et célébrations.
-          </p>
+              <p class="mt-3 text-white fw-500 fs-5 text-shadow-sm">
+                Salles de fêtes, chambres d'hôtel et espaces de réception<br>pour vos mariages, séminaires et célébrations.
+              </p>
             </div>
           </div>
           <!-- end hero-content -->
-          <div class="search-fields-container">
+          
+          <!-- Tabs Search Container -->
+          <div class="p-4 bg-white rounded shadow-lg search-fields-container" x-data="{ activeTab: 'rooms' }">
             <!-- Tabs Navigation -->
             <ul class="mb-3 nav nav-tabs" id="searchTabs" role="tablist">
               <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="rooms-tab" data-bs-toggle="tab" data-bs-target="#rooms-search" type="button" role="tab" aria-controls="rooms-search" aria-selected="true">
+                <button class="nav-link" :class="{'active': activeTab === 'rooms'}" id="rooms-tab" x-on:click="activeTab = 'rooms'" type="button" role="tab" aria-controls="rooms-search" aria-selected="true">
                   <i class="mr-1 la la-bed"></i> Chambres
                 </button>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link" id="events-tab" data-bs-toggle="tab" data-bs-target="#events-search" type="button" role="tab" aria-controls="events-search" aria-selected="false">
-                  <i class="mr-1 la la-calendar-check-o"></i> Salles de Fêtes
+                <button class="nav-link" :class="{'active': activeTab === 'events'}" id="events-tab" x-on:click="activeTab = 'events'" type="button" role="tab" aria-controls="events-search" aria-selected="false">
+                  <i class="mr-1 la la-glass-cheers"></i> Salles de Fêtes
                 </button>
               </li>
             </ul>
@@ -46,250 +48,15 @@ START HERO-WRAPPER AREA
             <!-- Tabs Content -->
             <div class="tab-content" id="searchTabsContent">
               <!-- Chambres Tab -->
-              <div class="tab-pane fade show active" id="rooms-search" role="tabpanel" aria-labelledby="rooms-tab">
-                <div class="contact-form-action">
-                  <form action="#" class="row">
-                    <div class="col-lg-3 pe-0">
-                      <div class="input-box">
-                        <label class="label-text">Destination / Nom de l'hôtel</label>
-                        <div class="form-group">
-                          <span class="la la-map-marker form-icon"></span>
-                          <input
-                            class="form-control"
-                            type="text"
-                            placeholder="Entrez une ville ou un hôtel"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <!-- end col-lg-3 -->
-                    <div class="col-lg-3 pe-0">
-                      <div class="input-box">
-                        <label class="label-text">Check in - Check out</label>
-                        <div class="form-group">
-                          <span class="la la-calendar form-icon"></span>
-                          <input
-                            class="date-range form-control"
-                            type="text"
-                            name="daterange"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <!-- end col-lg-3 -->
-                    <div class="col-lg-3 pe-0">
-                      <div class="input-box">
-                        <label class="label-text">Type de Chambre</label>
-                        <div class="form-group select2-container-wrapper">
-                          <div
-                            class="w-auto select-contain select-contain-shadow"
-                          >
-                            <select class="select-contain-select">
-                              <option value="0">Sélectionner</option>
-                              <option value="1">Simple</option>
-                              <option value="2">Double</option>
-                              <option value="3">Triple</option>
-                              <option value="4">Quad</option>
-                              <option value="5">Queen</option>
-                              <option value="6">King</option>
-                              <option value="7">Twin</option>
-                              <option value="8">Double-double</option>
-                              <option value="9">Studio</option>
-                              <option value="10">Suite</option>
-                              <option value="11">Mini Suite</option>
-                              <option value="12">Suite Présidentielle</option>
-                              <option value="14">Appartements</option>
-                              <option value="15">Chambres communicantes</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- end col-lg-3 -->
-                    <div class="col-lg-3">
-                      <div class="input-box">
-                        <label class="label-text">Invités et Chambres</label>
-                        <div class="form-group">
-                          <div class="dropdown dropdown-contain gty-container">
-                            <a
-                              class="dropdown-toggle dropdown-btn"
-                              href="#"
-                              role="button"
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                              data-bs-auto-close="outside"
-                            >
-                              <span
-                                class="adult"
-                                data-text="Adulte"
-                                data-text-multi="Adultes"
-                                >0 Adulte</span
-                              >
-                              -
-                              <span
-                                class="children"
-                                data-text="Enfant"
-                                data-text-multi="Enfants"
-                                >0 Enfant</span
-                              >
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-wrap">
-                              <div class="dropdown-item">
-                                <div
-                                  class="qty-box d-flex align-items-center justify-content-between"
-                                >
-                                  <label>Chambres</label>
-                                  <div class="qtyBtn d-flex align-items-center">
-                                    <div class="qtyDec">
-                                      <i class="la la-minus"></i>
-                                    </div>
-                                    <input
-                                      type="text"
-                                      name="room_number"
-                                      value="0"
-                                      class="qty-input"
-                                    />
-                                    <div class="qtyInc">
-                                      <i class="la la-plus"></i>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="dropdown-item">
-                                <div
-                                  class="qty-box d-flex align-items-center justify-content-between"
-                                >
-                                  <label>Adultes</label>
-                                  <div class="qtyBtn d-flex align-items-center">
-                                    <div class="qtyDec">
-                                      <i class="la la-minus"></i>
-                                    </div>
-                                    <input
-                                      type="text"
-                                      name="adult_number"
-                                      value="0"
-                                    />
-                                    <div class="qtyInc">
-                                      <i class="la la-plus"></i>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="dropdown-item">
-                                <div
-                                  class="qty-box d-flex align-items-center justify-content-between"
-                                >
-                                  <label>Enfants</label>
-                                  <div class="qtyBtn d-flex align-items-center">
-                                    <div class="qtyDec">
-                                      <i class="la la-minus"></i>
-                                    </div>
-                                    <input
-                                      type="text"
-                                      name="child_number"
-                                      value="0"
-                                    />
-                                    <div class="qtyInc">
-                                      <i class="la la-plus"></i>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- .end dropdown-contain -->
-                        </div>
-                      </div>
-                    </div>
-                    <!-- end col-lg-3 -->
-                  </form>
-                  <div class="pt-2 btn-box">
-                    <a href="room-search-result.html" class="theme-btn">
-                      <i class="mr-1 la la-search"></i> Rechercher
-                    </a>
-                  </div>
-                </div>
+              <div class="tab-pane fade" :class="{'show active': activeTab === 'rooms'}" id="rooms-search" role="tabpanel" aria-labelledby="rooms-tab">
+                <!-- Contenu du composant de recherche de chambres à intégrer ici -->
+                @include('site.layouts.partials.search-rooms')
               </div>
               
               <!-- Salles de Fêtes Tab -->
-              <div class="tab-pane fade" id="events-search" role="tabpanel" aria-labelledby="events-tab">
-                <div class="contact-form-action">
-                  <form action="#" class="row">
-                    <div class="col-lg-3 pe-0">
-                      <div class="input-box">
-                        <label class="label-text">Ville / Localisation</label>
-                        <div class="form-group">
-                          <span class="la la-map-marker form-icon"></span>
-                          <input
-                            class="form-control"
-                            type="text"
-                            placeholder="Entrez une ville"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <!-- end col-lg-3 -->
-                    <div class="col-lg-3 pe-0">
-                      <div class="input-box">
-                        <label class="label-text">Date de l'événement</label>
-                        <div class="form-group">
-                          <span class="la la-calendar form-icon"></span>
-                          <input
-                            class="date-range form-control"
-                            type="text"
-                            name="daterange"
-                            placeholder="Date de l'événement"
-                          />
-                        
-                        </div>
-                      </div>
-                    </div>
-                    <!-- end col-lg-3 -->
-                    <div class="col-lg-3 pe-0">
-                      <div class="input-box">
-                        <label class="label-text">Type d'événement</label>
-                        <div class="form-group select2-container-wrapper">
-                          <div
-                            class="w-auto select-contain select-contain-shadow"
-                          >
-                            <select class="select-contain-select">
-                              <option value="0">Sélectionner</option>
-                              <option value="1">Mariage</option>
-                              <option value="2">Anniversaire</option>
-                              <option value="3">Conférence</option>
-                              <option value="4">Séminaire</option>
-                              <option value="5">Réunion d'affaires</option>
-                              <option value="6">Fête</option>
-                              <option value="7">Gala</option>
-                              <option value="8">Autre</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- end col-lg-3 -->
-                    <div class="col-lg-3">
-                      <div class="input-box">
-                        <label class="label-text">Nombre d'invités</label>
-                        <div class="form-group">
-                          <span class="la la-users form-icon"></span>
-                          <input
-                            class="form-control"
-                            type="number"
-                            placeholder="Nombre de personnes"
-                            min="1"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <!-- end col-lg-3 -->
-                  </form>
-                  <div class="pt-2 btn-box">
-                    <a href="event-halls-search-result.html" class="theme-btn">
-                      <i class="mr-1 la la-search"></i> Rechercher
-                    </a>
-                  </div>
-                </div>
+              <div class="tab-pane fade" :class="{'show active': activeTab === 'events'}" id="events-search" role="tabpanel" aria-labelledby="events-tab">
+                <!-- Contenu du composant de recherche de salles de fêtes à intégrer ici -->
+                @include('site.layouts.partials.search-events')
               </div>
             </div>
           </div>
@@ -317,12 +84,12 @@ START INFO AREA
       <div class="col-lg-3 responsive-column">
         <div class="icon-box icon-layout-2 d-flex">
           <div class="flex-shrink-0 info-icon bg-rgb text-color-2">
-            <i class="las la-radiation"></i>
+            <i class="las la-hotel"></i>
           </div>
           <!-- end info-icon-->
           <div class="info-content">
-            <h4 class="info__title">Unique Atmosphere</h4>
-            <p class="info__desc">Varius quam quisque id diam vel quam</p>
+            <h4 class="info__title">Hébergement Premium</h4>
+            <p class="info__desc">Chambres élégantes et confortables pour tous vos séjours</p>
           </div>
           <!-- end info-content -->
         </div>
@@ -332,12 +99,12 @@ START INFO AREA
       <div class="col-lg-3 responsive-column">
         <div class="icon-box icon-layout-2 d-flex">
           <div class="flex-shrink-0 info-icon bg-rgb-2 text-color-3">
-            <i class="la la-tree"></i>
+            <i class="la la-calendar-check"></i>
           </div>
           <!-- end info-icon-->
           <div class="info-content">
-            <h4 class="info__title">Environment</h4>
-            <p class="info__desc">Varius quam quisque id diam vel quam</p>
+            <h4 class="info__title">Réservation Facile</h4>
+            <p class="info__desc">Processus de réservation simple et efficace en quelques clics</p>
           </div>
           <!-- end info-content -->
         </div>
@@ -351,8 +118,8 @@ START INFO AREA
           </div>
           <!-- end info-icon-->
           <div class="info-content">
-            <h4 class="info__title">Great Location</h4>
-            <p class="info__desc">Varius quam quisque id diam vel quam</p>
+            <h4 class="info__title">Emplacements Stratégiques</h4>
+            <p class="info__desc">Partout au Cameroun, dans les meilleurs quartiers</p>
           </div>
           <!-- end info-content -->
         </div>
@@ -362,12 +129,12 @@ START INFO AREA
       <div class="col-lg-3 responsive-column">
         <div class="icon-box icon-layout-2 d-flex">
           <div class="flex-shrink-0 info-icon bg-rgb-4 text-color-5">
-            <i class="las la-bed"></i>
+            <i class="las la-glass-cheers"></i>
           </div>
           <!-- end info-icon-->
           <div class="info-content">
-            <h4 class="info__title">Homey Comfort</h4>
-            <p class="info__desc">Varius quam quisque id diam vel quam</p>
+            <h4 class="info__title">Événements Réussis</h4>
+            <p class="info__desc">Des espaces adaptés à tous types de célébrations</p>
           </div>
           <!-- end info-content -->
         </div>
@@ -393,25 +160,25 @@ START ABOUT AREA
       <div class="col-lg-6">
         <div class="about-content pe-5">
           <div class="section-heading">
-            <h4 class="pb-2 font-size-16">Our Story</h4>
-            <h2 class="sec__title">Atmosphere and Design</h2>
+            <span class="mb-3 text-white badge bg-primary">Votre partenaire événementiel</span>
+            <h4 class="pb-2 font-size-16">Bienvenue chez AkilaEven</h4>
+            <h2 class="sec__title">Une expérience unique pour vos événements</h2>
             <p class="pt-4 pb-2 sec__desc">
-              It is a long established fact that a reader will be distracted
-              by the readable content of a page when looking at its layout.
-              The point of using Lorem Ipsum is that it has a more-or-less
-              normal distribution of letters
+              AkilaEven est votre plateforme de référence pour la réservation de salles de fêtes et chambres 
+              d'hôtel au Cameroun. Nous sélectionnons avec soin les meilleurs établissements pour garantir 
+              la réussite de tous vos événements et séjours.
             </p>
             <p class="sec__desc">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. A
-              accusamus amet consectetur ipsa officia. Doloremque error
-              porro sit soluta totam! A iste nobis vel voluptatem!
+              Que vous organisiez un mariage, un séminaire d'entreprise ou simplement un séjour 
+              d'affaires, nous vous accompagnons de la réservation jusqu'à la fin de votre expérience 
+              avec un service client disponible à tout moment.
             </p>
           </div>
           <!-- end section-heading -->
           <div class="pt-4 btn-box">
-            <a href="about.html" class="theme-btn"
-              >Read More <i class="la la-arrow-right ms-1"></i
-            ></a>
+            <a href="{{ route('site.bl-about.about') }}" class="theme-btn">
+              En savoir plus <i class="la la-arrow-right ms-1"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -419,12 +186,12 @@ START ABOUT AREA
       <div class="col-lg-6">
         <div class="image-box about-img-box">
           <img
-            src="assets_site/images/img5.jpg"
+            src="{{asset('assets_site/images_site/about-home.png')}}"
             alt="about-img"
-            class="img__item img__item-1"
+            class="rounded shadow img__item img__item-1"
           />
           <img
-            src="assets_site/images/tripadvisor.png"
+            src="{{asset('assets_site/images/tripadvisor.png')}}"
             alt="about-img"
             class="img__item img__item-2"
           />
@@ -450,7 +217,8 @@ START ROOM TYPE AREA
     <div class="row">
       <div class="col-lg-12">
         <div class="text-center section-heading">
-          <h2 class="sec__title">Find a Room Type</h2>
+          <h2 class="sec__title">Nos espaces à découvrir</h2>
+          <p class="mt-3 sec__desc">Découvrez nos différents types d'espaces adaptés à tous vos besoins</p>
         </div>
         <!-- end section-heading -->
       </div>
@@ -461,14 +229,19 @@ START ROOM TYPE AREA
       <div class="col-lg-6">
         <div class="room-type-content">
           <div class="image-box">
-            <a href="room-list.html" class="d-block">
+            <a href="#" class="overflow-hidden d-block position-relative">
               <img
-                src="assets_site/images/img27.jpg"
-                alt="room type img"
-                class="img__item"
+                src="{{ asset('assets_site/images_site/rooms/img3.jpg') }}"
+                alt="Chambres d'hôtel"
+                class="img__item w-100"
+                style="height: 350px; object-fit: cover;"
               />
               <div class="room-type-link">
-                Dorm Beds <i class="la la-arrow-right ms-2"></i>
+                <div>
+                  <h3 class="mb-2 text-white">Chambres d'Hôtel</h3>
+                  <p class="mb-0 text-white">Confort et élégance pour votre séjour</p>
+                </div>
+                <i class="la la-arrow-right ms-2"></i>
               </div>
             </a>
           </div>
@@ -478,14 +251,19 @@ START ROOM TYPE AREA
       <div class="col-lg-6">
         <div class="room-type-content">
           <div class="image-box">
-            <a href="room-list.html" class="d-block">
+            <a href="{{ route('site.sallesfetes') }}" class="overflow-hidden d-block position-relative">
               <img
-                src="assets_site/images/img28.jpg"
-                alt="room type img"
-                class="img__item"
+                src="{{ asset('assets_site/images_site/event_halls/event-halls-2.jpg') }}"
+                alt="Salles de fêtes"
+                class="img__item w-100"
+                style="height: 350px; object-fit: cover;"
               />
               <div class="room-type-link">
-                Private Room <i class="la la-arrow-right ms-2"></i>
+                <div>
+                  <h3 class="mb-2 text-white">Salles de Fêtes</h3>
+                  <p class="mb-0 text-white">L'endroit idéal pour vos célébrations</p>
+                </div>
+                <i class="la la-arrow-right ms-2"></i>
               </div>
             </a>
           </div>
