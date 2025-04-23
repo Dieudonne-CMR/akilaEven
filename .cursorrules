@@ -17,7 +17,7 @@ Hotel, function room, and room booking platform
 
 ## Overview
 
-The application will allow visitors (customers) to check the availability of hotels, reception halls, and rooms. Guests will be able to book directly online. It will also offer administrators and managers a dedicated space to manage hotels, halls, and rooms, and to validate and track reservations.
+The application will allow visitors (customers) to check the availability of reception halls and rooms at dedicated hotels. Guests will be able to book directly online. It will also offer administrators and managers a dedicated space to manage hotels, halls, and rooms, and to validate and track reservations.
 
 ## key features
 
@@ -25,7 +25,7 @@ The application will allow visitors (customers) to check the availability of hot
 
 ### Gestion des réservations
 
-L'utilisateur souhaite réserver remplit un formulaire avec ses informations(son nom, prenom,adresse mail, numéro de téléphone, ville region, pays, heure d'arrivée, heure prévue, adresse) puis il clique sur réserver. L'administrateur ou le manager sont notifiés par mail, après la reservation est stockée dans la base de donnée avec un status à **pending** et un email est envoyé à l'utilisateur pour l'informer. Une réservation a un statut qui peut être:
+L'utilisateur remplit un formulaire avec ses informations(son nom, prenom,adresse mail, numéro de téléphone, ville region, pays, heure d'arrivée, heure prévue, adresse) puis il clique sur réserver. L'administrateur ou le manager sont notifiés par mail, après la reservation est stockée dans la base de donnée avec un status à **pending** et un email est envoyé à l'utilisateur pour l'informer. Une réservation a un statut qui peut être:
 
 -   \*Pending\*\*: la réservation est en attente d'acceptation par l'administrateur.
 -   **Cancelled**: la réservation est annulée par l'administrateur.
@@ -34,8 +34,8 @@ L'utilisateur souhaite réserver remplit un formulaire avec ses informations(son
 -   **Declined**: la réservation est refusée par l'administrateur.
 
 -   **Completed**: la réservation a été payée par l'utilisateur.
-    Lorsque l'administrateur valide la reservation le status passe à **Accepted**, l'utilisateur est notifié par email pour confirmer sa reservation. Une fois que l'utilisateur confirme sa reservation à travers son email, le statut passe à **Booked**. Une fois la salle payée, le statut passe à **Completed**. Le client a 24H pour valider sa réservation, si elle n'est pas validée, la réservation passe à l'état **Cancelled**.
-    Pour les chambres, le prix de la réservation est calculer en fonction du nombre de nuits passés(e.g:20 nuits = 20x10 euros = 200€ avec 5€ de taxe de séjour par nuitée). L'utilisateur peut louer plusieurs chambres à la fois
+    Lorsque l'administrateur valide la reservation le status passe à **Accepted**, le client a alors 24H pour valider sa réservation, si elle n'est pas validée, la réservation passe à l'état **Cancelled**. l'utilisateur est notifié par email pour confirmer sa reservation. Une fois que l'utilisateur confirme sa reservation à travers son email, le statut passe à **Booked**. Une fois la salle payée, le statut passe à **Completed**.
+    Pour les chambres, le prix de la réservation est calculer en fonction du nombre de nuits passées(e.g:20 nuits = 20x10 euros = 200€ avec 5€ de taxe de séjour par nuitée = 200 + 5\*20 = 410€). L'utilisateur peut louer plusieurs chambres à la fois
 
 ### Gestion des chambres
 

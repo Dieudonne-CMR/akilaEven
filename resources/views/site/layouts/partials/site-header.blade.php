@@ -1,215 +1,102 @@
-<!-- ================================
-     START HEADER AREA
-================================= -->
-<header class="header-area">
-  <div class="header-menu-wrapper padding-right-100px padding-left-100px">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="menu-wrapper justify-content-between" style="padding: 5px 0px;">
-            <div class="logo">
-              <a href="{{route('home')}}" class="site-logo">AkilaEven</a>
-              <div class="menu-toggler">
-                <i class="la la-bars"></i>
-                <i class="la la-times"></i>
-              </div>
-              <!-- end menu-toggler -->
-            </div>
-            <!-- end logo -->
-            <div class="main-menu-content">
-              <nav>
-                <ul>
-                  <li>
-                    <a href="{{route('home')}}" class="nav-link {{request()->routeIs('home') ? 'active' : ''}}">Accueil</a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link">Chambres d'hôtel</a>
-                  </li>
-                  <li>
-                    <a href="{{route('site.sallesfetes')}}" class="nav-link {{request()->routeIs('site.sallesfetes') ? 'active' : ''}}">Salles de fêtes</a>
-                  </li>
-                  <li>
-                    <a href="{{route('site.bl-about.about')}}" class="nav-link {{request()->routeIs('site.bl-about.about') ? 'active' : ''}}">À propos</a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link">Contact</a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-            <!-- end main-menu-content -->
-            <div class="nav-btn">
-              @guest
-                <a href="{{ route('login') }}" class="theme-btn-outline">Connexion</a>
-                <a href="{{ route('register') }}" class="theme-btn">Créer votre espace</a>
-              @else
-                <a href="{{ route('dashboard') }}" class="theme-btn">Mon espace</a>
-              @endguest
-            </div>
-            <!-- end nav-btn -->
-          </div>
-          <!-- end menu-wrapper -->
-        </div>
-        <!-- end col-lg-12 -->
+<!-- Navigation Header -->
+<header x-data="{ open: false }" class="sticky top-0 z-[2000] w-full bg-white shadow-sm">
+  <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <div class="max-lg:flex max-lg:items-center max-lg:justify-between m=ax-lg:w-full">
+        <a href="{{ route('home') }}"
+           class="text-2xl font-bold text-blue-600 transition-colors duration-200 hover:text-blue-800">
+          AkilaEven
+        </a>
+        <!-- Mobile menu button -->
+        <button type="button"
+                class="inline-flex items-center justify-center p-2 ml-3 text-gray-400 rounded-md hover:text-gray-500 hover:bg-gray-100 lg:hidden"
+                @click="open = true"
+                aria-label="Ouvrir le menu">
+          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
       </div>
-      <!-- end row -->
+
+      <!-- Desktop Navigation -->
+     <x-navigation-site class="my-6" />
+
+      <!-- Desktop Authentication Buttons -->
+      <div class="hidden lg:flex lg:items-center lg:space-x-4">
+        @include('site.layouts.partials.auth-btn')
+      </div>
     </div>
-    <!-- end container-fluid -->
   </div>
-  <!-- end header-menu-wrapper -->
+
+  <!-- Mobile Navigation Sheet -->
+  <div
+    x-show="open"
+    x-cloak
+    class="fixed inset-0 z-50 flex items-end justify-center lg:hidden"
+    aria-modal="true"
+    role="dialog"
+  >
+    <!-- Backdrop -->
+    <div
+      class="fixed inset-0 transition-opacity bg-black bg-opacity-50"
+      @click="open = false"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Sheet Panel -->
+    <div
+      class="relative w-full max-h-[80vh] bg-white rounded-t-2xl p-6 overflow-y-auto transform transition-transform duration-300"
+      :class="open ? 'translate-y-0' : 'translate-y-full'"
+    >
+      <!-- Close Button -->
+      <button
+        class="absolute p-2 text-gray-500 rounded-full top-4 right-4 hover:text-gray-700 hover:bg-gray-100"
+        @click="open = false"
+        aria-label="Fermer le menu"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="w-6 h-6"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke="currentColor">
+          <path stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <x-navigation-site class="my-6" :isDesktop="false" />
+      <!-- Mobile Navigation Links -->
+    {{--   <nav class="space-y-4">
+        <a href="{{ route('home') }}"
+           class="block text-lg font-medium {{ request()->routeIs('home') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600' }} transition-colors duration-200">
+          Accueil
+        </a>
+        <a href="#"
+           class="block text-lg font-medium text-gray-700 transition-colors duration-200 hover:text-blue-600">
+          Chambres d'hôtel
+        </a>
+        <a href="{{ route('site.sallesfetes') }}"
+           class="block text-lg font-medium {{ request()->routeIs('site.sallesfetes') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600' }} transition-colors duration-200">
+          Salles de fêtes
+        </a>
+        <a href="{{ route('site.bl-about.about') }}"
+           class="block text-lg font-medium {{ request()->routeIs('site.bl-about.about') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600' }} transition-colors duration-200">
+          À propos
+        </a>
+        <a href="#"
+           class="block text-lg font-medium text-gray-700 transition-colors duration-200 hover:text-blue-600">
+          Contact
+        </a>
+      </nav> --}}
+
+      <!-- Mobile Authentication Buttons -->
+      <div class="flex items-center justify-center mt-6 ">
+        @include('site.layouts.partials.auth-btn')
+      </div>
+    </div>
+  </div>
 </header>
-<!-- ================================
-     END HEADER AREA
-================================= -->
-
-<style>
-  /* Style personnalisé pour la navigation */
-  .header-area {
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: white;
-  }
-  
-  .site-logo {
-    font-size: 26px;
-    font-weight: 700;
-    color: #287dfa;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    letter-spacing: 0.5px;
-  }
-  
-  .site-logo:hover {
-    color: #0056b3;
-  }
-  
-  .main-menu-content {
-    padding-top: 0px !important;
-    margin-left: 0px !important;
-    padding-right: 0px !important
-}
-
-  .main-menu-content ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .main-menu-content .nav-link {
-    position: relative;
-    transition: all 0.3s ease;
-    padding: 15px 20px;
-    font-weight: 500;
-    font-size: 16px;
-    color: #333;
-    text-decoration: none;
-  }
-  
-  .main-menu-content .nav-link:hover,
-  .main-menu-content .nav-link.active {
-    color: #287dfa;
-  }
-  
-  .main-menu-content .nav-link:after {
-    content: '';
-    position: absolute;
-    bottom: 5px;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background-color: #287dfa;
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-  }
-  
-  .main-menu-content .nav-link:hover:after,
-  .main-menu-content .nav-link.active:after {
-    width: 70%;
-  }
-  
-  .theme-btn-outline {
-    border: 2px solid #287dfa;
-    color: #287dfa;
-    background-color: transparent;
-    padding: 10px 20px;
-    border-radius: 30px;
-    font-weight: 600;
-    margin-right: 10px;
-    transition: all 0.3s ease;
-    display: inline-block;
-    text-decoration: none;
-  }
-  
-  .theme-btn-outline:hover {
-    background-color: #287dfa;
-    color: white;
-    text-decoration: none;
-  }
-  
-  .theme-btn {
-    background-color: #287dfa;
-    color: white;
-    border: 2px solid #287dfa;
-    padding: 0px 20px;
-    border-radius: 30px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    display: inline-block;
-    text-decoration: none;
-  }
-  
-  .theme-btn:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-    color: white;
-    text-decoration: none;
-  }
-  
-  /* Styles responsive */
-  @media (max-width: 992px) {
-    .main-menu-content {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      background-color: white;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-      display: none;
-    }
-
-    .main-menu-content .nav-link {
-    
-      width: fit-content;
-  }
-   
-    
-    .main-menu-content.show {
-      display: block;
-    }
-    
-    .main-menu-content ul {
-      flex-direction: column;
-    }
-    
-    .menu-toggler {
-      display: block;
-      font-size: 24px;
-      cursor: pointer;
-    }
-    
-    .menu-toggler .la-times {
-      display: none;
-    }
-    
-    .menu-toggler.active .la-bars {
-      display: none;
-    }
-    
-    .menu-toggler.active .la-times {
-      display: inline-block;
-    }
-  }
-</style> 

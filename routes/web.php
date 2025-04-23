@@ -9,12 +9,14 @@ use App\Http\Controllers\siteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VilleController;
 
-Route::get('/villes', [VilleController::class, 'index'])->name('villes.index');
-Route::post('/soumettre-ville', [VilleController::class, 'store'])->name('villes.store');
+/* Route::get('/villes', [VilleController::class, 'index'])->name('villes.index');
+Route::post('/soumettre-ville', [VilleController::class, 'store'])->name('villes.store'); */
+Route::get("/rooms", [RoomController::class, 'index'])->name('site.bl-rooms.rooms');
 Route::get('', [siteController::class, 'index'])->name('home');
 route::get('/site-sallesfetes', [siteController::class, 'salleFete'])->name('site.sallesfetes');
-route::get('/site-detail-sallesfetes-{eventHall}', [siteController::class, 'detailFallesFetes'])->name('site.detailSallesfetes');
+route::get('/site-detail-sallesfetes-{eventHall}', [siteController::class, 'detailSallesFetes'])->name('site.detailSallesfetes');
 route::get('/about', [siteController::class, 'about'])->name('site.bl-about.about');
+route::get("/contact", [siteController::class, 'contact'])->name('site.bl-contact.contact');
     
     // Route::get('/dashboard', function () {
         //     return view('dashboard');

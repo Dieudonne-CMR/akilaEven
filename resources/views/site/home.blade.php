@@ -24,7 +24,7 @@ START HERO-WRAPPER AREA
               </h2>
               <p class="mt-3 text-white fw-500 fs-5 text-shadow-sm">
                 Salles de fêtes, chambres d'hôtel et espaces de réception<br>pour vos mariages, séminaires et célébrations.
-              </p>
+          </p>
             </div>
           </div>
           <!-- end hero-content -->

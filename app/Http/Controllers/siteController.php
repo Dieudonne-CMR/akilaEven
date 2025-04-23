@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\eventHallFilterRequest;
 use App\Models\EventHall;
 use Illuminate\Http\Request;
 use PHPUnit\Event\TestSuite\Loaded;
@@ -24,12 +25,16 @@ class siteController extends Controller
      * @param  EventHall  $eventHall
      * @return View
      */
-    public function salleFete(EventHall $eventHall)
+    public function salleFete(EventHall $eventHall, eventHallFilterRequest $request)
     {
+        $validated = $request->validated();
+        // Traitement des locations (transformation en tableau si nécessaire)
+        $locations = isset($validated['locations']) 
+            ? array_map('trim', explode(',', $validated['locations'])) 
+            : [];
+        
         // $eventHalls = EventHall::all();
-        $eventHalls = EventHall::with(['ville','hotel'])->paginate(6);
-        // $eventHalls= $eventHall->Load('hotel', 'ville');
-        // dd($eventHalls);
+        $eventHalls = EventHall::with(['ville','hotel'])->paginate(4);       
         return view('site.bl-eventHall.salleFete', compact('eventHalls'));
     }
   
@@ -39,13 +44,13 @@ class siteController extends Controller
      * @param  EventHall  $eventHall
      * @return View
      */
-    public function detailFallesFetes(EventHall $eventHall) 
+    public function detailSallesFetes(EventHall $eventHall) 
     {
         // $eventHall = EventHall::find($id);
         // $eventHall = EventHall::with(['ville','hotel'])->find($id);
         // $eventHall = EventHall::with(['ville','hotel'])->find($eventHall->id);
-        $eventhall = $eventHall->load('hotel','ville','user');
-        $event_Halls =  EventHall::with(['ville','hotel'])->paginate(2);
+        $eventHall = $eventHall->load('hotel','ville','user');
+        $event_Halls =  EventHall::with(['ville','hotel'])->where('id', '!=', $eventHall->id)->paginate(2);
         // $eventHall = EventHall::with(['ville','hotel'])->find($eventHall->id);
         // $eventHall = EventHall::with(['ville','hotel'])->find($eventHall->id);
 

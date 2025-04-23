@@ -1,1662 +1,588 @@
-@extends('site.layouts.app-site')
+@extends('site.layouts.app-site2')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
+<!-- Swiper pour le carrousel mobile -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <!-- Flatpickr pour le calendrier -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<style>
+    [x-cloak] { display: none !important; }
+    
+    /* Style pour le calendrier */
+    .flatpickr-calendar.inline {
+        width: 100%;
+        box-shadow: none;
+        margin-top: 1rem;
+    }
+    
+    /* Style pour le carrousel mobile */
+    .swiper-pagination-bullet-active {
+        background-color: white;
+    }
+    .event-hall-subtitle span:not(:last-child)::after {
+            content: "|";
+            margin-left: 5px;
+        }
+</style>
 @section('content-site')
 
-    <!-- ================================
-    START ROOM DETAIL BREAD
-================================= -->
-<section class="room-detail-bread">
-  <div class="full-width-slider carousel-action">
-    <?php $fiels= ['photo', 'photo1', 'photo2', 'photo3', 'photo4'] ?>
-
-    @foreach ($fiels as $fiel)
-      @if( $eventHall->$fiel)
-      <div class="full-width-slide-item">
-        <img src="{{ asset('storage/' .  $eventHall->$fiel) }}" alt="" />
-      </div>
-      @endif
-    @endforeach
-
-    {{-- <!-- end full-width-slide-item -->
-    <div class="full-width-slide-item">
-      <img src="assets_site/images/img31.jpg" alt="" />
-    </div>
-    <!-- end full-width-slide-item -->
-    <div class="full-width-slide-item">
-      <img src="assets_site/images/img32.jpg" alt="" />
-    </div>
-    <!-- end full-width-slide-item -->
-    <div class="full-width-slide-item">
-      <img src="assets_site/images/img33.jpg" alt="" />
-    </div>
-    <!-- end full-width-slide-item -->
-    <div class="full-width-slide-item">
-      <img src="assets_site/images/img34.jpg" alt="" />
-    </div> --}}
-    <!-- end full-width-slide-item -->
-  </div>
-  <!-- end full-width-slider -->
-</section>
-<!-- end room-detail-bread -->
 <!-- ================================
-END ROOM DETAIL BREAD
+   START HALL DETAIL AREA
 ================================= -->
-
-<!-- ================================
-START TOUR DETAIL AREA
-================================= -->
-<section class="tour-detail-area padding-bottom-90px">
-  <div
-    class="single-content-navbar-wrap menu section-bg"
-    id="single-content-navbar"
-  >
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="single-content-nav" id="single-content-nav">
-            <ul>
-              {{-- <li>
-                <a
-                  data-scroll="description"
-                  href="#description"
-                  class="scroll-link active"
-                  >Description</a
-                >
-              </li>
-              <li>
-                <a
-                  data-scroll="services"
-                  href="#services"
-                  class="scroll-link"
-                  >Services</a
-                >
-              </li>
-              <li>
-                <a
-                  data-scroll="amenities"
-                  href="#amenities"
-                  class="scroll-link"
-                  >Amenities</a
-                >
-              </li>
-              <li>
-                <a
-                  data-scroll="location-map"
-                  href="#location-map"
-                  class="scroll-link"
-                  >Map</a
-                >
-              </li>
-              <li>
-                <a data-scroll="reviews" href="#reviews" class="scroll-link"
-                  >Reviews</a
-                >
-              </li> --}}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end single-content-navbar-wrap -->
-  <div class="single-content-box">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="single-content-wrap padding-top-60px">
-            <div id="description" class="page-scroll">
-              <div class="pb-4 single-content-item">
-                <h3 class="title font-size-26">{{$eventHall->nom_salle}}</h3>
-                <p class="pt-2">
-                  <span
-                    class="text-white badge text-bg-warning font-size-16"
-                    >4.6</span
-                  >
-                  <span>(4,209 Reviews)</span>
-                </p>
-              </div>
-
-              <h3 class="pb-3 title font-size-15 font-weight-medium">
-                House Rules
-              </h3>
-              <div class="container">
-                <div class="row">
-                    <div class=" col-md-4 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/8565/8565868.png" class="img-icone me-2">{{ $eventHall->hotel->nom_hotel }}</div>
-                    <div class=" col-md-4 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/2901/2901609.png" class="img-icone me-2" >{{$eventHall->ville->nom }}, {{ $eventHall->localisation }}</div>
-                    <div class=" col-md-4 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/6896/6896407.png" class="img-icone me-2">{{ $eventHall->capacite }} places</div>
-                    <div class=" col-md-4 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/9130/9130025.png" class="img-icone me-2" >{{ $eventHall->prix }} FCFA </div>
+<div x-data="roomDetails()" class="container px-4 py-8 mx-auto max-w-7xl">
+    <!-- Contenu principal -->
+    <div class="flex flex-col gap-8 lg:flex-row">
+        <!-- Section détails de la salle (partie gauche) -->
+        <div class="w-full lg:w-2/3">
+            <!-- En-tête avec titre et sous-titre -->
+            <div class="flex flex-col justify-between gap-6 mb-6 md:flex-row md:items-end">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900">{{ $eventHall->nom_salle }}</h1>
+                    <div class="flex flex-wrap items-center gap-2 mt-2 text-sm event-hall-subtitle">
+                        <span><i class="text-blue-500 fa-solid fa-hotel"></i> {{ $eventHall->hotel->nom_hotel ?? 'Hôtel non spécifié' }}</span>                       
+                      {{--   <div data-orientation="vertical" role="none" class="shrink-0 bg-border w-[1px] h-4"></div> --}}
+                        <span><i class="text-orange-500 fas fa-map-marker-alt"></i> {{ $eventHall->ville->nom ?? 'Ville non spécifiée' }}, {{ $eventHall->localisation ?? 'Localisation non spécifiée' }}</span>
+                       
+                        <span><i class="text-green-500 fas fa-users"></i>{{ number_format($eventHall->capacite) }} places</span>
+                    </div>
                 </div>
-            </div>
               
-              <!-- end single-content-item -->
-              <div class="section-block"></div>
-              <div class="single-content-item padding-top-30px padding-bottom-40px" >
-                <h3 class="title font-size-20">Description</h3>
-                
-                <p class="pb-4">
-                  {{$eventHall->description_salle}}
-                </p>
-              </div>
-              <!-- end single-content-item -->
-              <div class="section-block"></div>
+                <button 
+                    @click="toggleCalendarView()"
+                    class="py-3 mt-4 text-sm text-white transition-colors rounded-lg md:py-2 md:px-2 bg-primary md:mt-0 hover:bg-primary/80">
+                    Voir disponibilités
+                </button>
             </div>
-            {{-- <!-- end description -->
-            <div id="services" class="page-scroll">
-              <div
-                class="single-content-item padding-top-40px padding-bottom-40px"
-              >
-                <h3 class="title font-size-20">Services</h3>
-                <div class="pt-4 row">
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-check-circle"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Bicycle Hire
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-check-circle"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Conference Rooms
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-check-circle"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Fruit Basket
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-check-circle"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Massage
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-check-circle"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Sightseeing
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-check-circle"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Car Hire
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-check-circle"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Fitness Center
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-check-circle"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Laundry
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-check-circle"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Own Parking Space
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-check-circle"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Wake-Up Call
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                </div>
-                <!-- end row -->
-              </div>
-              <!-- end single-content-item -->
-              <div class="section-block"></div>
-            </div>
-            <!-- end itinerary -->
-            <div id="amenities" class="page-scroll">
-              <div
-                class="single-content-item padding-top-40px padding-bottom-40px"
-              >
-                <h3 class="title font-size-20">Amenities</h3>
-                <div class="pt-4 row">
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-couch"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          2 Seater Sofa
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-television"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          40-Inch Samsung LED TV
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-gear"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Butler Service
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-wifi"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Free Wi – Fi
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-swimming-pool"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Private Pool
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-user"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          24h Room Service
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-air-freshener"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Air Conditioning
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-phone"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Direct Dial Phone
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-bullhorn"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Hair Dryer
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-bathtub"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Bathtub
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-hand-holding-usd"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Safe Deposit Box
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                  <div class="col-lg-4 responsive-column">
-                    <div
-                      class="mb-3 single-tour-feature d-flex align-items-center"
-                    >
-                      <div
-                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
-                      >
-                        <i class="la la-luggage-cart"></i>
-                      </div>
-                      <div class="single-feature-titles">
-                        <h3 class="title font-size-15 font-weight-medium">
-                          Luggage storage
-                        </h3>
-                      </div>
-                    </div>
-                    <!-- end single-tour-feature -->
-                  </div>
-                  <!-- end col-lg-4 -->
-                </div>
-                <!-- end row -->
-              </div>
-              <!-- end single-content-item -->
-              <div class="section-block"></div>
-            </div>
-            <!-- end itinerary -->
-            <div id="location-map" class="page-scroll">
-              <div
-                class="single-content-item padding-top-40px padding-bottom-40px"
-              >
-                <h3 class="title font-size-20">Location</h3>
-                <div class="map-container padding-top-30px">
-                  <div id="map"></div>
-                </div>
-                <!-- end map-container -->
-              </div>
-              <!-- end single-content-item -->
-              <div class="section-block"></div>
-            </div>
-            <!-- end location-map -->
-            <div id="reviews" class="page-scroll">
-              <div
-                class="single-content-item padding-top-40px padding-bottom-40px"
-              >
-                <h3 class="title font-size-20">Reviews</h3>
-                <div class="review-container padding-top-30px">
-                  <div class="row align-items-center">
-                    <div class="col-lg-4">
-                      <div class="review-summary">
-                        <h2>4.5<span>/5</span></h2>
-                        <p>Excellent</p>
-                        <span>Based on 4 reviews</span>
-                      </div>
-                    </div>
-                    <!-- end col-lg-4 -->
-                    <div class="col-lg-8">
-                      <div class="review-bars">
-                        <div class="row">
-                          <div class="col-lg-6">
-                            <div class="progress-item">
-                              <h3 class="progressbar-title">Service</h3>
-                              <div
-                                class="progressbar-content line-height-20 d-flex align-items-center justify-content-between"
-                              >
-                                <div class="flex-shrink-0 progressbar-box">
-                                  <div
-                                    class="progressbar-line"
-                                    data-percent="70%"
-                                  >
-                                    <div
-                                      class="progressbar-line-item bar-bg-1"
-                                    ></div>
-                                  </div>
-                                  <!-- End Skill Bar -->
-                                </div>
-                                <div class="bar-percent">4.6</div>
-                              </div>
-                            </div>
-                            <!-- end progress-item -->
-                          </div>
-                          <!-- end col-lg-6 -->
-                          <div class="col-lg-6">
-                            <div class="progress-item">
-                              <h3 class="progressbar-title">Location</h3>
-                              <div
-                                class="progressbar-content line-height-20 d-flex align-items-center justify-content-between"
-                              >
-                                <div class="flex-shrink-0 progressbar-box">
-                                  <div
-                                    class="progressbar-line"
-                                    data-percent="55%"
-                                  >
-                                    <div
-                                      class="progressbar-line-item bar-bg-2"
-                                    ></div>
-                                  </div>
-                                  <!-- End Skill Bar -->
-                                </div>
-                                <div class="bar-percent">4.7</div>
-                              </div>
-                            </div>
-                            <!-- end progress-item -->
-                          </div>
-                          <!-- end col-lg-6 -->
-                          <div class="col-lg-6">
-                            <div class="progress-item">
-                              <h3 class="progressbar-title">
-                                Value for Money
-                              </h3>
-                              <div
-                                class="progressbar-content line-height-20 d-flex align-items-center justify-content-between"
-                              >
-                                <div class="flex-shrink-0 progressbar-box">
-                                  <div
-                                    class="progressbar-line"
-                                    data-percent="40%"
-                                  >
-                                    <div
-                                      class="progressbar-line-item bar-bg-3"
-                                    ></div>
-                                  </div>
-                                  <!-- End Skill Bar -->
-                                </div>
-                                <div class="bar-percent">2.6</div>
-                              </div>
-                            </div>
-                            <!-- end progress-item -->
-                          </div>
-                          <!-- end col-lg-6 -->
-                          <div class="col-lg-6">
-                            <div class="progress-item">
-                              <h3 class="progressbar-title">Cleanliness</h3>
-                              <div
-                                class="progressbar-content line-height-20 d-flex align-items-center justify-content-between"
-                              >
-                                <div class="flex-shrink-0 progressbar-box">
-                                  <div
-                                    class="progressbar-line"
-                                    data-percent="60%"
-                                  >
-                                    <div
-                                      class="progressbar-line-item bar-bg-4"
-                                    ></div>
-                                  </div>
-                                  <!-- End Skill Bar -->
-                                </div>
-                                <div class="bar-percent">3.6</div>
-                              </div>
-                            </div>
-                            <!-- end progress-item -->
-                          </div>
-                          <!-- end col-lg-6 -->
-                          <div class="col-lg-6">
-                            <div class="progress-item">
-                              <h3 class="progressbar-title">Facilities</h3>
-                              <div
-                                class="progressbar-content line-height-20 d-flex align-items-center justify-content-between"
-                              >
-                                <div class="flex-shrink-0 progressbar-box">
-                                  <div
-                                    class="progressbar-line"
-                                    data-percent="50%"
-                                  >
-                                    <div
-                                      class="progressbar-line-item bar-bg-5"
-                                    ></div>
-                                  </div>
-                                  <!-- End Skill Bar -->
-                                </div>
-                                <div class="bar-percent">2.6</div>
-                              </div>
-                            </div>
-                            <!-- end progress-item -->
-                          </div>
-                          <!-- end col-lg-6 -->
-                        </div>
-                        <!-- end row -->
-                      </div>
-                    </div>
-                    <!-- end col-lg-8 -->
-                  </div>
-                </div>
-              </div>
-              <!-- end single-content-item -->
-              <div class="section-block"></div>
-            </div>
-            <!-- end reviews -->
-            <div class="review-box">
-              <div class="single-content-item padding-top-40px">
-                <h3 class="title font-size-20">Showing 3 guest reviews</h3>
-                <div class="comments-list padding-top-50px">
-                  <div class="comment">
-                    <div class="comment-avatar">
-                      <img
-                        class="avatar__img"
-                        alt=""
-                        src="assets_site/images/team8.jpg"
-                      />
-                    </div>
-                    <div class="comment-body">
-                      <div class="meta-data">
-                        <h3 class="comment__author">Jenny Doe</h3>
-                        <div class="meta-data-inner d-flex">
-                          <span
-                            class="ratings d-flex align-items-center me-1"
-                          >
-                            <i class="la la-star"></i>
-                            <i class="la la-star"></i>
-                            <i class="la la-star"></i>
-                            <i class="la la-star"></i>
-                            <i class="la la-star"></i>
-                          </span>
-                          <p class="comment__date">April 5, 2019</p>
-                        </div>
-                      </div>
-                      <p class="comment-content">
-                        Lorem ipsum dolor sit amet, dolores mandamus
-                        moderatius ea ius, sed civibus vivendum imperdiet
-                        ei, amet tritani sea id. Ut veri diceret fierent
-                        mei, qui facilisi suavitate euripidis
-                      </p>
-                      <div
-                        class="comment-reply d-flex align-items-center justify-content-between"
-                      >
-                        <a
-                          class="theme-btn"
-                          href="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#replayPopupForm"
-                        >
-                          <span class="la la-mail-reply me-1"></span>Reply
-                        </a>
-                        <div class="reviews-reaction">
-                          <a href="#" class="comment-like"
-                            ><i class="la la-thumbs-up"></i> 13</a
-                          >
-                          <a href="#" class="comment-dislike"
-                            ><i class="la la-thumbs-down"></i> 2</a
-                          >
-                          <a href="#" class="comment-love"
-                            ><i class="la la-heart-o"></i> 5</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- end comments -->
-                  <div class="comment comment-reply-item">
-                    <div class="comment-avatar">
-                      <img
-                        class="avatar__img"
-                        alt=""
-                        src="assets_site/images/team9.jpg"
-                      />
-                    </div>
-                    <div class="comment-body">
-                      <div class="meta-data">
-                        <h3 class="comment__author">Jenny Doe</h3>
-                        <div class="meta-data-inner d-flex">
-                          <span
-                            class="ratings d-flex align-items-center me-1"
-                          >
-                            <i class="la la-star"></i>
-                            <i class="la la-star"></i>
-                            <i class="la la-star"></i>
-                            <i class="la la-star"></i>
-                            <i class="la la-star"></i>
-                          </span>
-                          <p class="comment__date">April 5, 2019</p>
-                        </div>
-                      </div>
-                      <p class="comment-content">
-                        Lorem ipsum dolor sit amet, dolores mandamus
-                        moderatius ea ius, sed civibus vivendum imperdiet
-                        ei, amet tritani sea id. Ut veri diceret fierent
-                        mei, qui facilisi suavitate euripidis
-                      </p>
-                      <div
-                        class="comment-reply d-flex align-items-center justify-content-between"
-                      >
-                        <a
-                          class="theme-btn"
-                          href="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#replayPopupForm"
-                        >
-                          <span class="la la-mail-reply me-1"></span>Reply
-                        </a>
-                        <div class="reviews-reaction">
-                          <a href="#" class="comment-like"
-                            ><i class="la la-thumbs-up"></i> 13</a
-                          >
-                          <a href="#" class="comment-dislike"
-                            ><i class="la la-thumbs-down"></i> 2</a
-                          >
-                          <a href="#" class="comment-love"
-                            ><i class="la la-heart-o"></i> 5</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- end comments -->
-                  <div class="comment">
-                    <div class="comment-avatar">
-                      <img
-                        class="avatar__img"
-                        alt=""
-                        src="assets_site/images/team10.jpg"
-                      />
-                    </div>
-                    <div class="comment-body">
-                      <div class="meta-data">
-                        <h3 class="comment__author">Jenny Doe</h3>
-                        <div class="meta-data-inner d-flex">
-                          <span
-                            class="ratings d-flex align-items-center me-1"
-                          >
-                            <i class="la la-star"></i>
-                            <i class="la la-star"></i>
-                            <i class="la la-star"></i>
-                            <i class="la la-star"></i>
-                            <i class="la la-star"></i>
-                          </span>
-                          <p class="comment__date">April 5, 2019</p>
-                        </div>
-                      </div>
-                      <p class="comment-content">
-                        Lorem ipsum dolor sit amet, dolores mandamus
-                        moderatius ea ius, sed civibus vivendum imperdiet
-                        ei, amet tritani sea id. Ut veri diceret fierent
-                        mei, qui facilisi suavitate euripidis
-                      </p>
-                      <div
-                        class="comment-reply d-flex align-items-center justify-content-between"
-                      >
-                        <a
-                          class="theme-btn"
-                          href="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#replayPopupForm"
-                        >
-                          <span class="la la-mail-reply me-1"></span>Reply
-                        </a>
-                        <div class="reviews-reaction">
-                          <a href="#" class="comment-like"
-                            ><i class="la la-thumbs-up"></i> 13</a
-                          >
-                          <a href="#" class="comment-dislike"
-                            ><i class="la la-thumbs-down"></i> 2</a
-                          >
-                          <a href="#" class="comment-love"
-                            ><i class="la la-heart-o"></i> 5</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- end comments -->
-                  <div class="text-center btn-box load-more">
-                    <button
-                      class="theme-btn theme-btn-small theme-btn-transparent"
-                      type="button"
-                    >
-                      Load More Review
+            
+            <!-- Calendrier inline (affiché/masqué) -->
+            <div x-show="showCalendar" x-cloak class="p-4 mb-6 bg-white rounded-lg shadow-md">
+                <h3 class="mb-2 text-lg font-semibold">Sélectionnez vos dates</h3>
+                <div id="inline-calendar" class="w-full"></div>
+                <div class="flex justify-end mt-4">
+                    <button 
+                        @click="applyDates()"
+                        class="px-4 py-2 text-white transition-colors bg-indigo-600 rounded-lg hover:bg-indigo-700">
+                        Appliquer
                     </button>
-                  </div>
                 </div>
-                <!-- end comments-list -->
-                <div class="comment-forum padding-top-40px">
-                  <div class="form-box">
-                    <div class="form-title-wrap">
-                      <h3 class="title">Write a Review</h3>
-                    </div>
-                    <!-- form-title-wrap -->
-                    <div class="form-content">
-                      <div class="p-2 rate-option">
-                        <div class="row">
-                          <div class="col-lg-4 responsive-column">
-                            <div class="rate-option-item">
-                              <label>Service</label>
-                              <div class="rate-stars-option">
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="lst1"
-                                  value="1"
-                                />
-                                <label for="lst1"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="lst2"
-                                  value="2"
-                                />
-                                <label for="lst2"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="lst3"
-                                  value="3"
-                                />
-                                <label for="lst3"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="lst4"
-                                  value="4"
-                                />
-                                <label for="lst4"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="lst5"
-                                  value="5"
-                                />
-                                <label for="lst5"></label>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- col-lg-4 -->
-                          <div class="col-lg-4 responsive-column">
-                            <div class="rate-option-item">
-                              <label>Location</label>
-                              <div class="rate-stars-option">
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="l1"
-                                  value="1"
-                                />
-                                <label for="l1"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="l2"
-                                  value="2"
-                                />
-                                <label for="l2"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="l3"
-                                  value="3"
-                                />
-                                <label for="l3"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="l4"
-                                  value="4"
-                                />
-                                <label for="l4"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="l5"
-                                  value="5"
-                                />
-                                <label for="l5"></label>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- col-lg-4 -->
-                          <div class="col-lg-4 responsive-column">
-                            <div class="rate-option-item">
-                              <label>Value for Money</label>
-                              <div class="rate-stars-option">
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="vm1"
-                                  value="1"
-                                />
-                                <label for="vm1"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="vm2"
-                                  value="2"
-                                />
-                                <label for="vm2"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="vm3"
-                                  value="3"
-                                />
-                                <label for="vm3"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="vm4"
-                                  value="4"
-                                />
-                                <label for="vm4"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="vm5"
-                                  value="5"
-                                />
-                                <label for="vm5"></label>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- col-lg-4 -->
-                          <div class="col-lg-4 responsive-column">
-                            <div class="rate-option-item">
-                              <label>Cleanliness</label>
-                              <div class="rate-stars-option">
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="cln1"
-                                  value="1"
-                                />
-                                <label for="cln1"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="cln2"
-                                  value="2"
-                                />
-                                <label for="cln2"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="cln3"
-                                  value="3"
-                                />
-                                <label for="cln3"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="cln4"
-                                  value="4"
-                                />
-                                <label for="cln4"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="cln5"
-                                  value="5"
-                                />
-                                <label for="cln5"></label>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- col-lg-4 -->
-                          <div class="col-lg-4 responsive-column">
-                            <div class="rate-option-item">
-                              <label>Facilities</label>
-                              <div class="rate-stars-option">
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="f1"
-                                  value="1"
-                                />
-                                <label for="f1"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="f2"
-                                  value="2"
-                                />
-                                <label for="f2"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="f3"
-                                  value="3"
-                                />
-                                <label for="f3"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="f4"
-                                  value="4"
-                                />
-                                <label for="f4"></label>
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="f5"
-                                  value="5"
-                                />
-                                <label for="f5"></label>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- col-lg-4 -->
-                        </div>
-                        <!-- end row -->
-                      </div>
-                      <!-- end rate-option -->
-                      <div class="contact-form-action">
-                        <form method="post">
-                          <div class="row">
-                            <div class="col-lg-6 responsive-column">
-                              <div class="input-box">
-                                <label class="label-text">Name</label>
-                                <div class="form-group">
-                                  <span class="la la-user form-icon"></span>
-                                  <input
-                                    class="form-control"
-                                    type="text"
-                                    name="text"
-                                    placeholder="Your name"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-lg-6 responsive-column">
-                              <div class="input-box">
-                                <label class="label-text">Email</label>
-                                <div class="form-group">
-                                  <span
-                                    class="la la-envelope-o form-icon"
-                                  ></span>
-                                  <input
-                                    class="form-control"
-                                    type="email"
-                                    name="email"
-                                    placeholder="Email address"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-lg-12">
-                              <div class="input-box">
-                                <label class="label-text">Message</label>
-                                <div class="form-group">
-                                  <span
-                                    class="la la-pencil form-icon"
-                                  ></span>
-                                  <textarea
-                                    class="message-control form-control"
-                                    name="message"
-                                    placeholder="Write message"
-                                  ></textarea>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-lg-12">
-                              <div class="btn-box">
-                                <button type="button" class="theme-btn">
-                                  Leave a Review
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                      <!-- end contact-form-action -->
-                    </div>
-                    <!-- end form-content -->
-                  </div>
-                  <!-- end form-box -->
-                </div>
-                <!-- end comment-forum -->
-              </div>
-              <!-- end single-content-item -->
-            </div> --}}
-            <!-- end review-box -->
-          </div>
-          <!-- end single-content-wrap -->
-        </div>
-        <!-- end col-lg-8 -->
-        <div class="col-lg-4">
-          <div class="mb-0 sidebar single-content-sidebar">
-            <div class="sidebar-widget single-content-widget">
-              <h3 class="title stroke-shape">Your Reservation</h3>
-              <div class="sidebar-widget-item">
-                <div class="contact-form-action">
-                  <form action="#">
-                    <div class="input-box">
-                      <label class="label-text">Check-in</label>
-                      <div class="form-group">
-                        <span class="la la-calendar form-icon"></span>
-                        <input
-                          class="date-range form-control"
-                          type="text"
-                          name="daterange-single"
-                        />
-                      </div>
-                    </div>
-                    <div class="input-box">
-                      <label class="label-text">Check-out</label>
-                      <div class="form-group">
-                        <span class="la la-calendar form-icon"></span>
-                        <input
-                          class="date-range form-control"
-                          type="text"
-                          name="daterange-single"
-                        />
-                      </div>
-                    </div>
-                    {{-- <div class="input-box">
-                      <label class="label-text">Rooms</label>
-                      <div class="form-group select2-container-wrapper">
-                        <div class="w-auto select-contain">
-                          <select class="select-contain-select">
-                            <option value="0">Select Room</option>
-                            <option value="1" selected>1 Room</option>
-                            <option value="2">2 Rooms</option>
-                            <option value="3">3 Rooms</option>
-                            <option value="4">4 Rooms</option>
-                            <option value="5">5 Rooms</option>
-                            <option value="6">6 Rooms</option>
-                            <option value="7">7 Rooms</option>
-                            <option value="8">8 Rooms</option>
-                            <option value="9">9 Rooms</option>
-                            <option value="10">10 Rooms</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div> --}}
-                    <div class="btn-box">
-                      <button type="submit" class="mb-2 text-center theme-btn w-100">Book Now</button>
-                      
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <!-- end sidebar-widget-item -->
-              <div class="sidebar-widget-item">
-                
-                <!-- end qty-box -->
-                
-                <!-- end qty-box -->
-                
-                <!-- end qty-box -->
-              </div>
-              <!-- end sidebar-widget-item -->
-              {{-- <div class="py-4 sidebar-widget-item">
-                <h3 class="title stroke-shape">Extra Services</h3>
-                <div class="extra-service-wrap">
-                  <form
-                    action="#"
-                    method="post"
-                    class="extraServiceForm"
-                    id="extraServiceForm"
-                  >
-                    <div id="checkboxContainPrice">
-                      <div class="custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          name="cleaning"
-                          id="cleaningChb"
-                          value="15.00"
-                        />
-                        <label
-                          for="cleaningChb"
-                          class="d-flex justify-content-between align-items-center"
-                          >Cleaning Fee
-                          <span class="text-black font-weight-regular"
-                            >$15</span
-                          ></label
-                        >
-                      </div>
-                      <div class="custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          name="airport-pickup"
-                          id="airportPickupChb"
-                          value="20.00"
-                        />
-                        <label
-                          for="airportPickupChb"
-                          class="d-flex justify-content-between align-items-center"
-                          >Airport pickup
-                          <span class="text-black font-weight-regular"
-                            >$20</span
-                          ></label
-                        >
-                      </div>
-                      <div class="custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          name="breakfast"
-                          id="breakfastChb"
-                          value="10.00"
-                        />
-                        <label
-                          for="breakfastChb"
-                          class="d-flex justify-content-between align-items-center"
-                          >Breakfast
-                          <span class="text-black font-weight-regular"
-                            >$10/ per person</span
-                          ></label
-                        >
-                      </div>
-                      <div class="custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          name="parking"
-                          id="parkingChb"
-                          value="5.00"
-                        />
-                        <label
-                          for="parkingChb"
-                          class="d-flex justify-content-between align-items-center"
-                          >Parking
-                          <span class="text-black font-weight-regular"
-                            >$5/ per night</span
-                          ></label
-                        >
-                      </div>
-                    </div>
-                    <div class="pt-3 total-price">
-                      <p class="text-black">Your Price</p>
-                      <p class="d-flex align-items-center">
-                        <span class="text-black font-size-17">$</span>
-                        <input
-                          type="text"
-                          name="total"
-                          class="num"
-                          value="80.00"
-                          readonly="readonly"
-                        /><span>/ per room</span>
-                      </p>
-                    </div>
-                  </form>
-                </div>
-              </div> --}}
-              <!-- end sidebar-widget-item -->
-              {{-- <div class="btn-box">
-                <a href="cart.html" class="mb-2 text-center theme-btn w-100"
-                  >Book Now</a
-                >
-              </div> --}}
             </div>
-            <!-- end sidebar-widget -->
-            {{-- <div class="sidebar-widget single-content-widget">
-              <h3 class="title stroke-shape">Why Book With Us?</h3>
-              <div class="sidebar-list">
-                <ul class="list-items">
-                  <li>
-                    <i class="la la-dollar icon-element me-2"></i>No-hassle
-                    best price guarantee
-                  </li>
-                  <li>
-                    <i class="la la-microphone icon-element me-2"></i
-                    >Customer care available 24/7
-                  </li>
-                  <li>
-                    <i class="la la-thumbs-up icon-element me-2"></i
-                    >Hand-picked Tours & Activities
-                  </li>
-                  <li>
-                    <i class="la la-file-text icon-element me-2"></i>Free
-                    Travel Insureance
-                  </li>
-                </ul>
-              </div>
-              <!-- end sidebar-list -->
+            
+            <!-- Galerie d'images (desktop) -->
+            <div class="hidden grid-cols-4 gap-2 mb-8 md:grid">
+                @php
+                    // Les champs d'images
+                    $imageFields = ['photo', 'photo1', 'photo2', 'photo3', 'photo4'];
+                    
+                    // Filtrer pour ne garder que les champs d'images remplis
+                    $images = collect($imageFields)->filter(function($field) use ($eventHall) {
+                        return !empty($eventHall->$field);
+                    });
+                    
+                    $imagesCount = $images->count();
+                @endphp
+                
+                @if($imagesCount === 1)
+                    <!-- Si seulement la photo principale est définie -->
+                    <div class="col-span-4">
+                        <img src="{{asset('storage/' . $eventHall->photo)}}" alt="{{ $eventHall->nom_salle }}" class="object-cover w-full h-full rounded-lg">
+                    </div>
+                @else
+                    <!-- Si plusieurs photos sont définies -->
+                    <div class="col-span-2 row-span-2">
+                        <img src="{{asset('storage/' . $eventHall->photo)}}" alt="{{ $eventHall->nom_salle }}" class="object-cover w-full h-full rounded-lg">
+                    </div>
+                    @foreach($images->slice(1)->values() as $index => $image)
+                        <div class="">
+                            <img src="{{asset('storage/' . $eventHall->$image)}}" alt="{{ $eventHall->nom_salle }} - Vue {{ $index + 1 }}" class="object-cover w-full h-40 rounded-lg">
+                        </div>
+                    @endforeach
+                @endif
             </div>
-            <!-- end sidebar-widget -->
-            <div class="sidebar-widget single-content-widget">
-              <h3 class="title stroke-shape">Get a Question?</h3>
-              <p class="font-size-14 line-height-24">
-                Do not hesitate to give us a call. We are an expert team and
-                we are happy to talk to you.
-              </p>
-              <div class="pt-3 sidebar-list">
-                <ul class="list-items">
-                  <li>
-                    <i class="la la-phone icon-element me-2"></i
-                    ><a href="#">+ 61 23 8093 3400</a>
-                  </li>
-                  <li>
-                    <i class="la la-envelope icon-element me-2"></i
-                    ><a href="mailto:info@trizen.com">info@trizen.com</a>
-                  </li>
-                </ul>
-              </div>
-              <!-- end sidebar-list -->
-            </div> --}}
-            <!-- end sidebar-widget -->
-          </div>
-          <!-- end sidebar -->
+            
+            <!-- Carrousel d'images (mobile) -->
+            <div class="mb-8 md:hidden h-[250px]">
+                <div class="overflow-hidden rounded-lg swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="{{asset('storage/' . $eventHall->photo)}}" alt="{{ $eventHall->nom_salle }}" class="object-cover w-full h-64">
+                        </div>
+                        <div class="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1498&q=80" alt="Espace cocktail" class="object-cover w-full h-64">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1498&q=80" alt="Espace dîner" class="object-cover w-full h-64">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1498&q=80" alt="Scène" class="object-cover w-full h-64">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1498&q=80" alt="Décoration" class="object-cover w-full h-64">
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+            
+            <!-- Onglets interactifs -->
+            <div class="mb-8">
+                <div class="flex border-b border-gray-200">
+                    <button 
+                        @click="activeTab = 'description'" 
+                        :class="{'border-b-2 border-indigo-600 text-indigo-600': activeTab === 'description', 'text-gray-500': activeTab !== 'description'}"
+                        class="px-6 py-4 font-medium">
+                        Description
+                    </button>
+                    <button 
+                        @click="activeTab = 'equipements'" 
+                        :class="{'border-b-2 border-indigo-600 text-indigo-600': activeTab === 'equipements', 'text-gray-500': activeTab !== 'equipements'}"
+                        class="px-6 py-4 font-medium">
+                        Équipements
+                    </button>
+                    <button 
+                        @click="activeTab = 'reglement'" 
+                        :class="{'border-b-2 border-indigo-600 text-indigo-600': activeTab === 'reglement', 'text-gray-500': activeTab !== 'reglement'}"
+                        class="px-6 py-4 font-medium">
+                        Règlement
+                    </button>
+                </div>
+                
+                <!-- Contenu des onglets -->
+                <div class="py-6">
+                    <!-- Description -->
+                    <div x-show="activeTab === 'description'" class="space-y-4">
+                        <p class="text-gray-700">
+                            @if(!empty($eventHall->description))
+                            <p>{{ $eventHall->description }}</p>
+                        @else
+                            Aucune description disponible pour cette salle
+                        @endif
+                        </p>
+                       {{--  <p class="text-gray-700">
+                            La salle principale offre un espace modulable de 300m² avec de hauts plafonds et de grandes fenêtres laissant entrer la lumière naturelle. Un espace cocktail séparé de 100m² est également disponible pour vos réceptions.
+                        </p>
+                        <p class="text-gray-700">
+                            Notre équipe professionnelle est à votre disposition pour vous aider à organiser votre événement sur mesure et répondre à toutes vos exigences.
+                        </p> --}}
+                    </div>
+                    
+                    <!-- Équipements -->
+                    <div x-show="activeTab === 'equipements'" class="space-y-4" x-cloak>
+                        <ul class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                Système de sonorisation professionnel
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                Éclairage scénique
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                Vidéoprojecteur et écran
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                Wi-Fi haut débit
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                Cuisine équipée pour traiteur
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                Vestiaire
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                Parking privé (30 places)
+                            </li>
+                            <li class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                Accès PMR
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Règlement -->
+                    <div x-show="activeTab === 'reglement'" class="space-y-4" x-cloak>
+                        <h3 class="text-lg font-semibold">Conditions de réservation</h3>
+                        <ul class="pl-5 space-y-2 text-gray-700 list-disc">
+                            <li>Acompte de 30% à la réservation, non remboursable</li>
+                            <li>Solde à régler 30 jours avant l'événement</li>
+                            <li>Caution de 2000€ (non encaissée) à déposer le jour de l'événement</li>
+                            <li>Annulation gratuite jusqu'à 60 jours avant l'événement (hors acompte)</li>
+                        </ul>
+                        
+                        <h3 class="mt-6 text-lg font-semibold">Horaires</h3>
+                        <ul class="pl-5 space-y-2 text-gray-700 list-disc">
+                            <li>Location de 8h à 2h du matin maximum</li>
+                            <li>Installation possible dès 8h le jour de l'événement</li>
+                            <li>Démontage à terminer avant 10h le lendemain</li>
+                        </ul>
+                        
+                        <h3 class="mt-6 text-lg font-semibold">Restrictions</h3>
+                        <ul class="pl-5 space-y-2 text-gray-700 list-disc">
+                            <li>Musique à volume modéré après minuit</li>
+                            <li>Interdiction de fumer à l'intérieur</li>
+                            <li>Confettis et paillettes interdits</li>
+                            <li>Animaux non admis (sauf chiens guides)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Carte Google Maps -->
+            <div class="mb-8">
+                <h3 class="mb-4 text-xl font-semibold">Localisation</h3>
+                <div class="w-full overflow-hidden rounded-lg h-80">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9916256937604!2d2.292292615509614!3d48.85837007928746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e2964e34e2d%3A0x8ddca9ee380ef7e0!2sTour%20Eiffel!5e0!3m2!1sfr!2sfr!4v1651245814268!5m2!1sfr!2sfr" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
         </div>
-        <!-- end col-lg-4 -->
-      </div>
-      <!-- end row -->
-    </div>
-    <!-- end container -->
-  </div>
-  <!-- end single-content-box -->
-</section>
-<!-- end tour-detail-area -->
-<!-- ================================
-END TOUR DETAIL AREA
-================================= -->
-
-<div class="section-block"></div>
-
-<!-- ================================
-START RELATE TOUR AREA
-================================= -->
-<section class="related-tour-area section--padding">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="text-center section-heading">
-          <h2 class="sec__title">Autres salles de fetes</h2>
-          <p class="sec__desc">Peut également vous intéresser</p>
-        </div>
-        <!-- end section-heading -->
-      </div>
-      <!-- end col-lg-12 -->
-    </div>
-    <!-- end row -->
-    <div class="row padding-top-50px">
-      @foreach ($event_Halls as $event_Hall)
         
-      <div class="col-lg-6">
-        <div class="card-item room-card">
-          <div class="card-img-carousel carousel-action carousel--action">
-            <div class="card-img">
-              <a href="room-details.html" class="d-block">
-                <img src="assets_site/images/img5.jpg" alt="hotel-img" />
-              </a>
-            </div>
-            <div class="card-img">
-              <a href="room-details.html" class="d-block">
-                <img src="assets_site/images/img29.jpg" alt="hotel-img" />
-              </a>
-            </div>
-            <div class="card-img">
-              <a href="room-details.html" class="d-block">
-                <img src="assets_site/images/img30.jpg" alt="hotel-img" />
-              </a>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="pb-2 card-price">
-              <p>
-                <span class="price__from">From</span>
-                <span class="price__num">$88.00</span>
-              </p>
-            </div>
-            <h3 class="card-title font-size-26">
-              <a href="room-details.html">Premium Lake View Room</a>
-            </h3>
-            <p class="pt-2 card-text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Aperiam asperiores commodi deleniti hic inventore laboriosam
-              laborum molestias, non odit quaerat! Aperiam culpa facilis
-              fuga impedit.
-            </p>
-            <div class="pt-3 pb-4 card-attributes">
-              <ul class="d-flex align-items-center">
-                <li class="d-flex align-items-center">
-                  <i class="la la-bed"></i><span>2 Beds</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <i class="la la-building"></i
-                  ><span>24 ft<sup>2</sup></span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <i class="la la-bathtub"></i><span>2 Bathrooms</span>
-                </li>
-              </ul>
-            </div>
-            <div class="card-btn d-flex align-items-center">
-              <div class="btn-box">
-                <a
-                  href="room-details.html"
-                  class="theme-btn theme-btn-transparent"
-                  >Book Now</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- end card-item -->
-      </div>
-      @endforeach
-      <!-- end col-lg-6 -->
-      {{-- <div class="col-lg-6">
-        <div class="card-item room-card">
-          <div class="card-img-carousel carousel-action carousel--action">
-            <div class="card-img">
-              <a href="room-details.html" class="d-block">
-                <img src="assets_site/images/img31.jpg" alt="hotel-img" />
-              </a>
-            </div>
-            <div class="card-img">
-              <a href="room-details.html" class="d-block">
-                <img src="assets_site/images/img32.jpg" alt="hotel-img" />
-              </a>
-            </div>
-            <div class="card-img">
-              <a href="room-details.html" class="d-block">
-                <img src="assets_site/images/img33.jpg" alt="hotel-img" />
-              </a>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="pb-2 card-price">
-              <p>
-                <span class="price__from">From</span>
-                <span class="price__num">$45.00</span>
-              </p>
-            </div>
-            <h3 class="card-title font-size-26">
-              <a href="room-details.html">Standard 2 Bed Male Dorm</a>
-            </h3>
-            <p class="pt-2 card-text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Aperiam asperiores commodi deleniti hic inventore laboriosam
-              laborum molestias, non odit quaerat! Aperiam culpa facilis
-              fuga impedit.
-            </p>
-            <div class="pt-3 pb-4 card-attributes">
-              <ul class="d-flex align-items-center">
-                <li class="d-flex align-items-center">
-                  <i class="la la-bed"></i><span>2 Beds</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <i class="la la-building"></i
-                  ><span>24 ft<sup>2</sup></span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <i class="la la-bathtub"></i><span>2 Bathrooms</span>
-                </li>
-              </ul>
-            </div>
-            <div class="card-btn d-flex align-items-center">
-              <div class="btn-box">
-                <a
-                  href="room-details.html"
-                  class="theme-btn theme-btn-transparent"
-                  >Book Now</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- end card-item -->
-      </div> --}}
-    
-      <!-- end col-lg-6 -->
-    </div>
-    <!-- end row -->
-  </div>
-  <!-- end container -->
-</section>
-<!-- end related-tour-area -->
-<!-- ================================
-END RELATE TOUR AREA
-================================= -->
-
-<!-- ================================
-START CTA AREA
-================================= -->
-<section
-  class="cta-area subscriber-area section-bg-2 padding-top-60px padding-bottom-60px"
->
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-7">
-        <div class="section-heading">
-          <p class="pb-1 sec__desc text-white-50">Newsletter sign up</p>
-          <h2 class="text-white sec__title font-size-30">
-            Subscribe to Get Special Offers
-          </h2>
-        </div>
-        <!-- end section-heading -->
-      </div>
-      <!-- end col-lg-7 -->
-      <div class="col-lg-5">
-        <div class="subscriber-box">
-          <div class="contact-form-action">
-            <form action="#">
-              <div class="input-box">
-                <label class="text-white label-text"
-                  >Enter email address</label
-                >
-                <div class="mb-0 form-group">
-                  <span class="la la-envelope form-icon"></span>
-                  <input
-                    class="form-control"
-                    type="email"
-                    name="email"
-                    placeholder="Email address"
-                  />
-                  <button
-                    class="theme-btn theme-btn-small submit-btn"
-                    type="submit"
-                  >
-                    Subscribe
-                  </button>
-                  <span class="pt-1 font-size-14 text-white-50"
-                    ><i class="la la-lock me-1"></i>Don't worry your
-                    information is safe with us.</span
-                  >
+        <!-- Section tarification (partie droite) -->
+        <div class="w-full text-black lg:w-1/3">
+            <div class="sticky top-8">
+                <div class="p-6 border border-gray-200 rounded-lg shadow-md bg-card">
+                    <h2 class="mb-4 text-2xl font-bold text-black">Réservez cette salle</h2>
+                    
+                    <!-- Prix et dates -->
+                    <div class="mb-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="">Prix par jour</span>
+                            <span class="text-xl font-semibold text-primary">{{ number_format($eventHall->prix, 0, ',', ' ') }} <span>FCFA</span></span>
+                        </div>
+                        
+                        <div class="pt-4 mt-4 border-t border-gray-200">
+                            <div class="flex justify-between mb-2">
+                                <div>
+                                    <span class="text-black">Dates</span>
+                                    <div x-show="!startDate && !endDate" class="text-sm text-muted-foreground">Sélectionnez vos dates</div>
+                                    <div x-show="startDate && endDate" class="text-sm font-medium">
+                                        <span x-text="formatDate(startDate)"></span> - <span x-text="formatDate(endDate)"></span>
+                                    </div>
+                                </div>
+                                <button 
+                                    @click="toggleCalendarView()"
+                                    class="text-sm text-muted-foreground">
+                                    Modifier
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Calcul du prix -->
+                        <div x-show="startDate && endDate" class="pt-4 mt-4 border-t border-gray-200">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">
+                                    <span x-text="calculateNights()"></span> jour<span x-show="calculateNights() > 1">s</span> x {{ number_format($eventHall->prix, 0, ',', ' ') }} <span>FCFA</span>
+                                </span>
+                                <span class="font-semibold text-primary" x-text="formatPrice(calculateNights() * {{ $eventHall->prix }})"></span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="t">Frais de service (10%)</span>
+                                <span class="font-semibold text-primary" x-text="formatPrice(calculateNights() * {{ $eventHall->prix }} * 0.1)"></span>
+                            </div>
+                            <div class="flex justify-between pt-4 mt-4 text-lg font-bold border-t border-gray-200">
+                                <span>Total</span>
+                                <span class="text-xl text-primary" x-text="formatPrice(calculateNights() * {{ $eventHall->prix }} * 1.1)"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bouton de réservation -->
+                    <button 
+                        @click="openReservationModal()"
+                        :disabled="!startDate || !endDate"
+                        :class="{'bg-primary hover:bg-primary/80': startDate && endDate, 'bg-muted-foreground cursor-not-allowed': !startDate || !endDate}"
+                        class="w-full px-4 py-3 font-medium text-white transition-colors rounded-lg">
+                        Réserver maintenant
+                    </button>
+                   
                 </div>
-              </div>
-            </form>
-          </div>
+            </div>
         </div>
-        <!-- end section-heading -->
-      </div>
-      <!-- end col-lg-5 -->
     </div>
-    <!-- end row -->
-  </div>
-  <!-- end container -->
-</section>
-<!-- end cta-area -->
-<!-- ================================
-END CTA AREA
-================================= -->
-@endsection
+    
+    <!-- Modale de réservation -->
+    <div 
+        x-show="showReservationModal" 
+        x-cloak
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+        <div 
+            @click.away="showReservationModal = false"
+            class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Finaliser votre réservation</h2>
+                    <button @click="showReservationModal = false" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <form @submit.prevent="submitReservation()" class="space-y-6">
+                    <!-- Informations personnelles -->
+                    <div class="space-y-4">
+                        <div>
+                            <label for="name" class="block mb-1 text-sm font-medium text-gray-700">Nom complet</label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                x-model="form.name" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                                required>
+                        </div>
+                        <div>
+                            <label for="email" class="block mb-1 text-sm font-medium text-gray-700">Email</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                x-model="form.email" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                                required>
+                        </div>
+                        <div>
+                            <label for="phone" class="block mb-1 text-sm font-medium text-gray-700">Téléphone</label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                x-model="form.phone" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                                required>
+                        </div>
+                        <div>
+                            <label for="message" class="block mb-1 text-sm font-medium text-gray-700">Message (optionnel)</label>
+                            <textarea 
+                                id="message" 
+                                x-model="form.message" 
+                                rows="3" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Récapitulatif de la réservation -->
+                    <div class="p-4 rounded-lg bg-gray-50">
+                        <h3 class="mb-3 text-lg font-semibold">Récapitulatif</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Salle</span>
+                                <span class="font-medium">Le Grand Palais</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Dates</span>
+                                <span class="font-medium">
+                                    <span x-text="formatDate(startDate)"></span> - <span x-text="formatDate(endDate)"></span>
+                                </span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Durée</span>
+                                <span class="font-medium">
+                                    <span x-text="calculateNights()"></span> jour<span x-show="calculateNights() > 1">s</span>
+                                </span>
+                            </div>
+                            <div class="flex justify-between pt-2 mt-2 border-t border-gray-200">
+                                <span class="text-gray-600">Sous-total</span>
+                                <span class="font-medium" x-text="formatPrice(calculateNights() * 2500)"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Frais de service (10%)</span>
+                                <span class="font-medium" x-text="formatPrice(calculateNights() * 2500 * 0.1)"></span>
+                            </div>
+                            <div class="flex justify-between pt-2 mt-2 font-bold border-t border-gray-200">
+                                <span>Total</span>
+                                <span x-text="formatPrice(calculateNights() * 2500 * 1.1)"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Conditions et politique d'annulation -->
+                    <div class="text-sm text-gray-600">
+                        <p class="mb-2">En cliquant sur "Confirmer la réservation", vous acceptez les conditions générales et la politique d'annulation.</p>
+                        <p>Un acompte de 30% (<span x-text="formatPrice(calculateNights() * 2500 * 1.1 * 0.3)"></span>) sera prélevé immédiatement pour confirmer votre ré  * 2500 * 1.1 * 0.3)"></span>) sera prélevé immédiatement pour confirmer votre réservation.</p>
+                    </div>
+                    
+                    <!-- Bouton de confirmation -->
+                    <button 
+                        type="submit"
+                        class="w-full px-4 py-3 font-medium text-white transition-colors bg-indigo-600 rounded-lg hover:bg-indigo-700">
+                        Confirmer la réservation
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modale de confirmation -->
+    <div 
+        x-show="showConfirmationModal" 
+        x-cloak
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+        <div class="w-full max-w-md p-6 text-center bg-white rounded-lg shadow-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mx-auto mb-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <h2 class="mb-2 text-2xl font-bold text-gray-900">Réservation confirmée !</h2>
+            <p class="mb-6 text-gray-600">
+                Merci pour votre réservation. Un email de confirmation a été envoyé à <span x-text="form.email"></span>.
+            </p>
+            <button 
+                @click="showConfirmationModal = false"
+                class="w-full px-4 py-3 font-medium text-white transition-colors bg-indigo-600 rounded-lg hover:bg-indigo-700">
+                Fermer
+            </button>
+        </div>
+    </div>
+</div>
 
- 
+<script>
+    // Initialisation du carrousel pour mobile
+    document.addEventListener('DOMContentLoaded', function() {
+        const swiper = new Swiper(".mySwiper", {
+            pagination: {
+                el: ".swiper-pagination",
+                dynamicBullets: true,
+            },
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+        });
+    });
+    
+    // Fonction principale Alpine.js
+    function roomDetails() {
+        return {
+            // Variables d'état
+            activeTab: 'description',
+            showCalendar: false,
+            showReservationModal: false,
+            showConfirmationModal: false,
+            startDate: null,
+            endDate: null,
+            calendar: null,
+            form: {
+                name: '',
+                email: '',
+                phone: '',
+                message: ''
+            },
+            
+            // Initialisation
+            init() {
+                this.$nextTick(() => {
+                    this.initCalendar();
+                });
+            },
+            
+            // Initialisation du calendrier Flatpickr
+            initCalendar() {
+                this.calendar = flatpickr("#inline-calendar", {
+                    inline: true,
+                    mode: "range",
+                    minDate: "today",
+                    locale: "fr",
+                    dateFormat: "Y-m-d",
+                    disable: [
+                        // Dates déjà réservées (exemple)
+                        "2023-12-24", "2023-12-25", "2023-12-31", "2024-01-01"
+                    ],
+                    onChange: (selectedDates) => {
+                        if (selectedDates.length === 2) {
+                            this.startDate = selectedDates[0];
+                            this.endDate = selectedDates[1];
+                        }
+                    }
+                });
+            },
+            
+            // Afficher/masquer le calendrier
+            toggleCalendarView() {
+                this.showCalendar = !this.showCalendar;
+            },
+            
+            // Appliquer les dates sélectionnées
+            applyDates() {
+                this.showCalendar = false;
+            },
+            
+            // Calculer le nombre de nuits
+            calculateNights() {
+                if (!this.startDate || !this.endDate) return 0;
+                
+                const start = new Date(this.startDate);
+                const end = new Date(this.endDate);
+                const diffTime = Math.abs(end - start);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 car on compte le jour d'arrivée
+                
+                return diffDays;
+            },
+            
+            // Formater le prix
+            formatPrice(price) {
+                return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XAF' }).format(price);
+            },
+            
+            // Formater la date
+            formatDate(date) {
+                if (!date) return '';
+                return new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(date));
+            },
+            
+            // Ouvrir la modale de réservation
+            openReservationModal() {
+                if (this.startDate && this.endDate) {
+                    this.showReservationModal = true;
+                }
+            },
+            
+            // Soumettre la réservation
+            submitReservation() {
+                // Ici, vous pourriez envoyer les données à votre backend
+                console.log('Réservation soumise:', {
+                    dates: {
+                        start: this.startDate,
+                        end: this.endDate,
+                        nights: this.calculateNights()
+                    },
+                    total: this.calculateNights() * 2500 * 1.1,
+                    user: this.form
+                });
+                
+                // Fermer la modale de réservation et afficher la confirmation
+                this.showReservationModal = false;
+                this.showConfirmationModal = true;
+            }
+        };
+    }
+</script>
+
+@endsection

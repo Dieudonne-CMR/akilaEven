@@ -1,7 +1,10 @@
 <?php
 
 return [
-
+  /*   'providers' => [
+    // ...
+    App\Providers\ViewServiceProvider::class,
+    ], */
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -13,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'AkilaEven'),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,5 +125,10 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+   /*  'providers' => [
+    // …
+    App\Providers\AppServiceProvider::class,
+    ], */
+    
 
 ];

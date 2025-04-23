@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     @vite('resources/css/app.css')
-    <title>AkilaEven - Réservation de salles de fêtes et chambres d'hôtel</title>
+    <title>AkilaEven - Détails salle de fête</title>
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.png" />
 
@@ -17,9 +17,12 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{asset('assets_site/css/jquery-ui.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets_site/css/style.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets_site/styles.css')}}" />
+
     <!-- Template CSS Files -->
-    <link rel="stylesheet" href="{{asset('assets_site/css/bootstrap.min.css')}}" />
+ 
     <link rel="stylesheet" href="{{asset('assets_site/css/select2.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/line-awesome.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/owl.carousel.min.css')}}" />
@@ -27,15 +30,15 @@
     <link rel="stylesheet" href="{{asset('assets_site/css/jquery.fancybox.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/daterangepicker.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/animated-headline.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets_site/css/jquery-ui.css')}}" />
+   
     <link rel="stylesheet" href="{{asset('assets_site/css/flag-icon.min.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets_site/css/style.css')}}" />
+  
     <link rel="stylesheet" href="{{asset('css/social-media.css')}}" />
 
     <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
-   
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
       .img-icone {width: 1.5rem; margin: 3px;}
     </style>
@@ -70,8 +73,8 @@
  <!--  <script src="{{asset('assets_site/js/jquery-3.4.1.min.js')}}"></script> -->
   <script src="{{asset('assets_site/js/jquery-ui.js')}}"></script>
 
-  <script src="{{asset('assets_site/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{asset('assets_site/js/select2.min.js')}}"></script>
+{{--   <script src="{{asset('assets_site/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{asset('assets_site/js/select2.min.js')}}"></script> --}}
 
   <script src="{{asset('assets_site/js/moment.min.js')}}"></script>
   <script src="{{asset('assets_site/js/daterangepicker.js')}}"></script>
