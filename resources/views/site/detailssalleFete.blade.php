@@ -124,26 +124,14 @@ START TOUR DETAIL AREA
               <div class="pb-4 single-content-item">
                 <h3 class="title font-size-26">{{$eventHall->nom_salle}}</h3>
                 <p class="pt-2">
-<<<<<<< HEAD
+
                   {{-- <span
                     class="badge text-bg-warning text-white font-size-16"
-=======
-                  <span
-                    class="text-white badge text-bg-warning font-size-16"
->>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
                     >4.6</span
                   > --}}
                   <span>({{$eventHall->views}} vues )</span>
                 </p>
               </div>
-
-<<<<<<< HEAD
-              <h3 class="title font-size-15 font-weight-medium pb-3">
-                Informations
-=======
-              <h3 class="pb-3 title font-size-15 font-weight-medium">
-                House Rules
->>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
               </h3>
               <div class="container">
                 <div class="row">
@@ -1544,13 +1532,9 @@ START RELATE TOUR AREA
 
           </div>
           <div class="card-body">
-<<<<<<< HEAD
+
             <div class="card-price pb-2">
               {{-- <p>
-=======
-            <div class="pb-2 card-price">
-              <p>
->>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
                 <span class="price__from">From</span>
                 <span class="price__num">{{$event_Hall->prix}}</span>
               </p> --}}
@@ -1558,22 +1542,11 @@ START RELATE TOUR AREA
             <h3 class="card-title font-size-26">
               <a href="{{route('site.detailSallesfetes', $event_Hall->id)}}">{{$event_Hall->nom_salle}}</a>
             </h3>
-<<<<<<< HEAD
             <p class="card-text pt-2">
               {{Str::limit(strip_tags($event_Hall->description_salle), 100)}}
             </p>
             <div class="card-attributes pt-3 pb-4">
               {{-- <ul class="d-flex align-items-center">
-=======
-            <p class="pt-2 card-text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Aperiam asperiores commodi deleniti hic inventore laboriosam
-              laborum molestias, non odit quaerat! Aperiam culpa facilis
-              fuga impedit.
-            </p>
-            <div class="pt-3 pb-4 card-attributes">
-              <ul class="d-flex align-items-center">
->>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
                 <li class="d-flex align-items-center">
                   <i class="la la-bed"></i><span>2 Beds</span>
                 </li>

@@ -3,13 +3,8 @@
 <!-- ================================
 START HERO-WRAPPER AREA
 ================================= -->
-<<<<<<< HEAD
 <section class="hero-wrapper hero-wrapper2  padding-bottom-80px">
   <div class="hero-box pb-0">
-=======
-<section class="hero-wrapper hero-wrapper2">
-  <div class="pb-0 hero-box">
->>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
     <div id="fullscreen-slide-contain">
       <ul class="slides-container">
         <li><img src="assets_site/images/hero-bg2.jpg" alt="" /></li>
@@ -25,12 +20,8 @@ START HERO-WRAPPER AREA
             <div class="section-heading">
               <p class="pb-2 sec__desc">Partout au cameroun</p>
               <h2 class="sec__title">
-<<<<<<< HEAD
-                Trouver une salle des fêtes <br />
-                Et d'autres salles pour vos évènements !
-=======
+
               Trouvez l'espace idéal pour tous vos événements            
->>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
               </h2>
               <p style="color: white;font-size: 20px;">
             Salles de fêtes, chambres d'hôtel et espaces de réception <br /> pour vos mariages, séminaires et célébrations.
@@ -462,36 +453,18 @@ START ABOUT AREA
       <div class="col-lg-6">
         <div class="about-content pe-5">
           <div class="section-heading">
-<<<<<<< HEAD
             <h4 class="font-size-16 pb-2">A propos</h4>
             <h2 class="sec__title">Un Mot sur Nous !</h2>
             <p class="sec__desc pt-4 pb-2">
               Akila Even est une agence événementielle qui facilite l’organisation d’événements au Cameroun. Forte de plus de cinq ans d’expérience, elle répond aux défis liés à la recherche de salles adaptées en termes de budget, emplacement et capacité, garantissant ainsi des célébrations réussies.
-=======
-            <h4 class="pb-2 font-size-16">Our Story</h4>
-            <h2 class="sec__title">Atmosphere and Design</h2>
-            <p class="pt-4 pb-2 sec__desc">
-              It is a long established fact that a reader will be distracted
-              by the readable content of a page when looking at its layout.
-              The point of using Lorem Ipsum is that it has a more-or-less
-              normal distribution of letters
-            </p>
-            <p class="sec__desc">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. A
-              accusamus amet consectetur ipsa officia. Doloremque error
-              porro sit soluta totam! A iste nobis vel voluptatem!
->>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
             </p>
             {{-- <p class="sec__desc">
             
             </p> --}}
           </div>
           <!-- end section-heading -->
-<<<<<<< HEAD
           {{-- <div class="btn-box pt-4">
-=======
           <div class="pt-4 btn-box">
->>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
             <a href="about.html" class="theme-btn"
               >Read More <i class="la la-arrow-right ms-1"></i
             ></a>
@@ -587,14 +560,9 @@ END ROOM TYPE AREA
 <!-- ================================
 START HOTEL AREA
 ================================= -->
-<<<<<<< HEAD
+
 {{-- <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> --}}
 <section class="hotel-area section-bg padding-top-100px padding-bottom-200px overflow-hidden">
-=======
-<section
-  class="overflow-hidden hotel-area section-bg padding-top-100px padding-bottom-200px"
->
->>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -612,8 +580,6 @@ START HOTEL AREA
       <div class="col-lg-12">
         <div class="hotel-card-wrap">
           <div class="hotel-card-carousel-2 carousel-action">
-<<<<<<< HEAD
-
             @foreach ($eventhalls as $eventhall)
               <div class="card-item">
                 <div class="card-img">
@@ -622,27 +588,6 @@ START HOTEL AREA
                   </a>
                   {{-- <span class="badge">Bestseller</span>
                   <span class="badge badge-ribbon">30% off</span> --}}
-=======
-            <div class="card-item">
-              <div class="card-img">
-                <a href="hotel-single.html" class="d-block">
-                  <img src="assets_site/images/img1.jpg" alt="hotel-img" />
-                </a>
-                <span class="badge">Bestseller</span>
-                <span class="badge badge-ribbon">30% off</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="hotel-single.html"
-                    >The Millennium Hilton New York</a
-                  >
-                </h3>
-                <p class="card-meta">124 E Huron St, New york</p>
-                <div class="card-rating">
-                  <span class="text-white badge">4.4/5</span>
-                  <span class="review__text">Average</span>
-                  <span class="rating__text">(30 Reviews)</span>
->>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
                 </div>
                 <div class="card-body">
                   <h3 class="card-title"> <i class="rtcl-icon rtcl-icon-location"></i>
@@ -879,7 +824,6 @@ START DISCOUNT AREA
           <!-- end discount-img -->
           <div class="discount-content">
             <div class="section-heading">
-<<<<<<< HEAD
               <p class="sec__desc text-white">Une bonne affaire, 20% d'économies</p>
               <h2 class="sec__title mb-0 line-height-50 text-white">
                 Réduction de 20% pour la première <br> réservation 
@@ -888,20 +832,7 @@ START DISCOUNT AREA
             <!-- end section-heading -->
             <div class="btn-box pt-4">
               <a href="{{route('site.sallesfetes')}}" class="theme-btn border-0"
-                >Salle de fete <i class="la la-arrow-right ms-1"></i
-=======
-              <p class="text-white sec__desc">Hot deal, save 50%</p>
-              <h2 class="mb-0 text-white sec__title line-height-50">
-                Discount 50% for the <br />
-                First Booking
-              </h2>
-            </div>
-            <!-- end section-heading -->
-            <div class="pt-4 btn-box">
-              <a href="#" class="border-0 theme-btn"
-                >Learn More <i class="la la-arrow-right ms-1"></i
->>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
-              ></a>
+                >Salle de fete <i class="la la-arrow-right ms-1"></i></a>
             </div>
           </div>
           <!-- end discount-content -->
