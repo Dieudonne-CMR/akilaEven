@@ -1,0 +1,285 @@
+<context>
+You are an AI embed in a project that use:
+- Laravel
+- PHP
+- MySQL
+- HTML
+- CSS
+- JavaScript
+- Bootstrap
+</context>
+
+<project>
+
+# Name of project
+
+Hotel, function room, and room booking platform
+
+## Overview
+
+The application will allow visitors (customers) to check the availability of hotels, reception halls, and rooms. Guests will be able to book directly online. It will also offer administrators and managers a dedicated space to manage hotels, halls, and rooms, and to validate and track reservations.
+
+## key features
+
+### Authentification
+
+### Gestion des réservations
+
+L'utilisateur souhaite réserver remplit un formulaire avec ses informations(son nom, prenom,adresse mail, numéro de téléphone, ville region, pays, heure d'arrivée, heure prévue, adresse) puis il clique sur réserver. L'administrateur ou le manager sont notifiés par mail, après la reservation est stockée dans la base de donnée avec un status à **pending** et un email est envoyé à l'utilisateur pour l'informer. Une réservation a un statut qui peut être:
+
+-   \*Pending\*\*: la réservation est en attente d'acceptation par l'administrateur.
+-   **Cancelled**: la réservation est annulée par l'administrateur.
+-   Booked: la réservation est confirmée par l'utilisateur et la salle est réservée.
+-   **Accepted**: la réservation est acceptée par l'administrateur.
+-   **Declined**: la réservation est refusée par l'administrateur.
+
+-   **Completed**: la réservation a été payée par l'utilisateur.
+    Lorsque l'administrateur valide la reservation le status passe à **Accepted**, l'utilisateur est notifié par email pour confirmer sa reservation. Une fois que l'utilisateur confirme sa reservation à travers son email, le statut passe à **Booked**. Une fois la salle payée, le statut passe à **Completed**. Le client a 24H pour valider sa réservation, si elle n'est pas validée, la réservation passe à l'état **Cancelled**.
+    Pour les chambres, le prix de la réservation est calculer en fonction du nombre de nuits passés(e.g:20 nuits = 20x10 euros = 200€ avec 5€ de taxe de séjour par nuitée). L'utilisateur peut louer plusieurs chambres à la fois
+
+### Gestion des chambres
+
+Une chambre est caractérisée par: son nom, sa description, son localisation, sa capacité, son prix, et ses photos, la date de création et de modification, ainsi que son hôtel.
+recherche et filtrage par les caractéristiques des chambres, le nombre de personnes, l'hôtel.
+L'utilisateur peut rechercher et filtrer des chambres à travers sa localisation,
+capacité (le nombre de places),type d'évènement,prix
+
+### Gestion des salles de fêtes
+
+Une salle de fête est caractérisée par : son nom, sa description, son localisation, capacité(e.g:200 places), son prix(pour une nuit), une taxe de séjour par nuitée et ses photos, la date de création et de modification, sa ville ainsi que son hôtel, le type d'évènement qui peut être plusieurs (Mariage, Anniversaire, etc...).
+L'utilisateur peut rechercher et filtrer des salle de fêtes à travers sa ville, capacité, type d'évènement, prix
+
+### Gestion des utilisateurs
+
+Un utilisateur est caractérisé par son nom, prénom, email, password, date de création, date de modification, photo, et son rôle(ADMIN, MANAGER).
+
+### Gestion des managers
+
+Lors de l'inscription, il remplit toutes ces informations puis il valide. c'est à l'admin de valider l'utilisateur.
+Lorsque l'admin le valide il reçoit un mail, avec ses identifiants (mot de passe).
+A la connexion, il entre son email et son mot de passe.
+Le manager peut ajouter, modifier, supprimer des hotels, des salles de fête, des chambres.
+
+### Gestion des hôtels
+
+Un hôtel est caractérisé par son logo, nom, description, ville, téléphone, localisation, email,ses banières, matricule hôtel, date de création, date de modification,manager.
+
+## Use case
+
+Processus de réservation « idéal » (du visiteur au manager)
+
+    Recherche & sélection
+
+        Visiteur choisit dates + type de prestation → le système vérifie en temps réel la dispo.
+
+    Formulaire de réservation
+
+        Saisie des coordonnées minimales + validation conditions générales.
+
+        ↳ Création d’une réservation « en attente de confirmation » dans la base (statut = pending).
+
+    Notification au client
+        Envoi d’un email(e.g: votre réservation a été prise en compte, nous confirmerons votre demande dans les prochains 24H)
+
+    Notification manager
+
+        Envoi d’un email au manager/responsable (e.g: les détails de la réservation).
+
+    Validation par le manager
+
+        Manager consulte les détails, accepte ou refuse.
+
+        Si acceptation → statut de la chambre passe à unavailable et la réservation à « accepted ».
+
+
+
+        Envoi d'un mail à l'utilisateur (e.g: la réservation a été validée, nous vous remercions de votre confiance).
+
+    Confirmation de l'utilisateur:
+        L'utilisateur confirme sa réservation à travers son email, le statut de la réservation  passe à « booked ».
+
+## Underlying stack
+
+**Laravel 12**
+**Blade/Livewire**
+**Alpine.js**
+**MySQL**
+**Tailwind CSS**
+
+## Project structure
+
+**/app**
+
+-   **Objectif :** Contient la logique métier principale de l'application, suivant le modèle MVC.
+-   **Contenu :**
+    -   Modèles (ex. Hotel.php, Room.php, User.php)
+    -   Contrôleurs (dans Http/Controllers)
+    -   Middleware (dans Http/Middleware)
+    -   Services et utilitaires
+-   **Techno :** PHP, Laravel
+-   **Bonnes pratiques :**
+    -   Suivre les conventions de nommage PSR-4
+    -   Un modèle par entité
+    -   Utiliser les traits pour la réutilisation de code
+-   **Améliorations :**
+
+    -   Ajouter des repositories pour séparer la logique d'accès aux données
+    -   Implémenter des services pour les opérations complexes
+
+-   **/app/Models**
+
+    -   **Objectif :** Contient les modèles Eloquent qui représentent les tables de la base de données.
+    -   **Contenu :**
+        -   EventHall.php (Salles de fêtes)
+        -   Hotel.php
+        -   Room.php (Chambres)
+        -   User.php
+        -   Ville.php
+    -   **Techno :** Eloquent ORM, PHP
+    -   **Bonnes pratiques :**
+        -   Définir les relations entre modèles clairement
+        -   Utiliser les scopes pour les requêtes fréquentes
+        -   Définir les propriétés $fillable ou $guarded
+    -   **Améliorations :**
+        -   Ajouter des modèles manquants (Reservation, Task, Notification)
+
+-   **/app/Http/Controllers**
+
+    -   **Objectif :** Contient les contrôleurs qui gèrent les requêtes HTTP
+    -   **Contenu :**
+        -   Contrôleurs pour chaque entité (HotelController, RoomController, etc.)
+        -   Contrôleurs d'authentification
+    -   **Techno :** Laravel, PHP
+    -   **Bonnes pratiques :**
+        -   Limiter les méthodes à 7 actions RESTful standards
+        -   Valider les entrées avec Request
+        -   Renvoyer des réponses formatées
+    -   **Améliorations :**
+        -   Implémenter une API REST complète
+        -   Utiliser des Resource classes pour la transformation de données
+
+-   **/config**
+
+    -   **Objectif :** Contient les fichiers de configuration de l'application
+    -   **Contenu :**
+        -   Fichiers de configuration (\*.php)
+        -   Configuration de la BDD, mail, services externes
+    -   **Techno :** PHP
+    -   **Bonnes pratiques :**
+        -   Ne pas stocker de secrets directement dans les fichiers
+        -   Utiliser des variables d'environnement
+    -   **Améliorations :**
+        -   Documentation des options disponibles
+
+-   **/database**
+
+    -   **Objectif :** Contient les migrations, seeders et factories pour la base de données
+    -   **Contenu :**
+        -   Migrations (création de tables)
+        -   Seeders (données de test)
+        -   Factories (génération de données)
+    -   **Techno :** PHP, Laravel Migrations
+    -   **Bonnes pratiques :**
+        -   Nommer les migrations de façon descriptive
+        -   Documenter les champs complexes
+        -   Prévoir les rollbacks
+    -   **Améliorations :**
+        -   Ajouter plus de seeders pour faciliter le développement
+        -   Mettre à jour les migrations avec les nouvelles fonctionnalités
+
+-   **/public**
+
+    -   **Objectif :** Point d'entrée de l'application et stockage des fichiers publics
+    -   **Contenu :**
+        -   index.php (point d'entrée)
+        -   CSS, JS compilés
+        -   Images et médias accessibles publiquement
+    -   **Techno :** PHP, Assets web
+    -   **Bonnes pratiques :**
+        -   Ne pas stocker de code applicatif dans ce dossier
+        -   Organiser les assets par type
+    -   **Améliorations :**
+        -   Optimiser les images pour le web
+        -   Mettre en place un CDN pour les assets statiques
+
+-   **/resources**
+
+    -   **Objectif :** Contient les fichiers de ressources non compilés
+    -   **Contenu :**
+        -   Vues Blade (\*.blade.php)
+        -   CSS/SCSS source
+        -   JavaScript non compilé
+        -   Fichiers de langue
+    -   **Techno :** Blade, CSS, JavaScript, Alpine.js
+    -   **Bonnes pratiques :**
+        -   Organiser les vues par section
+        -   Utiliser des composants réutilisables
+        -   Séparer la logique et la présentation
+    -   **Améliorations :**
+        -   Implémenter des composants Blade/Livewire
+
+-   **/routes**
+
+    -   **Objectif :** Définit les routes de l'application
+    -   **Contenu :**
+        -   web.php (routes web)
+        -   api.php (routes API)
+        -   console.php (commandes personnalisées)
+        -   auth.php (routes d'authentification)
+    -   **Techno :** Laravel Routes
+    -   **Bonnes pratiques :**
+        -   Grouper les routes par préfixe ou middleware
+        -   Nommer les routes
+        -   Utiliser des contrôleurs dédiés
+    -   **Améliorations :**
+        -   Organiser les routes par domaine fonctionnel
+        -   Ajouter une documentation des API
+
+-   **/storage**
+
+    -   **Objectif :** Stockage des fichiers générés par l'application
+    -   **Contenu :**
+        -   Logs
+        -   Fichiers téléchargés
+        -   Cache
+        -   Sessions
+    -   **Techno :** Laravel Storage
+    -   **Bonnes pratiques :**
+        -   Configurer correctement les permissions
+        -   Utiliser le système de disques de Laravel
+    -   **Améliorations :**
+        -   Mettre en place une stratégie de rotation des logs
+        -   Configurer un stockage cloud pour les uploads
+
+-   **/tests**
+
+    -   **Objectif :** Contient les tests automatisés
+    -   **Contenu :**
+        -   Tests unitaires
+        -   Tests fonctionnels
+        -   Tests d'intégration
+    -   **Techno :** PHPUnit, Laravel Testing
+    -   **Bonnes pratiques :**
+        -   Couvrir les fonctionnalités critiques
+        -   Organiser les tests par fonctionnalité
+        -   Utiliser des factories pour générer des données de test
+    -   **Améliorations :**
+        -   Augmenter la couverture de tests
+        -   Ajouter des tests d'interface utilisateur
+
+-   **/vendor**
+    -   **Objectif :** Contient les dépendances installées par Composer
+    -   **Contenu :**
+        -   Packages externes
+        -   Laravel framework
+        -   Bibliothèques PHP
+    -   **Techno :** Composer
+    -   **Bonnes pratiques :**
+        -   Ne jamais modifier directement les fichiers
+        -   Exclure du contrôle de version
+        -   Utiliser composer.lock pour des installations cohérentes
+    -   **Améliorations:**
+        -   Régulièrement mettre à jour les dépendances
+        -   Auditer les dépendances pour des problèmes de sécurité
+
+</project>

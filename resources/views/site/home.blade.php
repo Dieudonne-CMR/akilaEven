@@ -1,11 +1,15 @@
-
 @extends('site.layouts.app-site')
 @section('content-site')
 <!-- ================================
 START HERO-WRAPPER AREA
 ================================= -->
+<<<<<<< HEAD
 <section class="hero-wrapper hero-wrapper2  padding-bottom-80px">
   <div class="hero-box pb-0">
+=======
+<section class="hero-wrapper hero-wrapper2">
+  <div class="pb-0 hero-box">
+>>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
     <div id="fullscreen-slide-contain">
       <ul class="slides-container">
         <li><img src="assets_site/images/hero-bg2.jpg" alt="" /></li>
@@ -17,189 +21,285 @@ START HERO-WRAPPER AREA
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <div class="hero-content pb-5">
+          <div class="pb-5 hero-content">
             <div class="section-heading">
-              <p class="sec__desc pb-2">Partout au cameroun</p>
+              <p class="pb-2 sec__desc">Partout au cameroun</p>
               <h2 class="sec__title">
+<<<<<<< HEAD
                 Trouver une salle des fêtes <br />
                 Et d'autres salles pour vos évènements !
+=======
+              Trouvez l'espace idéal pour tous vos événements            
+>>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
               </h2>
+              <p style="color: white;font-size: 20px;">
+            Salles de fêtes, chambres d'hôtel et espaces de réception <br /> pour vos mariages, séminaires et célébrations.
+          </p>
             </div>
           </div>
           <!-- end hero-content -->
           <div class="search-fields-container">
-            <div class="contact-form-action">
-              <form action="#" class="row">
-                <div class="col-lg-3 pe-0">
-                  <div class="input-box">
-                    <label class="label-text"
-                      >Destination / Hotel name</label
-                    >
-                    <div class="form-group">
-                      <span class="la la-map-marker form-icon"></span>
-                      <input
-                        class="form-control"
-                        type="text"
-                        placeholder="Enter City or property"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <!-- end col-lg-3 -->
-                <div class="col-lg-3 pe-0">
-                  <div class="input-box">
-                    <label class="label-text">Check in - Check out</label>
-                    <div class="form-group">
-                      <span class="la la-calendar form-icon"></span>
-                      <input
-                        class="date-range form-control"
-                        type="text"
-                        name="daterange"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <!-- end col-lg-3 -->
-                <div class="col-lg-3 pe-0">
-                  <div class="input-box">
-                    <label class="label-text">Room Type</label>
-                    <div class="form-group select2-container-wrapper">
-                      <div
-                        class="select-contain select-contain-shadow w-auto"
-                      >
-                        <select class="select-contain-select">
-                          <option value="0">Select Type</option>
-                          <option value="1">Single</option>
-                          <option value="2">Double</option>
-                          <option value="3">Triple</option>
-                          <option value="4">Quad</option>
-                          <option value="5">Queen</option>
-                          <option value="6">King</option>
-                          <option value="7">Twin</option>
-                          <option value="8">Double-double</option>
-                          <option value="9">Studio</option>
-                          <option value="10">Suite</option>
-                          <option value="11">Mini Suite</option>
-                          <option value="12">President Suite</option>
-                          <option value="13">President Suite</option>
-                          <option value="14">Apartments</option>
-                          <option value="15">Connecting rooms</option>
-                          <option value="16">Murphy Room</option>
-                          <option value="17">Accessible Room</option>
-                          <option value="18">Cabana</option>
-                          <option value="19">Adjoining rooms</option>
-                          <option value="20">Adjacent rooms</option>
-                          <option value="21">Villa</option>
-                          <option value="22">Executive Floor</option>
-                          <option value="23">Smoking room</option>
-                          <option value="24">Non-Smoking Room</option>
-                        </select>
+            <!-- Tabs Navigation -->
+            <ul class="mb-3 nav nav-tabs" id="searchTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="rooms-tab" data-bs-toggle="tab" data-bs-target="#rooms-search" type="button" role="tab" aria-controls="rooms-search" aria-selected="true">
+                  <i class="mr-1 la la-bed"></i> Chambres
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="events-tab" data-bs-toggle="tab" data-bs-target="#events-search" type="button" role="tab" aria-controls="events-search" aria-selected="false">
+                  <i class="mr-1 la la-calendar-check-o"></i> Salles de Fêtes
+                </button>
+              </li>
+            </ul>
+            
+            <!-- Tabs Content -->
+            <div class="tab-content" id="searchTabsContent">
+              <!-- Chambres Tab -->
+              <div class="tab-pane fade show active" id="rooms-search" role="tabpanel" aria-labelledby="rooms-tab">
+                <div class="contact-form-action">
+                  <form action="#" class="row">
+                    <div class="col-lg-3 pe-0">
+                      <div class="input-box">
+                        <label class="label-text">Destination / Nom de l'hôtel</label>
+                        <div class="form-group">
+                          <span class="la la-map-marker form-icon"></span>
+                          <input
+                            class="form-control"
+                            type="text"
+                            placeholder="Entrez une ville ou un hôtel"
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <!-- end col-lg-3 -->
-                <div class="col-lg-3">
-                  <div class="input-box">
-                    <label class="label-text">Guests and Rooms</label>
-                    <div class="form-group">
-                      <div class="dropdown dropdown-contain gty-container">
-                        <a
-                          class="dropdown-toggle dropdown-btn"
-                          href="#"
-                          role="button"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                          data-bs-auto-close="outside"
-                        >
-                          <span
-                            class="adult"
-                            data-text="Adult"
-                            data-text-multi="Adults"
-                            >0 Adult</span
+                    <!-- end col-lg-3 -->
+                    <div class="col-lg-3 pe-0">
+                      <div class="input-box">
+                        <label class="label-text">Check in - Check out</label>
+                        <div class="form-group">
+                          <span class="la la-calendar form-icon"></span>
+                          <input
+                            class="date-range form-control"
+                            type="text"
+                            name="daterange"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end col-lg-3 -->
+                    <div class="col-lg-3 pe-0">
+                      <div class="input-box">
+                        <label class="label-text">Type de Chambre</label>
+                        <div class="form-group select2-container-wrapper">
+                          <div
+                            class="w-auto select-contain select-contain-shadow"
                           >
-                          -
-                          <span
-                            class="children"
-                            data-text="Child"
-                            data-text-multi="Children"
-                            >0 Child</span
-                          >
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-wrap">
-                          <div class="dropdown-item">
-                            <div
-                              class="qty-box d-flex align-items-center justify-content-between"
-                            >
-                              <label>Rooms</label>
-                              <div class="qtyBtn d-flex align-items-center">
-                                <div class="qtyDec">
-                                  <i class="la la-minus"></i>
-                                </div>
-                                <input
-                                  type="text"
-                                  name="room_number"
-                                  value="0"
-                                  class="qty-input"
-                                />
-                                <div class="qtyInc">
-                                  <i class="la la-plus"></i>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="dropdown-item">
-                            <div
-                              class="qty-box d-flex align-items-center justify-content-between"
-                            >
-                              <label>Adults</label>
-                              <div class="qtyBtn d-flex align-items-center">
-                                <div class="qtyDec">
-                                  <i class="la la-minus"></i>
-                                </div>
-                                <input
-                                  type="text"
-                                  name="adult_number"
-                                  value="0"
-                                />
-                                <div class="qtyInc">
-                                  <i class="la la-plus"></i>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="dropdown-item">
-                            <div
-                              class="qty-box d-flex align-items-center justify-content-between"
-                            >
-                              <label>Children</label>
-                              <div class="qtyBtn d-flex align-items-center">
-                                <div class="qtyDec">
-                                  <i class="la la-minus"></i>
-                                </div>
-                                <input
-                                  type="text"
-                                  name="child_number"
-                                  value="0"
-                                />
-                                <div class="qtyInc">
-                                  <i class="la la-plus"></i>
-                                </div>
-                              </div>
-                            </div>
+                            <select class="select-contain-select">
+                              <option value="0">Sélectionner</option>
+                              <option value="1">Simple</option>
+                              <option value="2">Double</option>
+                              <option value="3">Triple</option>
+                              <option value="4">Quad</option>
+                              <option value="5">Queen</option>
+                              <option value="6">King</option>
+                              <option value="7">Twin</option>
+                              <option value="8">Double-double</option>
+                              <option value="9">Studio</option>
+                              <option value="10">Suite</option>
+                              <option value="11">Mini Suite</option>
+                              <option value="12">Suite Présidentielle</option>
+                              <option value="14">Appartements</option>
+                              <option value="15">Chambres communicantes</option>
+                            </select>
                           </div>
                         </div>
                       </div>
-                      <!-- .end dropdown-contain -->
                     </div>
+                    <!-- end col-lg-3 -->
+                    <div class="col-lg-3">
+                      <div class="input-box">
+                        <label class="label-text">Invités et Chambres</label>
+                        <div class="form-group">
+                          <div class="dropdown dropdown-contain gty-container">
+                            <a
+                              class="dropdown-toggle dropdown-btn"
+                              href="#"
+                              role="button"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                              data-bs-auto-close="outside"
+                            >
+                              <span
+                                class="adult"
+                                data-text="Adulte"
+                                data-text-multi="Adultes"
+                                >0 Adulte</span
+                              >
+                              -
+                              <span
+                                class="children"
+                                data-text="Enfant"
+                                data-text-multi="Enfants"
+                                >0 Enfant</span
+                              >
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-wrap">
+                              <div class="dropdown-item">
+                                <div
+                                  class="qty-box d-flex align-items-center justify-content-between"
+                                >
+                                  <label>Chambres</label>
+                                  <div class="qtyBtn d-flex align-items-center">
+                                    <div class="qtyDec">
+                                      <i class="la la-minus"></i>
+                                    </div>
+                                    <input
+                                      type="text"
+                                      name="room_number"
+                                      value="0"
+                                      class="qty-input"
+                                    />
+                                    <div class="qtyInc">
+                                      <i class="la la-plus"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="dropdown-item">
+                                <div
+                                  class="qty-box d-flex align-items-center justify-content-between"
+                                >
+                                  <label>Adultes</label>
+                                  <div class="qtyBtn d-flex align-items-center">
+                                    <div class="qtyDec">
+                                      <i class="la la-minus"></i>
+                                    </div>
+                                    <input
+                                      type="text"
+                                      name="adult_number"
+                                      value="0"
+                                    />
+                                    <div class="qtyInc">
+                                      <i class="la la-plus"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="dropdown-item">
+                                <div
+                                  class="qty-box d-flex align-items-center justify-content-between"
+                                >
+                                  <label>Enfants</label>
+                                  <div class="qtyBtn d-flex align-items-center">
+                                    <div class="qtyDec">
+                                      <i class="la la-minus"></i>
+                                    </div>
+                                    <input
+                                      type="text"
+                                      name="child_number"
+                                      value="0"
+                                    />
+                                    <div class="qtyInc">
+                                      <i class="la la-plus"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- .end dropdown-contain -->
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end col-lg-3 -->
+                  </form>
+                  <div class="pt-2 btn-box">
+                    <a href="room-search-result.html" class="theme-btn">
+                      <i class="mr-1 la la-search"></i> Rechercher
+                    </a>
                   </div>
                 </div>
-                <!-- end col-lg-3 -->
-              </form>
-              <div class="btn-box pt-2">
-                <a href="room-search-result.html" class="theme-btn"
-                  >Search Now</a
-                >
+              </div>
+              
+              <!-- Salles de Fêtes Tab -->
+              <div class="tab-pane fade" id="events-search" role="tabpanel" aria-labelledby="events-tab">
+                <div class="contact-form-action">
+                  <form action="#" class="row">
+                    <div class="col-lg-3 pe-0">
+                      <div class="input-box">
+                        <label class="label-text">Ville / Localisation</label>
+                        <div class="form-group">
+                          <span class="la la-map-marker form-icon"></span>
+                          <input
+                            class="form-control"
+                            type="text"
+                            placeholder="Entrez une ville"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end col-lg-3 -->
+                    <div class="col-lg-3 pe-0">
+                      <div class="input-box">
+                        <label class="label-text">Date de l'événement</label>
+                        <div class="form-group">
+                          <span class="la la-calendar form-icon"></span>
+                          <input
+                            class="date-range form-control"
+                            type="text"
+                            name="daterange"
+                            placeholder="Date de l'événement"
+                          />
+                        
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end col-lg-3 -->
+                    <div class="col-lg-3 pe-0">
+                      <div class="input-box">
+                        <label class="label-text">Type d'événement</label>
+                        <div class="form-group select2-container-wrapper">
+                          <div
+                            class="w-auto select-contain select-contain-shadow"
+                          >
+                            <select class="select-contain-select">
+                              <option value="0">Sélectionner</option>
+                              <option value="1">Mariage</option>
+                              <option value="2">Anniversaire</option>
+                              <option value="3">Conférence</option>
+                              <option value="4">Séminaire</option>
+                              <option value="5">Réunion d'affaires</option>
+                              <option value="6">Fête</option>
+                              <option value="7">Gala</option>
+                              <option value="8">Autre</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end col-lg-3 -->
+                    <div class="col-lg-3">
+                      <div class="input-box">
+                        <label class="label-text">Nombre d'invités</label>
+                        <div class="form-group">
+                          <span class="la la-users form-icon"></span>
+                          <input
+                            class="form-control"
+                            type="number"
+                            placeholder="Nombre de personnes"
+                            min="1"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end col-lg-3 -->
+                  </form>
+                  <div class="pt-2 btn-box">
+                    <a href="event-halls-search-result.html" class="theme-btn">
+                      <i class="mr-1 la la-search"></i> Rechercher
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -224,7 +324,7 @@ START INFO AREA
     <div class="row">
       <div class="col-lg-3 responsive-column">
         <div class="icon-box icon-layout-2 d-flex">
-          <div class="info-icon flex-shrink-0 bg-rgb text-color-2">
+          <div class="flex-shrink-0 info-icon bg-rgb text-color-2">
             <i class="las la-radiation"></i>
           </div>
           <!-- end info-icon-->
@@ -239,7 +339,7 @@ START INFO AREA
       <!-- end col-lg-3 -->
       <div class="col-lg-3 responsive-column">
         <div class="icon-box icon-layout-2 d-flex">
-          <div class="info-icon flex-shrink-0 bg-rgb-2 text-color-3">
+          <div class="flex-shrink-0 info-icon bg-rgb-2 text-color-3">
             <i class="la la-tree"></i>
           </div>
           <!-- end info-icon-->
@@ -254,7 +354,7 @@ START INFO AREA
       <!-- end col-lg-3 -->
       <div class="col-lg-3 responsive-column">
         <div class="icon-box icon-layout-2 d-flex">
-          <div class="info-icon flex-shrink-0 bg-rgb-3 text-color-4">
+          <div class="flex-shrink-0 info-icon bg-rgb-3 text-color-4">
             <i class="las la-map-marked-alt"></i>
           </div>
           <!-- end info-icon-->
@@ -269,7 +369,7 @@ START INFO AREA
       <!-- end col-lg-3 -->
       <div class="col-lg-3 responsive-column">
         <div class="icon-box icon-layout-2 d-flex">
-          <div class="info-icon flex-shrink-0 bg-rgb-4 text-color-5">
+          <div class="flex-shrink-0 info-icon bg-rgb-4 text-color-5">
             <i class="las la-bed"></i>
           </div>
           <!-- end info-icon-->
@@ -356,23 +456,42 @@ END INFO AREA
 <!-- ================================
 START ABOUT AREA
 ================================= -->
-<section class="about-area section--padding overflow-hidden">
+<section class="overflow-hidden about-area section--padding">
   <div class="container">
     <div class="row">
       <div class="col-lg-6">
         <div class="about-content pe-5">
           <div class="section-heading">
+<<<<<<< HEAD
             <h4 class="font-size-16 pb-2">A propos</h4>
             <h2 class="sec__title">Un Mot sur Nous !</h2>
             <p class="sec__desc pt-4 pb-2">
               Akila Even est une agence événementielle qui facilite l’organisation d’événements au Cameroun. Forte de plus de cinq ans d’expérience, elle répond aux défis liés à la recherche de salles adaptées en termes de budget, emplacement et capacité, garantissant ainsi des célébrations réussies.
+=======
+            <h4 class="pb-2 font-size-16">Our Story</h4>
+            <h2 class="sec__title">Atmosphere and Design</h2>
+            <p class="pt-4 pb-2 sec__desc">
+              It is a long established fact that a reader will be distracted
+              by the readable content of a page when looking at its layout.
+              The point of using Lorem Ipsum is that it has a more-or-less
+              normal distribution of letters
+            </p>
+            <p class="sec__desc">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. A
+              accusamus amet consectetur ipsa officia. Doloremque error
+              porro sit soluta totam! A iste nobis vel voluptatem!
+>>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
             </p>
             {{-- <p class="sec__desc">
             
             </p> --}}
           </div>
           <!-- end section-heading -->
+<<<<<<< HEAD
           {{-- <div class="btn-box pt-4">
+=======
+          <div class="pt-4 btn-box">
+>>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
             <a href="about.html" class="theme-btn"
               >Read More <i class="la la-arrow-right ms-1"></i
             ></a>
@@ -413,7 +532,7 @@ START ROOM TYPE AREA
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <div class="section-heading text-center">
+        <div class="text-center section-heading">
           <h2 class="sec__title">Find a Room Type</h2>
         </div>
         <!-- end section-heading -->
@@ -468,12 +587,18 @@ END ROOM TYPE AREA
 <!-- ================================
 START HOTEL AREA
 ================================= -->
+<<<<<<< HEAD
 {{-- <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> --}}
 <section class="hotel-area section-bg padding-top-100px padding-bottom-200px overflow-hidden">
+=======
+<section
+  class="overflow-hidden hotel-area section-bg padding-top-100px padding-bottom-200px"
+>
+>>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <div class="section-heading text-center">
+        <div class="text-center section-heading">
           <h2 class="sec__title line-height-55">
             Places événementielles <br>les plus visitées
           </h2>
@@ -487,6 +612,7 @@ START HOTEL AREA
       <div class="col-lg-12">
         <div class="hotel-card-wrap">
           <div class="hotel-card-carousel-2 carousel-action">
+<<<<<<< HEAD
 
             @foreach ($eventhalls as $eventhall)
               <div class="card-item">
@@ -496,6 +622,27 @@ START HOTEL AREA
                   </a>
                   {{-- <span class="badge">Bestseller</span>
                   <span class="badge badge-ribbon">30% off</span> --}}
+=======
+            <div class="card-item">
+              <div class="card-img">
+                <a href="hotel-single.html" class="d-block">
+                  <img src="assets_site/images/img1.jpg" alt="hotel-img" />
+                </a>
+                <span class="badge">Bestseller</span>
+                <span class="badge badge-ribbon">30% off</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="hotel-single.html"
+                    >The Millennium Hilton New York</a
+                  >
+                </h3>
+                <p class="card-meta">124 E Huron St, New york</p>
+                <div class="card-rating">
+                  <span class="text-white badge">4.4/5</span>
+                  <span class="review__text">Average</span>
+                  <span class="rating__text">(30 Reviews)</span>
+>>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
                 </div>
                 <div class="card-body">
                   <h3 class="card-title"> <i class="rtcl-icon rtcl-icon-location"></i>
@@ -542,7 +689,7 @@ START HOTEL AREA
                 </h3>
                 <p class="card-meta">124 E Huron St, Chicago</p>
                 <div class="card-rating">
-                  <span class="badge text-white">4.4/5</span>
+                  <span class="text-white badge">4.4/5</span>
                   <span class="review__text">Average</span>
                   <span class="rating__text">(30 Reviews)</span>
                 </div>
@@ -577,7 +724,7 @@ START HOTEL AREA
                 </h3>
                 <p class="card-meta">200 Nohea Kai Dr, Lahaina, HI</p>
                 <div class="card-rating">
-                  <span class="badge text-white">4.4/5</span>
+                  <span class="text-white badge">4.4/5</span>
                   <span class="review__text">Average</span>
                   <span class="rating__text">(30 Reviews)</span>
                 </div>
@@ -613,7 +760,7 @@ START HOTEL AREA
                 </h3>
                 <p class="card-meta">3900 Wailea Alanui Drive, Kihei, HI</p>
                 <div class="card-rating">
-                  <span class="badge text-white">4.4/5</span>
+                  <span class="text-white badge">4.4/5</span>
                   <span class="review__text">Average</span>
                   <span class="rating__text">(30 Reviews)</span>
                 </div>
@@ -646,7 +793,7 @@ START HOTEL AREA
                 </h3>
                 <p class="card-meta">272 Bath Road, Harlington, England</p>
                 <div class="card-rating">
-                  <span class="badge text-white">4.4/5</span>
+                  <span class="text-white badge">4.4/5</span>
                   <span class="review__text">Average</span>
                   <span class="rating__text">(30 Reviews)</span>
                 </div>
@@ -682,7 +829,7 @@ START HOTEL AREA
                   38-40 Rue Saint Séverin, Paris, Paris
                 </p>
                 <div class="card-rating">
-                  <span class="badge text-white">4.4/5</span>
+                  <span class="text-white badge">4.4/5</span>
                   <span class="review__text">Average</span>
                   <span class="rating__text">(30 Reviews)</span>
                 </div>
@@ -732,6 +879,7 @@ START DISCOUNT AREA
           <!-- end discount-img -->
           <div class="discount-content">
             <div class="section-heading">
+<<<<<<< HEAD
               <p class="sec__desc text-white">Une bonne affaire, 20% d'économies</p>
               <h2 class="sec__title mb-0 line-height-50 text-white">
                 Réduction de 20% pour la première <br> réservation 
@@ -741,6 +889,18 @@ START DISCOUNT AREA
             <div class="btn-box pt-4">
               <a href="{{route('site.sallesfetes')}}" class="theme-btn border-0"
                 >Salle de fete <i class="la la-arrow-right ms-1"></i
+=======
+              <p class="text-white sec__desc">Hot deal, save 50%</p>
+              <h2 class="mb-0 text-white sec__title line-height-50">
+                Discount 50% for the <br />
+                First Booking
+              </h2>
+            </div>
+            <!-- end section-heading -->
+            <div class="pt-4 btn-box">
+              <a href="#" class="border-0 theme-btn"
+                >Learn More <i class="la la-arrow-right ms-1"></i
+>>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
               ></a>
             </div>
           </div>
@@ -770,7 +930,7 @@ END DISCOUNT AREA
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <div class="section-heading text-center mb-0">
+        <div class="mb-0 text-center section-heading">
           <h2 class="sec__title line-height-50">
             What Our Customers <br />
             are Saying Us?
@@ -911,7 +1071,7 @@ END DISCOUNT AREA
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <div class="section-heading text-center">
+        <div class="text-center section-heading">
           <h2 class="sec__title">Recent Articles</h2>
         </div>
         <!-- end section-heading -->
@@ -1110,8 +1270,8 @@ START CTA AREA
     <div class="row align-items-center">
       <div class="col-lg-7">
         <div class="section-heading">
-          <p class="sec__desc text-white-50 pb-1">Newsletter Sign up</p>
-          <h2 class="sec__title font-size-30 text-white">
+          <p class="pb-1 sec__desc text-white-50">Newsletter Sign up</p>
+          <h2 class="text-white sec__title font-size-30">
             Subscribe to Get Special Offers
           </h2>
         </div>
@@ -1123,10 +1283,10 @@ START CTA AREA
           <div class="contact-form-action">
             <form action="#">
               <div class="input-box">
-                <label class="label-text text-white"
+                <label class="text-white label-text"
                   >Enter email address</label
                 >
-                <div class="form-group mb-0">
+                <div class="mb-0 form-group">
                   <span class="la la-envelope form-icon"></span>
                   <input
                     class="form-control"
@@ -1140,7 +1300,7 @@ START CTA AREA
                   >
                     Subscribe
                   </button>
-                  <span class="font-size-14 pt-1 text-white-50"
+                  <span class="pt-1 font-size-14 text-white-50"
                     ><i class="la la-lock me-1"></i>Don't worry your
                     information is safe with us.</span
                   >

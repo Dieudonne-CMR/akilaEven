@@ -35,6 +35,7 @@ class Kernel extends HttpKernel
         // 'auth' => \App\Http\Middleware\Authenticate::class,
         // 'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'hotel.selected' => \App\Http\Middleware\CheckHotelSelected::class,
+        // Alias pour le middleare CheckHotelSelected
+       'check.hotel.selected' => \App\Http\Middleware\CheckHotelSelected::class,
     ];
 }

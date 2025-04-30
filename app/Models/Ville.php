@@ -14,4 +14,6 @@ class Ville extends Model
     public function eventHalls(){
         return $this->hasMany(EventHall::class);
     }
+ 
+
 }

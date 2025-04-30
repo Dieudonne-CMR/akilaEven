@@ -1,4 +1,3 @@
-
 @extends('site.layouts.app-site')
 @section('content-site')
 
@@ -122,19 +121,29 @@ START TOUR DETAIL AREA
         <div class="col-lg-8">
           <div class="single-content-wrap padding-top-60px">
             <div id="description" class="page-scroll">
-              <div class="single-content-item pb-4">
+              <div class="pb-4 single-content-item">
                 <h3 class="title font-size-26">{{$eventHall->nom_salle}}</h3>
                 <p class="pt-2">
+<<<<<<< HEAD
                   {{-- <span
                     class="badge text-bg-warning text-white font-size-16"
+=======
+                  <span
+                    class="text-white badge text-bg-warning font-size-16"
+>>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
                     >4.6</span
                   > --}}
                   <span>({{$eventHall->views}} vues )</span>
                 </p>
               </div>
 
+<<<<<<< HEAD
               <h3 class="title font-size-15 font-weight-medium pb-3">
                 Informations
+=======
+              <h3 class="pb-3 title font-size-15 font-weight-medium">
+                House Rules
+>>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
               </h3>
               <div class="container">
                 <div class="row">
@@ -173,13 +182,13 @@ START TOUR DETAIL AREA
                 class="single-content-item padding-top-40px padding-bottom-40px"
               >
                 <h3 class="title font-size-20">Services</h3>
-                <div class="row pt-4">
+                <div class="pt-4 row">
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-check-circle"></i>
                       </div>
@@ -194,10 +203,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-check-circle"></i>
                       </div>
@@ -212,10 +221,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-check-circle"></i>
                       </div>
@@ -230,10 +239,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-check-circle"></i>
                       </div>
@@ -248,10 +257,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-check-circle"></i>
                       </div>
@@ -266,10 +275,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-check-circle"></i>
                       </div>
@@ -284,10 +293,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-check-circle"></i>
                       </div>
@@ -302,10 +311,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-check-circle"></i>
                       </div>
@@ -320,10 +329,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-check-circle"></i>
                       </div>
@@ -338,10 +347,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-check-circle"></i>
                       </div>
@@ -366,13 +375,13 @@ START TOUR DETAIL AREA
                 class="single-content-item padding-top-40px padding-bottom-40px"
               >
                 <h3 class="title font-size-20">Amenities</h3>
-                <div class="row pt-4">
+                <div class="pt-4 row">
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-couch"></i>
                       </div>
@@ -387,10 +396,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-television"></i>
                       </div>
@@ -405,10 +414,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-gear"></i>
                       </div>
@@ -423,10 +432,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-wifi"></i>
                       </div>
@@ -441,10 +450,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-swimming-pool"></i>
                       </div>
@@ -459,10 +468,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-user"></i>
                       </div>
@@ -477,10 +486,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-air-freshener"></i>
                       </div>
@@ -495,10 +504,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-phone"></i>
                       </div>
@@ -513,10 +522,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-bullhorn"></i>
                       </div>
@@ -531,10 +540,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-bathtub"></i>
                       </div>
@@ -549,10 +558,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-hand-holding-usd"></i>
                       </div>
@@ -567,10 +576,10 @@ START TOUR DETAIL AREA
                   <!-- end col-lg-4 -->
                   <div class="col-lg-4 responsive-column">
                     <div
-                      class="single-tour-feature d-flex align-items-center mb-3"
+                      class="mb-3 single-tour-feature d-flex align-items-center"
                     >
                       <div
-                        class="single-feature-icon icon-element ms-0 flex-shrink-0 me-3"
+                        class="flex-shrink-0 single-feature-icon icon-element ms-0 me-3"
                       >
                         <i class="la la-luggage-cart"></i>
                       </div>
@@ -628,7 +637,7 @@ START TOUR DETAIL AREA
                               <div
                                 class="progressbar-content line-height-20 d-flex align-items-center justify-content-between"
                               >
-                                <div class="progressbar-box flex-shrink-0">
+                                <div class="flex-shrink-0 progressbar-box">
                                   <div
                                     class="progressbar-line"
                                     data-percent="70%"
@@ -651,7 +660,7 @@ START TOUR DETAIL AREA
                               <div
                                 class="progressbar-content line-height-20 d-flex align-items-center justify-content-between"
                               >
-                                <div class="progressbar-box flex-shrink-0">
+                                <div class="flex-shrink-0 progressbar-box">
                                   <div
                                     class="progressbar-line"
                                     data-percent="55%"
@@ -676,7 +685,7 @@ START TOUR DETAIL AREA
                               <div
                                 class="progressbar-content line-height-20 d-flex align-items-center justify-content-between"
                               >
-                                <div class="progressbar-box flex-shrink-0">
+                                <div class="flex-shrink-0 progressbar-box">
                                   <div
                                     class="progressbar-line"
                                     data-percent="40%"
@@ -699,7 +708,7 @@ START TOUR DETAIL AREA
                               <div
                                 class="progressbar-content line-height-20 d-flex align-items-center justify-content-between"
                               >
-                                <div class="progressbar-box flex-shrink-0">
+                                <div class="flex-shrink-0 progressbar-box">
                                   <div
                                     class="progressbar-line"
                                     data-percent="60%"
@@ -722,7 +731,7 @@ START TOUR DETAIL AREA
                               <div
                                 class="progressbar-content line-height-20 d-flex align-items-center justify-content-between"
                               >
-                                <div class="progressbar-box flex-shrink-0">
+                                <div class="flex-shrink-0 progressbar-box">
                                   <div
                                     class="progressbar-line"
                                     data-percent="50%"
@@ -923,7 +932,7 @@ START TOUR DETAIL AREA
                     </div>
                   </div>
                   <!-- end comments -->
-                  <div class="btn-box load-more text-center">
+                  <div class="text-center btn-box load-more">
                     <button
                       class="theme-btn theme-btn-small theme-btn-transparent"
                       type="button"
@@ -940,7 +949,7 @@ START TOUR DETAIL AREA
                     </div>
                     <!-- form-title-wrap -->
                     <div class="form-content">
-                      <div class="rate-option p-2">
+                      <div class="p-2 rate-option">
                         <div class="row">
                           <div class="col-lg-4 responsive-column">
                             <div class="rate-option-item">
@@ -1235,7 +1244,7 @@ START TOUR DETAIL AREA
         </div>
         <!-- end col-lg-8 -->
         <div class="col-lg-4">
-          <div class="sidebar single-content-sidebar mb-0">
+          <div class="mb-0 sidebar single-content-sidebar">
             <div class="sidebar-widget single-content-widget">
               <h3 class="title stroke-shape">Votre réservation</h3>
               <div class="sidebar-widget-item">
@@ -1288,7 +1297,7 @@ START TOUR DETAIL AREA
                     {{-- <div class="input-box">
                       <label class="label-text">Rooms</label>
                       <div class="form-group select2-container-wrapper">
-                        <div class="select-contain w-auto">
+                        <div class="w-auto select-contain">
                           <select class="select-contain-select">
                             <option value="0">Select Room</option>
                             <option value="1" selected>1 Room</option>
@@ -1306,7 +1315,7 @@ START TOUR DETAIL AREA
                       </div>
                     </div> --}}
                     <div class="btn-box">
-                      <button type="submit" class="theme-btn text-center w-100 mb-2">Book Now</button>
+                      <button type="submit" class="mb-2 text-center theme-btn w-100">Book Now</button>
                       
                     </div>
                   </form>
@@ -1322,7 +1331,7 @@ START TOUR DETAIL AREA
                 <!-- end qty-box -->
               </div>
               <!-- end sidebar-widget-item -->
-              {{-- <div class="sidebar-widget-item py-4">
+              {{-- <div class="py-4 sidebar-widget-item">
                 <h3 class="title stroke-shape">Extra Services</h3>
                 <div class="extra-service-wrap">
                   <form
@@ -1401,10 +1410,10 @@ START TOUR DETAIL AREA
                         >
                       </div>
                     </div>
-                    <div class="total-price pt-3">
+                    <div class="pt-3 total-price">
                       <p class="text-black">Your Price</p>
                       <p class="d-flex align-items-center">
-                        <span class="font-size-17 text-black">$</span>
+                        <span class="text-black font-size-17">$</span>
                         <input
                           type="text"
                           name="total"
@@ -1419,7 +1428,7 @@ START TOUR DETAIL AREA
               </div> --}}
               <!-- end sidebar-widget-item -->
               {{-- <div class="btn-box">
-                <a href="cart.html" class="theme-btn text-center w-100 mb-2"
+                <a href="cart.html" class="mb-2 text-center theme-btn w-100"
                   >Book Now</a
                 >
               </div> --}}
@@ -1456,7 +1465,7 @@ START TOUR DETAIL AREA
                 Do not hesitate to give us a call. We are an expert team and
                 we are happy to talk to you.
               </p>
-              <div class="sidebar-list pt-3">
+              <div class="pt-3 sidebar-list">
                 <ul class="list-items">
                   <li>
                     <i class="la la-phone icon-element me-2"></i
@@ -1496,7 +1505,7 @@ START RELATE TOUR AREA
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <div class="section-heading text-center">
+        <div class="text-center section-heading">
           <h2 class="sec__title">Autres salles de fetes</h2>
           <p class="sec__desc">Peut également vous intéresser</p>
         </div>
@@ -1535,8 +1544,13 @@ START RELATE TOUR AREA
 
           </div>
           <div class="card-body">
+<<<<<<< HEAD
             <div class="card-price pb-2">
               {{-- <p>
+=======
+            <div class="pb-2 card-price">
+              <p>
+>>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
                 <span class="price__from">From</span>
                 <span class="price__num">{{$event_Hall->prix}}</span>
               </p> --}}
@@ -1544,11 +1558,22 @@ START RELATE TOUR AREA
             <h3 class="card-title font-size-26">
               <a href="{{route('site.detailSallesfetes', $event_Hall->id)}}">{{$event_Hall->nom_salle}}</a>
             </h3>
+<<<<<<< HEAD
             <p class="card-text pt-2">
               {{Str::limit(strip_tags($event_Hall->description_salle), 100)}}
             </p>
             <div class="card-attributes pt-3 pb-4">
               {{-- <ul class="d-flex align-items-center">
+=======
+            <p class="pt-2 card-text">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Aperiam asperiores commodi deleniti hic inventore laboriosam
+              laborum molestias, non odit quaerat! Aperiam culpa facilis
+              fuga impedit.
+            </p>
+            <div class="pt-3 pb-4 card-attributes">
+              <ul class="d-flex align-items-center">
+>>>>>>> ef186f96167a0e49b844557f22a1ef24967bb032
                 <li class="d-flex align-items-center">
                   <i class="la la-bed"></i><span>2 Beds</span>
                 </li>
@@ -1602,7 +1627,7 @@ START RELATE TOUR AREA
             </div>
           </div>
           <div class="card-body">
-            <div class="card-price pb-2">
+            <div class="pb-2 card-price">
               <p>
                 <span class="price__from">From</span>
                 <span class="price__num">$45.00</span>
@@ -1611,13 +1636,13 @@ START RELATE TOUR AREA
             <h3 class="card-title font-size-26">
               <a href="room-details.html">Standard 2 Bed Male Dorm</a>
             </h3>
-            <p class="card-text pt-2">
+            <p class="pt-2 card-text">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               Aperiam asperiores commodi deleniti hic inventore laboriosam
               laborum molestias, non odit quaerat! Aperiam culpa facilis
               fuga impedit.
             </p>
-            <div class="card-attributes pt-3 pb-4">
+            <div class="pt-3 pb-4 card-attributes">
               <ul class="d-flex align-items-center">
                 <li class="d-flex align-items-center">
                   <i class="la la-bed"></i><span>2 Beds</span>
@@ -1666,8 +1691,8 @@ START CTA AREA
     <div class="row align-items-center">
       <div class="col-lg-7">
         <div class="section-heading">
-          <p class="sec__desc text-white-50 pb-1">Newsletter sign up</p>
-          <h2 class="sec__title font-size-30 text-white">
+          <p class="pb-1 sec__desc text-white-50">Newsletter sign up</p>
+          <h2 class="text-white sec__title font-size-30">
             Subscribe to Get Special Offers
           </h2>
         </div>
@@ -1679,10 +1704,10 @@ START CTA AREA
           <div class="contact-form-action">
             <form action="#">
               <div class="input-box">
-                <label class="label-text text-white"
+                <label class="text-white label-text"
                   >Enter email address</label
                 >
-                <div class="form-group mb-0">
+                <div class="mb-0 form-group">
                   <span class="la la-envelope form-icon"></span>
                   <input
                     class="form-control"
@@ -1696,7 +1721,7 @@ START CTA AREA
                   >
                     Subscribe
                   </button>
-                  <span class="font-size-14 pt-1 text-white-50"
+                  <span class="pt-1 font-size-14 text-white-50"
                     ><i class="la la-lock me-1"></i>Don't worry your
                     information is safe with us.</span
                   >
