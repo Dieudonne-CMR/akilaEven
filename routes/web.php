@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('', [siteController::class, 'index'])->name('home');
 route::get('/site-sallesfetes', [siteController::class, 'salleFete'])->name('site.sallesfetes');
 route::get('/site-detail-sallesfetes-{eventHall}', [siteController::class, 'detailFallesFetes'])->name('site.detailSallesfetes');
+route::get('/site-blog',[siteController::class, 'blogSite'])->name('site.blog');
     
     // Route::get('/dashboard', function () {
         //     return view('dashboard');

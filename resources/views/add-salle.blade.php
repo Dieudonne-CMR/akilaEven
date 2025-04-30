@@ -39,6 +39,7 @@
   <link rel="stylesheet" href="assets/css/lib/audioplayer.css">
   <!-- main css -->
   <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
 </head>
 
 <body>
@@ -90,7 +91,7 @@
                   <div class="border border-neutral-200 radius-8 overflow-hidden">
                     <div class="height-200">
                       <!-- Editor Toolbar Start -->
-                      <div id="toolbar-container">
+                      {{-- <div id="toolbar-container">
                         <span class="ql-formats">
                           <select class="ql-font"></select>
                           <select class="ql-size"></select>
@@ -134,15 +135,16 @@
                         <span class="ql-formats">
                           <button class="ql-clean"></button>
                         </span>
-                      </div>
+                      </div> --}}
                       <!-- Editor Toolbar Start -->
 
                       <!-- Editor start -->
-                      <div id="editor">
+                      <textarea id="editor"></textarea>
+                      {{-- <div id="editor">
                         <p class="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis dolores explicabo
                           corrupti, fuga</p>
                         <p><br></p>
-                      </div>
+                      </div> --}}
                       <!-- Edit End -->
                     </div>
                   </div>
@@ -360,6 +362,26 @@
     });
     // =============================== Upload Single Image js End here ================================================
 
+  </script>
+
+    <!-- custom script -->
+    <script>
+      ClassicEditor
+          .create(document.querySelector('#editor'))
+          .then(editor => {
+              console.log(editor);
+          })
+          .catch(error => {
+              console.error(error);
+          });
+  </script>
+
+  <script>
+      const textarea = document.querySelector('textarea');
+      textarea.addEventListener('input', () => {
+          textarea.style.height = 'auto';
+          textarea.style.height = `${textarea.scrollHeight}px`;
+      });
   </script>
 
 </body>

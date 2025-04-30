@@ -10,7 +10,7 @@
           <div class="breadcrumb-content text-center">
             <div class="section-heading">
               <h2 class="sec__title text-white">
-                Meilleur Annuaire de location de salle de fête au Cameroun </h2>
+                Meilleur Annuaire de location de <br> salle de fête au Cameroun </h2>
             </div>
             <span class="arrow-blink">
               <i class="la la-arrow-down"></i>
@@ -111,28 +111,35 @@
                   </h3>
                  
                   <p class=" text-sm md:text-basecard-text pt-2">
-                    {{ Str::limit($hall->description_salle, 100) }}
+                    {{ Str::limit(strip_tags($hall->description_salle), 100)  }}
                   </p>
                
                   
                   <div class="card-attributes pt-3 pb-4">
                     <ul class=" align-items-center">
-                      <li class="d-flex align-items-center text-sm md:text-base">
+                      {{-- <li class="d-flex align-items-center text-sm ">
                         <img src="https://cdn-icons-png.flaticon.com/128/8565/8565868.png" class="img-icone" alt="" sizes="" srcset=""><p> {{ $hall->hotel->nom_hotel }}  </p>
                       </li>
-                      <li class="d-flex align-items-center text-sm md:text-base">
+                      <li class="d-flex align-items-center text-sm ">
                         <img src="https://cdn-icons-png.flaticon.com/128/2901/2901609.png" class="img-icone" > <p> {{$hall->ville->nom }}, {{ $hall->localisation }}</p>
                       </li>
-                      <li class="d-flex align-items-center text-sm md:text-base">
+                      <li class="d-flex align-items-center text-sm ">
                         <img src="https://cdn-icons-png.flaticon.com/128/6896/6896407.png" class="img-icone" alt="" sizes="" srcset=""><p> {{ $hall->capacite }} places </p>
                       </li>
                       <li class="d-flex align-items-center">
                         <img src="https://cdn-icons-png.flaticon.com/128/9130/9130025.png" class="img-icone" alt="" sizes="" srcset=""><p>{{ $hall->prix }} FCFA </p>
-                      </li>
+                      </li> --}}
                       {{-- <li class="d-flex align-items-center">
                         <i class="la la-bathtub"></i><span> {{ $hall->ville?->nom_ville ?? 'Non renseignée' }}, {{ $hall->localisation }}</span>
                       </li> --}}
                     </ul>
+
+                    <div class="row">
+                      <div class=" col-md-12 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/8565/8565868.png" class="img-icone me-1">{{ $hall->hotel->nom_hotel }}</div>
+                      <div class=" col-md-12 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/2901/2901609.png" class="img-icone me-1" >{{$hall->ville->nom }}, {{ $hall->localisation }}</div>
+                      <div class=" col-md-12 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/6896/6896407.png" class="img-icone me-1">{{ $hall->capacite }} places</div>
+                      <div class=" col-md-12 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/9130/9130025.png" class="img-icone me-1">{{ number_format($hall->prix , 0, ',', ' ') }} FCFA / la journée</div>
+                  </div>
                     
                   </div>
                   <div class="card-btn">
@@ -445,134 +452,7 @@
   END CARD AREA
 ================================= -->
 
-<!-- ================================
-  START CHECK AVAILABILITY AREA
-================================= -->
-<section class="check-availability-area section-bg section-padding">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-12">
-        <div class="check-availability-content">
-          <div class="section-heading text-center">
-            <h2 class="sec__title">Book Your Stay</h2>
-          </div>
-          <!-- end section-heading -->
-          <div class="contact-form-action padding-top-40px">
-            <form action="#">
-              <div class="row">
-                <div class="col-lg-3">
-                  <div class="input-box">
-                    <label class="label-text">Check-in</label>
-                    <div class="form-group">
-                      <span class="la la-calendar form-icon"></span>
-                      <input class="date-range form-control" type="text" name="daterange-single" />
-                    </div>
-                  </div>
-                </div>
-                <!-- end col-lg-3 -->
-                <div class="col-lg-3">
-                  <div class="input-box">
-                    <label class="label-text">Check-out</label>
-                    <div class="form-group">
-                      <span class="la la-calendar form-icon"></span>
-                      <input class="date-range form-control" type="text" name="daterange-single" />
-                    </div>
-                  </div>
-                </div>
-                <!-- end col-lg-3 -->
-                <div class="col-lg-3">
-                  <div class="input-box">
-                    <label class="label-text">Rooms</label>
-                    <div class="form-group select2-container-wrapper">
-                      <div class="select-contain w-auto">
-                        <select class="select-contain-select">
-                          <option value="0">Select Rooms</option>
-                          <option value="1" selected>1 Room</option>
-                          <option value="2">2 Rooms</option>
-                          <option value="3">3 Rooms</option>
-                          <option value="4">4 Rooms</option>
-                          <option value="5">5 Rooms</option>
-                          <option value="6">6 Rooms</option>
-                          <option value="7">7 Rooms</option>
-                          <option value="8">8 Rooms</option>
-                          <option value="9">9 Rooms</option>
-                          <option value="10">10 Rooms</option>
-                          <option value="11">11 Rooms</option>
-                          <option value="12">12 Rooms</option>
-                          <option value="13">13 Rooms</option>
-                          <option value="14">14 Rooms</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- end col-lg-3 -->
-                <div class="col-lg-3">
-                  <div class="input-box">
-                    <label class="label-text">Guests</label>
-                    <div class="form-group">
-                      <div class="dropdown dropdown-contain">
-                        <a class="dropdown-toggle dropdown-btn" href="#" data-bs-toggle="dropdown">
-                          <span>Total Guests
-                            <span class="qtyTotal guestTotal">0</span></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-wrap">
-                          <div class="dropdown-item">
-                            <div class="qty-box d-flex align-items-center justify-content-between">
-                              <label>Adults</label>
-                              <div class="qtyBtn d-flex align-items-center">
-                                <input type="text" name="qtyInput" value="0" />
-                              </div>
-                            </div>
-                          </div>
-                          <!-- end dropdown-item -->
-                          <div class="dropdown-item">
-                            <div class="qty-box d-flex align-items-center justify-content-between">
-                              <label>Children <span>2-12 years old</span></label>
-                              <div class="qtyBtn d-flex align-items-center">
-                                <input type="text" name="qtyInput" value="0" />
-                              </div>
-                            </div>
-                          </div>
-                          <!-- end dropdown-item -->
-                          <div class="dropdown-item">
-                            <div class="qty-box d-flex align-items-center justify-content-between">
-                              <label>Infants <span>0-2 years old</span></label>
-                              <div class="qtyBtn d-flex align-items-center">
-                                <input type="text" name="qtyInput" value="0" />
-                              </div>
-                            </div>
-                            <!-- end qty-box -->
-                          </div>
-                          <!-- end dropdown-item -->
-                        </div>
-                      </div>
-                      <!-- end dropdown -->
-                    </div>
-                  </div>
-                </div>
-                <!-- end col-lg-3 -->
-                <div class="col-lg-12">
-                  <div class="btn-box text-center pt-2">
-                    <a href="#" class="theme-btn">Check Availability</a>
-                  </div>
-                </div>
-                <!-- end col-lg-3 -->
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <!-- end col-lg-12 -->
-    </div>
-    <!-- end row -->
-  </div>
-  <!-- end container -->
-</section>
-<!-- end check-availability-area -->
-<!-- ================================
-  END CHECK AVAILABILITY AREA
-================================= -->
+  
 @endsection
 
  

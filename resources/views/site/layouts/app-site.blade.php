@@ -16,7 +16,7 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap"
       rel="stylesheet"
     />
-
+    
     <!-- Template CSS Files -->
     <link rel="stylesheet" href="{{asset('assets_site/css/bootstrap.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/select2.min.css')}}" />
@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="{{asset('assets_site/css/style.css')}}" />
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <style>
       .img-icone {width: 1.5rem; margin: 3px;}
     </style>
@@ -262,6 +263,10 @@
 
                       <li>
                         <a href="{{route('site.sallesfetes')}}">Salle des fêtes </a>
+                      </li>
+
+                      <li>
+                        <a href="{{route('site.blog')}}">Articles </a>
                       </li>
                       {{-- <li>
                         <a href="{{route('home')}}">Articles </a>
@@ -546,7 +551,7 @@
 ================================= -->
 
 
-@yield('content-site');
+    @yield('content-site')
 
    <!-- ================================
        START FOOTER AREA

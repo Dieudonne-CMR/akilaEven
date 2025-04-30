@@ -82,20 +82,33 @@ class EventHallController extends Controller
     public function update(Request $request, EventHall $event_hall){
 
         $validated = $request->validate([
-            'nom_salle' => 'required|string|max:255',
-            'description_salle' => 'required|string',
-            'localisation' => 'string',
-            'capacite' => 'required|integer',
-            'prix' => 'required|decimal:0,2',
-            'ville_id' => 'required|exists:villes,id',
-            'hotel_id' => 'required|exists:hotels,id',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'photo1' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'photo2' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'photo3' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            // 'photo4' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+            // 'nom_salle' => 'required|string|max:255',
+            // 'description_salle' => 'required|string',
+            // 'localisation' => 'string',
+            // 'capacite' => 'required|integer',
+            // 'prix' => 'required|decimal:0,2',
+            // 'ville_id' => 'required|exists:villes,id',
+            // 'hotel_id' => 'required|exists:hotels,id',
+            // 'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            // 'photo1' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            // 'photo2' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            // 'photo3' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            // // 'photo4' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
 
+            'nom_salle'         => 'required|string|max:255',
+            'description_salle' => 'required|string',
+            'localisation'      => 'required|string',
+            'capacite'          => 'required|integer',
+            'ville_id'          => 'required|exists:villes,id',
+            // 'hotel_id'          => 'required|exists:hotels,id',
+            'prix'              => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
+            'photo'             => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'photo1'            => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'photo2'            => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'photo3'            => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'photo4'            => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+// dd($event_hall);
         // gestion des images
         $photoFields=['photo','photo1','photo2','photo3'];
 

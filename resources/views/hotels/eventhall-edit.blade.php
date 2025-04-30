@@ -12,7 +12,7 @@
           display: flex;
       }
  </style>
-  
+  <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
 @endpush
     <div class="dashboard-main-body">
         <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
@@ -53,7 +53,7 @@
                             method="POST" enctype="multipart/form-data">
                             @csrf               
                             @method('PUT')
-                            <input type="hidden" name="hotel_id" value="{{ session('current_hotel_id') }}">
+                            {{-- <input type="hidden" name="hotel_id" value="{{ session('current_hotel_id') }}"> --}}
                             <div>
                                 <label class="form-label fw-bold text-neutral-900" for="title">Nom de la salle: </label>
                                 <input type="text" name="nom_salle" value="{{ old('nom_salle', $eventHall->nom_salle) }}"
@@ -101,7 +101,7 @@
                                 <div class="border border-neutral-200 radius-8 overflow-hidden">
                                     <div class="height-200">
                                         <!-- Editor Toolbar Start -->
-                                        <div id="toolbar-container">
+                                        {{-- <div id="toolbar-container">
                                             <span class="ql-formats">
                                                 <select class="ql-font"></select>
                                                 <select class="ql-size"></select>
@@ -145,7 +145,7 @@
                                             <span class="ql-formats">
                                                 <button class="ql-clean"></button>
                                             </span>
-                                        </div>
+                                        </div> --}}
                                         <!-- Editor Toolbar Start -->
 
                                         <!-- Editor start -->
@@ -219,9 +219,9 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('assets/js/editor.highlighted.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/editor.highlighted.min.js') }}"></script>
     <script src="{{ asset('assets/js/editor.quill.js') }}"></script>
-    <script src="{{ asset('assets/js/editor.katex.min.js') }}"></script>
+    <script src="{{ asset('assets/js/editor.katex.min.js') }}"></script> --}}
 
     <script>
         // Editor Js Start
@@ -271,4 +271,23 @@
           });
       });
     </script>
+      <script>
+              ClassicEditor
+                  .create(document.querySelector('#editor'))
+                  .then(editor => {
+                      console.log(editor);
+                  })
+                  .catch(error => {
+                      console.error(error);
+                  });
+          </script>
+      
+          <script>
+              const textarea = document.querySelector('textarea');
+              
+              textarea.addEventListener('input', () => {
+                  textarea.style.height = 'auto';
+                  textarea.style.height = `${textarea.scrollHeight}px`;
+              });
+          </script>
 @endpush

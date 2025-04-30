@@ -4,7 +4,7 @@
 <!-- ================================
 START HERO-WRAPPER AREA
 ================================= -->
-<section class="hero-wrapper hero-wrapper2">
+<section class="hero-wrapper hero-wrapper2  padding-bottom-80px">
   <div class="hero-box pb-0">
     <div id="fullscreen-slide-contain">
       <ul class="slides-container">
@@ -22,7 +22,7 @@ START HERO-WRAPPER AREA
               <p class="sec__desc pb-2">Partout au cameroun</p>
               <h2 class="sec__title">
                 Trouver une salle des fêtes <br />
-                Et d'autres salles pour des évènements ...
+                Et d'autres salles pour vos évènements !
               </h2>
             </div>
           </div>
@@ -219,9 +219,7 @@ END HERO-WRAPPER AREA
 <!-- ================================
 START INFO AREA
 ================================= -->
-<section
-  class="info-area info-bg info-area2 padding-top-80px padding-bottom-45px"
->
+{{-- <section class="info-area info-bg info-area2 padding-top-80px padding-bottom-45px">
   <div class="container">
     <div class="row">
       <div class="col-lg-3 responsive-column">
@@ -288,6 +286,67 @@ START INFO AREA
     <!-- end row -->
   </div>
   <!-- end container -->
+</section> --}}
+
+<section class="info-area padding-bottom-70px info-area info-bg info-area2 ">
+  <div class="container">
+    {{-- <h2 class="ssec__title">Akila Even Pourquoi ? et pour qui ?</h2> --}}
+    <div class="row">
+      <div class="col-lg-4 responsive-column">
+        <div class="icon-box icon-layout-3 d-flex">
+          <div class="info-icon flex-shrink-0">
+            <i class="la la-file-text"></i>
+          </div>
+          <!-- end info-icon-->
+          <div class="info-content">
+            <h4 class="info__title">Notre mission</h4>
+            <p class="info__desc">
+              Akila Even est le premier site gratuit des salles publiques et privées en location au Cameroun.
+            </p>
+          </div>
+          <!-- end info-content -->
+        </div>
+        <!-- end icon-box -->
+      </div>
+      <!-- end col-lg-4 -->
+      <div class="col-lg-4 responsive-column">
+        <div class="icon-box icon-layout-3 d-flex">
+          <div class="info-icon flex-shrink-0">
+            <i class="la la-bullhorn"></i>
+          </div>
+          <!-- end info-icon-->
+          <div class="info-content">
+            <h4 class="info__title">Louer votre salle</h4>
+            <p class="info__desc">
+              Collectivités, entreprises, ne perdez pas de temps et mettez gratuitement votre salle en location sur 
+            </p>
+          </div>
+          <!-- end info-content -->
+        </div>
+        <!-- end icon-box -->
+      </div>
+      <!-- end col-lg-4 -->
+      <div class="col-lg-4 responsive-column">
+        <div class="icon-box icon-layout-3 d-flex">
+          <div class="info-icon flex-shrink-0">
+            <i class="la la-users"></i>
+          </div>
+          <!-- end info-icon-->
+          <div class="info-content">
+            <h4 class="info__title">Trouver une salle</h4>
+            <p class="info__desc">
+              Internaute, avec Akila Even, trouvez une salle en location simplement, gratuitement dans le respect de votre vie privée.
+            </p>
+          </div>
+          <!-- end info-content -->
+        </div>
+        <!-- end icon-box -->
+      </div>
+      <!-- end col-lg-4 -->
+    </div>
+    <!-- end row -->
+  </div>
+  <!-- end container -->
 </section>
 <!-- end info-area -->
 <!-- ================================
@@ -303,26 +362,21 @@ START ABOUT AREA
       <div class="col-lg-6">
         <div class="about-content pe-5">
           <div class="section-heading">
-            <h4 class="font-size-16 pb-2">Our Story</h4>
-            <h2 class="sec__title">Atmosphere and Design</h2>
+            <h4 class="font-size-16 pb-2">A propos</h4>
+            <h2 class="sec__title">Un Mot sur Nous !</h2>
             <p class="sec__desc pt-4 pb-2">
-              It is a long established fact that a reader will be distracted
-              by the readable content of a page when looking at its layout.
-              The point of using Lorem Ipsum is that it has a more-or-less
-              normal distribution of letters
+              Akila Even est une agence événementielle qui facilite l’organisation d’événements au Cameroun. Forte de plus de cinq ans d’expérience, elle répond aux défis liés à la recherche de salles adaptées en termes de budget, emplacement et capacité, garantissant ainsi des célébrations réussies.
             </p>
-            <p class="sec__desc">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. A
-              accusamus amet consectetur ipsa officia. Doloremque error
-              porro sit soluta totam! A iste nobis vel voluptatem!
-            </p>
+            {{-- <p class="sec__desc">
+            
+            </p> --}}
           </div>
           <!-- end section-heading -->
-          <div class="btn-box pt-4">
+          {{-- <div class="btn-box pt-4">
             <a href="about.html" class="theme-btn"
               >Read More <i class="la la-arrow-right ms-1"></i
             ></a>
-          </div>
+          </div> --}}
         </div>
       </div>
       <!-- end col-lg-6 -->
@@ -333,11 +387,11 @@ START ABOUT AREA
             alt="about-img"
             class="img__item img__item-1"
           />
-          <img
+          {{-- <img
             src="assets_site/images/tripadvisor.png"
             alt="about-img"
             class="img__item img__item-2"
-          />
+          /> --}}
         </div>
       </div>
       <!-- end col-lg-6 -->
@@ -355,7 +409,7 @@ END ABOUT AREA
 <!-- ================================
 START ROOM TYPE AREA
 ================================= -->
-<section class="room-type-area section--padding">
+{{-- <section class="room-type-area section--padding">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -406,7 +460,7 @@ START ROOM TYPE AREA
     <!-- end row -->
   </div>
   <!-- end container -->
-</section>
+</section> --}}
 <!-- ================================
 END ROOM TYPE AREA
 ================================= -->
@@ -414,16 +468,14 @@ END ROOM TYPE AREA
 <!-- ================================
 START HOTEL AREA
 ================================= -->
-<section
-  class="hotel-area section-bg padding-top-100px padding-bottom-200px overflow-hidden"
->
+{{-- <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> --}}
+<section class="hotel-area section-bg padding-top-100px padding-bottom-200px overflow-hidden">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
         <div class="section-heading text-center">
           <h2 class="sec__title line-height-55">
-            Popular Hotel Destinations <br />
-            You Might Like
+            Places événementielles <br>les plus visitées
           </h2>
         </div>
         <!-- end section-heading -->
@@ -435,44 +487,48 @@ START HOTEL AREA
       <div class="col-lg-12">
         <div class="hotel-card-wrap">
           <div class="hotel-card-carousel-2 carousel-action">
-            <div class="card-item">
-              <div class="card-img">
-                <a href="hotel-single.html" class="d-block">
-                  <img src="assets_site/images/img1.jpg" alt="hotel-img" />
-                </a>
-                <span class="badge">Bestseller</span>
-                <span class="badge badge-ribbon">30% off</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="hotel-single.html"
-                    >The Millennium Hilton New York</a
-                  >
-                </h3>
-                <p class="card-meta">124 E Huron St, New york</p>
-                <div class="card-rating">
-                  <span class="badge text-white">4.4/5</span>
-                  <span class="review__text">Average</span>
-                  <span class="rating__text">(30 Reviews)</span>
+
+            @foreach ($eventhalls as $eventhall)
+              <div class="card-item">
+                <div class="card-img">
+                  <a href="{{route('site.detailSallesfetes', $eventhall->id)}}" class="d-block">
+                    <img src="{{ asset('storage/' .  $eventhall->photo) }}" alt="hotel-img" />
+                  </a>
+                  {{-- <span class="badge">Bestseller</span>
+                  <span class="badge badge-ribbon">30% off</span> --}}
                 </div>
-                <div
-                  class="card-price d-flex align-items-center justify-content-between"
-                >
-                  <p>
-                    <span class="price__num">$90.00</span>
-                    <span class="price__num before-price color-text-3"
-                      >$120.00</span
+                <div class="card-body">
+                  <h3 class="card-title"> <i class="rtcl-icon rtcl-icon-location"></i>
+                    <a href="{{route('site.detailSallesfetes', $eventhall->id)}}" >{{$eventhall->nom_salle}}</a
                     >
-                    <span class="price__text">Per night</span>
-                  </p>
-                  <a href="hotel-single.html" class="btn-text"
-                    >See details<i class="la la-angle-right"></i
-                  ></a>
+                  </h3>
+                  <p class="card-meta">{{ $eventhall->localisation }}, {{$eventhall->ville->nom }} </p>
+                  <div class="card-rating">
+                    <span class="">{{ $eventhall->capacite }}</span>
+                    <span class="review__text">Personnes</span>
+                    <span class="rating__text">({{$eventhall->views }}) Vues</span>
+                  </div>
+                  <div
+                    class="card-price d-flex align-items-center justify-content-between"
+                  >
+                    <p> 
+                      <span class="price__num">{{ number_format($eventhall->prix, 0, ',', ' ') }} Xaf </span>
+                      {{-- <span class="price__num before-price color-text-3">$120.00</span> --}}
+                      
+                      <span class="price__text"> La journée</span>
+                    </p>
+                    <i class='fas fa-money-bill-alt' style='font-size:24px'></i>
+                    <a href="{{route('site.detailSallesfetes', $eventhall->id)}}" class="btn-text"
+                      >Voir le detail<i class="la la-angle-right"></i
+                    ></a>
+                  </div>
                 </div>
               </div>
-            </div>
-            <!-- end card-item -->
-            <div class="card-item">
+              <!-- end card-item -->
+              
+            @endforeach
+
+            {{-- <div class="card-item">
               <div class="card-img">
                 <a href="hotel-single.html" class="d-block">
                   <img src="assets_site/images/img2.jpg" alt="hotel-img" />
@@ -645,7 +701,7 @@ START HOTEL AREA
                   ></a>
                 </div>
               </div>
-            </div>
+            </div> --}}
             <!-- end card-item -->
           </div>
           <!-- end hotel-card-carousel -->
@@ -676,23 +732,22 @@ START DISCOUNT AREA
           <!-- end discount-img -->
           <div class="discount-content">
             <div class="section-heading">
-              <p class="sec__desc text-white">Hot deal, save 50%</p>
+              <p class="sec__desc text-white">Une bonne affaire, 20% d'économies</p>
               <h2 class="sec__title mb-0 line-height-50 text-white">
-                Discount 50% for the <br />
-                First Booking
+                Réduction de 20% pour la première <br> réservation 
               </h2>
             </div>
             <!-- end section-heading -->
             <div class="btn-box pt-4">
-              <a href="#" class="theme-btn border-0"
-                >Learn More <i class="la la-arrow-right ms-1"></i
+              <a href="{{route('site.sallesfetes')}}" class="theme-btn border-0"
+                >Salle de fete <i class="la la-arrow-right ms-1"></i
               ></a>
             </div>
           </div>
           <!-- end discount-content -->
           <div class="company-logo">
-            <img src="assets_site/images/logo2.png" alt="" />
-            <p class="text-white font-size-14 text-end">*Terms applied</p>
+            {{-- <img src="assets_site/images/logo2.png" alt="" /> --}}
+            <p class="text-white font-size-14 text-end">*Conditions d'application</p>
           </div>
           <!-- end company-logo -->
         </div>
@@ -711,7 +766,7 @@ END DISCOUNT AREA
 <!-- ================================
    START TESTIMONIAL AREA
 ================================= -->
-<section class="testimonial-area section-padding">
+{{-- <section class="testimonial-area section-padding">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -841,7 +896,7 @@ END DISCOUNT AREA
     <!-- end row -->
   </div>
   <!-- end container -->
-</section>
+</section> --}}
 <!-- end testimonial-area -->
 <!-- ================================
    START TESTIMONIAL AREA

@@ -2,6 +2,23 @@
 @extends('site.layouts.app-site')
 @section('content-site')
 
+<style>
+  .product-description p {
+     margin-bottom: 1rem;
+     line-height: 1.6;
+ }
+ 
+ .product-description strong {
+     color: #2c3e50;
+     font-weight: 600;
+ }
+ 
+ .product-description br {
+     content: "";
+     display: block;
+     margin: 0.5rem 0;
+ }
+</style>
     <!-- ================================
     START ROOM DETAIL BREAD
 ================================= -->
@@ -108,34 +125,44 @@ START TOUR DETAIL AREA
               <div class="single-content-item pb-4">
                 <h3 class="title font-size-26">{{$eventHall->nom_salle}}</h3>
                 <p class="pt-2">
-                  <span
+                  {{-- <span
                     class="badge text-bg-warning text-white font-size-16"
                     >4.6</span
-                  >
-                  <span>(4,209 Reviews)</span>
+                  > --}}
+                  <span>({{$eventHall->views}} vues )</span>
                 </p>
               </div>
 
               <h3 class="title font-size-15 font-weight-medium pb-3">
-                House Rules
+                Informations
               </h3>
               <div class="container">
                 <div class="row">
-                    <div class=" col-md-4 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/8565/8565868.png" class="img-icone me-2">{{ $eventHall->hotel->nom_hotel }}</div>
-                    <div class=" col-md-4 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/2901/2901609.png" class="img-icone me-2" >{{$eventHall->ville->nom }}, {{ $eventHall->localisation }}</div>
-                    <div class=" col-md-4 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/6896/6896407.png" class="img-icone me-2">{{ $eventHall->capacite }} places</div>
-                    <div class=" col-md-4 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/9130/9130025.png" class="img-icone me-2" >{{ $eventHall->prix }} FCFA </div>
+                    <div class=" col-md-6 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/8565/8565868.png" class="img-icone me-2">{{ $eventHall->hotel->nom_hotel }}</div>
+                    <div class=" col-md-6 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/2901/2901609.png" class="img-icone me-2" >{{$eventHall->ville->nom }}, {{ $eventHall->localisation }}</div>
+                    <div class=" col-md-6 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/6896/6896407.png" class="img-icone me-2">{{ $eventHall->capacite }} places</div>
+                    <div class=" col-md-6 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/9130/9130025.png" class="img-icone me-2" >{{ number_format($eventHall->prix , 0, ',', ' ') }} FCFA / la journée</div>
                 </div>
             </div>
-              
+           
               <!-- end single-content-item -->
               <div class="section-block"></div>
               <div class="single-content-item padding-top-30px padding-bottom-40px" >
                 <h3 class="title font-size-20">Description</h3>
-                
-                <p class="pb-4">
-                  {{$eventHall->description_salle}}
+                @php
+                    $cleanDescription = html_entity_decode($eventHall->description_salle);
+                    $cleanDescription = str_replace([' ', '<br>'], [' ', '<br class="break">'], $cleanDescription);
+                @endphp
+            
+              <div class="product-description">
+                <p class="pb-4 ">
+                  {!! $cleanDescription !!}
                 </p>
+              </div>
+                
+                {{-- <p class="pb-4 ">
+                  {!! $cleanDescription !!}
+                </p> --}}
               </div>
               <!-- end single-content-item -->
               <div class="section-block"></div>
@@ -1210,12 +1237,12 @@ START TOUR DETAIL AREA
         <div class="col-lg-4">
           <div class="sidebar single-content-sidebar mb-0">
             <div class="sidebar-widget single-content-widget">
-              <h3 class="title stroke-shape">Your Reservation</h3>
+              <h3 class="title stroke-shape">Votre réservation</h3>
               <div class="sidebar-widget-item">
                 <div class="contact-form-action">
                   <form action="#">
                     <div class="input-box">
-                      <label class="label-text">Check-in</label>
+                      <label class="label-text">Debut</label>
                       <div class="form-group">
                         <span class="la la-calendar form-icon"></span>
                         <input
@@ -1226,13 +1253,35 @@ START TOUR DETAIL AREA
                       </div>
                     </div>
                     <div class="input-box">
-                      <label class="label-text">Check-out</label>
+                      <label class="label-text">Fin</label>
                       <div class="form-group">
                         <span class="la la-calendar form-icon"></span>
                         <input
                           class="date-range form-control"
                           type="text"
                           name="daterange-single"
+                        />
+                      </div>
+                    </div>
+                    <div class="input-box">
+                      <label class="label-text">Votre Nom</label>
+                      <div class="form-group">
+                        <span class="la la-user form-icon"></span>
+                        <input
+                          class="date-range form-control"
+                          type="text"
+                          name="daterange-single"
+                        />
+                      </div>
+                    </div>
+                    <div class="input-box">
+                      <label class="label-text">Téléphone</label>
+                      <div class="form-group">
+                        <span class="la la-phone form-icon"></span>
+                        <input
+                          class="date-range form-control"
+                          type="tel"
+                          name="+237 690 00 00 00"
                         />
                       </div>
                     </div>
@@ -1462,40 +1511,44 @@ START RELATE TOUR AREA
       <div class="col-lg-6">
         <div class="card-item room-card">
           <div class="card-img-carousel carousel-action carousel--action">
-            <div class="card-img">
-              <a href="room-details.html" class="d-block">
-                <img src="assets_site/images/img5.jpg" alt="hotel-img" />
-              </a>
-            </div>
-            <div class="card-img">
+            @foreach (['photo','photo1','photo2','photo3'] as $photo )
+              @if ( $event_Hall->$photo)
+                <div class="card-img">
+                  <a href="room-details.html" class="d-block">
+                    <img src="{{asset('storage/'.$event_Hall->$photo)}}" alt="hotel-img" />
+                  </a>
+                </div> 
+              @endif
+            @endforeach
+
+            {{-- <div class="card-img">
               <a href="room-details.html" class="d-block">
                 <img src="assets_site/images/img29.jpg" alt="hotel-img" />
               </a>
             </div>
+
             <div class="card-img">
               <a href="room-details.html" class="d-block">
                 <img src="assets_site/images/img30.jpg" alt="hotel-img" />
               </a>
-            </div>
+            </div> --}}
+
           </div>
           <div class="card-body">
             <div class="card-price pb-2">
-              <p>
+              {{-- <p>
                 <span class="price__from">From</span>
-                <span class="price__num">$88.00</span>
-              </p>
+                <span class="price__num">{{$event_Hall->prix}}</span>
+              </p> --}}
             </div>
             <h3 class="card-title font-size-26">
-              <a href="room-details.html">Premium Lake View Room</a>
+              <a href="{{route('site.detailSallesfetes', $event_Hall->id)}}">{{$event_Hall->nom_salle}}</a>
             </h3>
             <p class="card-text pt-2">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Aperiam asperiores commodi deleniti hic inventore laboriosam
-              laborum molestias, non odit quaerat! Aperiam culpa facilis
-              fuga impedit.
+              {{Str::limit(strip_tags($event_Hall->description_salle), 100)}}
             </p>
             <div class="card-attributes pt-3 pb-4">
-              <ul class="d-flex align-items-center">
+              {{-- <ul class="d-flex align-items-center">
                 <li class="d-flex align-items-center">
                   <i class="la la-bed"></i><span>2 Beds</span>
                 </li>
@@ -1506,7 +1559,13 @@ START RELATE TOUR AREA
                 <li class="d-flex align-items-center">
                   <i class="la la-bathtub"></i><span>2 Bathrooms</span>
                 </li>
-              </ul>
+              </ul> --}}
+              <div class="row">
+                <div class=" col-md-6 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/8565/8565868.png" class="img-icone me-2">{{ $event_Hall->hotel->nom_hotel }}</div>
+                <div class=" col-md-6 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/2901/2901609.png" class="img-icone me-2" >{{$event_Hall->ville->nom }}, {{ $event_Hall->localisation }}</div>
+                <div class=" col-md-6 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/6896/6896407.png" class="img-icone me-2">{{ $event_Hall->capacite }} places</div>
+                <div class=" col-md-6 d-flex align-items-center"><img src="https://cdn-icons-png.flaticon.com/128/9130/9130025.png" class="img-icone me-2" >{{ number_format($event_Hall->prix , 0, ',', ' ') }} FCFA / la journée</div>
+            </div>
             </div>
             <div class="card-btn d-flex align-items-center">
               <div class="btn-box">

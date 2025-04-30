@@ -10,7 +10,9 @@ class siteController extends Controller
 {
     public function index()
     {
-        return view('site.home');
+        $eventhalls = EventHall::with(['ville', 'hotel'])->take(2)->get();
+
+        return view('site.home', compact('eventhalls'));
     }
     public function salleFete(EventHall $eventHall)
     {
@@ -29,6 +31,8 @@ class siteController extends Controller
         // $eventHall = EventHall::with(['ville','hotel'])->find($eventHall->id);
         $eventhall = $eventHall->load('hotel','ville','user');
         $event_Halls =  EventHall::with(['ville','hotel'])->paginate(2);
+        $eventhall->increment('views'); // Increment the views count
+        
         // $eventHall = EventHall::with(['ville','hotel'])->find($eventHall->id);
         // $eventHall = EventHall::with(['ville','hotel'])->find($eventHall->id);
 
@@ -48,5 +52,9 @@ class siteController extends Controller
     public function services()
     {
         return view('services');
+    }
+
+    public function blogSite(){
+        return view('site.blog');
     }
 }

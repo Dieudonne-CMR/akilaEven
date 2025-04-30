@@ -19,7 +19,8 @@ class EventHall extends Model
         'photo4',
         'ville_id',
         'user_id',
-        'hotel_id'
+        'hotel_id',
+        'views', // New field added
     ];
 
     public function hotel()
