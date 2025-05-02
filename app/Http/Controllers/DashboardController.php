@@ -17,14 +17,14 @@ class DashboardController extends Controller
         // Récupérer les statistiques pour le carrousel
         $stats = $this->getStatistics();
         
-        // Récupérer les hôtels
-        $hotels = Hotel::with('user')->get();
+        // Récupérer les 5 hôtels les plus récents
+        $hotels = Hotel::with('user')->latest()->take(5)->get();
         
-        // Récupérer les salles de fêtes
-        $eventHalls = EventHall::with(['hotel', 'ville'])->get();
+        // Récupérer les 5 salles de fêtes les plus récentes
+        $eventHalls = EventHall::with(['hotel', 'ville'])->latest()->take(5)->get();
         
-        // Récupérer les réservations
-        $bookings = Bookings::with('eventHall')->get();
+        // Récupérer les 5 réservations les plus récentes
+        $bookings = Bookings::with('eventHall')->latest()->take(5)->get();
         
         // Récupérer les réservations complétées
         $completedBookings = Bookings::where('status', 'completed')
@@ -150,8 +150,8 @@ class DashboardController extends Controller
                 'icon' => 'hotel',
                 'badge' => $roomsOccupancyText,
                 'badgeText' => 'taux d\'occupation',
-                'gradientFrom' => 'emerald',
-                'gradientTo' => 'emerald'
+                'gradientFrom' => 'blue',
+                'gradientTo' => 'blue'
             ],
             [
                 'title' => 'Hôtels partenaires',
@@ -168,8 +168,8 @@ class DashboardController extends Controller
                 'icon' => 'check-circle',
                 'badge' => $completionRateText,
                 'badgeText' => 'taux de réussite',
-                'gradientFrom' => 'blue',
-                'gradientTo' => 'blue'
+                'gradientFrom' => 'emerald',
+                'gradientTo' => 'emerald'
             ],
             [
                 'title' => 'Réservations de chambres',

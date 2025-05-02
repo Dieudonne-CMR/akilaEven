@@ -84,7 +84,7 @@
           <div x-show="activeTab === 'hotels'" x-transition>
             <x-dashboard.tab-content :active="true" 
             title="Liste des hôtels" 
-            description="Gérez tous les hôtels partenaires de la plateforme">
+            description="Les cinq derniers hôtels enregistrés">
             
             @if($hotels->isEmpty())
                 <x-dashboard.empty-state 
@@ -119,7 +119,7 @@
                                 <td class="px-6 py-4">
                                     <div class="flex items-center">
                                         <i data-lucide="map-pin" class="w-4 h-4 mr-1 text-gray-400"></i>
-                                        {{ $hotel->ville }}
+                                        {{$hotel->ville . ', ' . $hotel->localisation }}
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">{{ $hotel->user ? $hotel->user->email : 'Non assigné' }}</td>
@@ -158,7 +158,7 @@
             <!-- Table des salles de fêtes -->
           <x-dashboard.tab-content :active="false" 
           title="Liste des salles de fêtes" 
-          description="Gérez toutes les salles de fêtes disponibles pour la réservation">
+          description="Les cinq dernières salles de fêtes enregistrées">
           
           @if($eventHalls->isEmpty())
               <x-dashboard.empty-state 
@@ -193,7 +193,7 @@
                               <td class="px-6 py-4">
                                   <div class="flex items-center">
                                       <i data-lucide="map-pin" class="w-4 h-4 mr-1 text-gray-400"></i>
-                                      {{ $eventHall->ville ? $eventHall->ville->nom : $eventHall->localisation }}
+                                      {{$eventHall->ville->nom . ', ' . $eventHall->localisation }}
                                   </div>
                               </td>
                               <td class="px-6 py-4">{{ number_format($eventHall->prix, 0, ',', ' ') }} FCFA / jour</td>
@@ -231,7 +231,7 @@
             <!-- Table des réservations -->
             <x-dashboard.tab-content :active="false" 
             title="Liste des réservations" 
-            description="Suivez et gérez toutes les réservations effectuées sur la plateforme">
+            description="Les cinq dernières réservations effectuées">
           
                 @if($bookings->isEmpty())
                 <x-dashboard.empty-state 

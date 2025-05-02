@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/hotels/create', 'create')->name('hotels.create');
         // Enregistrer un hôtel
         Route::post('/hotels/store', 'store')->name('hotels.store');
-        // Afficher le formulaire de création d'hôtels
+        // Afficher les détails d'un hôtel
         Route::get('/hotels/{hotel}', 'show')->name('hotels.show');
         
     });
