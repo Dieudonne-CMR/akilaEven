@@ -21,16 +21,29 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Pour les anciens MySQL < 5.7.7 (facultatif si vous êtes sur une version récente de Laravel/MySQL)
         Schema::defaultStringLength(191);
+
         View::composer('*', function ($view) {
-            $links = config('navigation.links');
+            $navigation = config('navigation', []);
             
-            $view->with('globalNavigationLinks', array_map(function ($link) {
-                $link['is_active'] = request()->routeIs($link['active'] ?? []);
-                return $link;
-            }, $links));
+            // Liens front
+            $links = $navigation['links'] ?? [];
+            $view->with('globalNavigationLinks', array_map(
+                fn(array $link) => array_merge($link, [
+                    'is_active' => request()->routeIs(...($link['active'] ?? []))
+                ]),
+                $links
+            ));
+            
+            // Liens admin
+            $adminLinks = $navigation['admin_links'];
+            $view->with('adminNavigationLinks', array_map(
+                fn(array $link) => array_merge($link, [
+                    'is_active' => request()->routeIs(...($link['active'] ?? []))
+                ]),
+                $adminLinks
+            ));
         });
-        
-        //
     }
 }

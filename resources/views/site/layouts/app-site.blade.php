@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  
-<!-- Mirrored from techydevs.com/demos/themes/html/trizen-demo/html/index2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Mar 2025 18:49:42 GMT -->
+
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="TechyDevs" />
@@ -22,15 +21,22 @@
     <link rel="stylesheet" href="{{asset('assets_site/css/bootstrap.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/select2.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/line-awesome.css')}}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{asset('assets_site/css/owl.carousel.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/owl.theme.default.min.css')}}" />
+    
     <link rel="stylesheet" href="{{asset('assets_site/css/jquery.fancybox.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/daterangepicker.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/animated-headline.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/jquery-ui.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/flag-icon.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/style.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets_site/styles.css')}}" />
     <link rel="stylesheet" href="{{asset('css/social-media.css')}}" />
+    <!-- Swiper pour le carrousel-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/resources/css/app.css" />
+
 
     <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -40,7 +46,7 @@
       .img-icone {width: 1.5rem; margin: 3px;}
     </style>
   </head>
-  <body>
+  <body class="bg-background">
     <!-- start cssload-loader -->
    <!--  <div class="preloader" id="preloader">
       <div class="loader">
@@ -85,10 +91,107 @@
   <script src="{{asset('assets_site/js/superslider-script.js')}}"></script>
 
   <script src="{{asset('assets_site/js/main.js')}}"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <script>
   
+  document.addEventListener('DOMContentLoaded', function() {
+    const commonConfig = {
+      slidesPerView: 1,
+      spaceBetween: 10,
+      grabCursor: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      breakpoints: {
+        640:  { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      },
+      keyboard:   { enabled: true },
+      /* mousewheel: { invert: false }, */
+      a11y: {
+        prevSlideMessage: 'Slide précédente',
+        nextSlideMessage: 'Slide suivante',
+      },
+      effect: 'slide',
+      // Navigation arrows
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },            
+      // Pagination
+      pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          dynamicBullets: true,
+      },
+    };
+    document.querySelectorAll('.swiper').forEach(container => {
+      const data = container.dataset;
+      const override = {};
+
+      // — Autoplay, slidesPerView, spaceBetween, etc. comme avant —
+      if (data.autoplay === 'false') override.autoplay = false;
+      if (data.slidesPerView)   override.slidesPerView  = parseInt(data.slidesPerView, 10);
+      if (data.spaceBetween)    override.spaceBetween   = parseInt(data.spaceBetween, 10);
+      // ...
+
+      // — Gestion des breakpoints —
+
+      if (data.breakpoints === '0') {
+        // cas « disable all breakpoints »
+        override.breakpoints = {};
+      } else {
+        // on cherche tous les data-breakpoint-XXX-...
+        const bpOverrides = {};
+        container.getAttributeNames().forEach(attrName => {
+          if (!attrName.startsWith('data-breakpoint-')) return;
+          // ex. "data-breakpoint-640-slides-per-view"
+          const parts = attrName.slice(5).split('-');
+          if (parts.length < 3) return;
+
+          const width    = parts[1]; // "640"
+          const propCamel = parts
+            .slice(2)
+            .map((chunk, i) => i === 0 ? chunk : chunk[0].toUpperCase() + chunk.slice(1))
+            .join('');           // "slidesPerView" ou "spaceBetween"
+
+          const raw = container.getAttribute(attrName);
+          const val = /^\d+$/.test(raw) ? parseInt(raw, 10) : raw;
+          bpOverrides[width] = bpOverrides[width] || {};
+          bpOverrides[width][propCamel] = val;
+        });
+
+        if (Object.keys(bpOverrides).length) {
+          override.breakpoints = bpOverrides;
+        }
+      }
+
+      // — Fusion finale —
+      const config = {
+        ...commonConfig,
+        ...override,
+        // si override.breakpoints est défini (même {}), on l'utilise ;
+        // sinon on garde commonConfig.breakpoints
+        breakpoints: override.breakpoints !== undefined
+          ? override.breakpoints
+          : commonConfig.breakpoints
+      };
+
+      new Swiper(container, config);
+    })
+});
+
+       
+</script>
   <!-- Scripts supplémentaires -->
   @stack('scripts')
 </body>
 
-<!-- Mirrored from techydevs.com/demos/themes/html/trizen-demo/html/index2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Mar 2025 18:49:46 GMT -->
 </html>

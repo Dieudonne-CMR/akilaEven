@@ -22,8 +22,14 @@ class Hotel extends Model
         'date_at', 
         'mat_user',
         'telephone',
-        'email'
+        'email',
+        'services'
     ];
+
+    protected $casts = [
+        'services' => 'array',
+    ];
+    
 
      // Relation avec l'utilisateur
      public function user()

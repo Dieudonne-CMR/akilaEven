@@ -1,102 +1,83 @@
+<style>
+  
+  body {
+      font-family: 'Poppins', sans-serif;
+     
+  }  
+  
+  .transition-all {
+      transition: all 0.3s ease;
+  }  
+  .space-card:hover {
+      transform: translateY(-5px);
+  }  
+  /* Header shadow on scroll */
+  .header-shadow {
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+    
+  /* Mobile menu animation */
+  .mobile-menu {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .mobile-menu.hidden {
+      transform: translateY(-20px);
+      opacity: 0;
+  }
+</style>
 <!-- Navigation Header -->
-<header x-data="{ open: false }" class="sticky top-0 z-[2000] w-full bg-white shadow-sm">
+<header class="sticky top-0 left-0 right-0 z-50 h-auto bg-white header-shadow">
   <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16">
-      <!-- Logo -->
-      <div class="max-lg:flex max-lg:items-center max-lg:justify-between m=ax-lg:w-full">
-        <a href="{{ route('home') }}"
-           class="text-2xl font-bold text-blue-600 transition-colors duration-200 hover:text-blue-800">
-          AkilaEven
-        </a>
-        <!-- Mobile menu button -->
-        <button type="button"
-                class="inline-flex items-center justify-center p-2 ml-3 text-gray-400 rounded-md hover:text-gray-500 hover:bg-gray-100 lg:hidden"
-                @click="open = true"
-                aria-label="Ouvrir le menu">
-          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-               viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
+      <div class="flex items-center justify-between h-28">
+          <!-- Logo -->
+          <div class="flex items-center">
+              <a href="#" class="flex items-center">
+                  <svg class="w-8 h-8 text-amber-600" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                  </svg>
+                  <span class="ml-2 text-xl font-bold heading">VenueHub</span>
+              </a>
+          </div>
+           <!-- Desktop Navigation -->
+          <x-navigation-site :isDesktop="true" />
+         
+          
+          <!-- User Actions -->
+          <x-auth.auth-btn :isDesktop="true" />
+          
+          <!-- Mobile Menu Button -->
+          <div class="md:hidden">
+              <button id="mobile-menu-button" class="cursor-pointer text-muted-foreground focus:outline-none">
+                <i data-lucide="menu" class="size-6"></i>
+                  
+              </button>
+          </div>
       </div>
-
-      <!-- Desktop Navigation -->
-     <x-navigation-site class="my-6" />
-
-      <!-- Desktop Authentication Buttons -->
-      <div class="hidden lg:flex lg:items-center lg:space-x-4">
-        @include('site.layouts.partials.auth-btn')
-      </div>
-    </div>
   </div>
-
-  <!-- Mobile Navigation Sheet -->
-  <div
-    x-show="open"
-    x-cloak
-    class="fixed inset-0 z-50 flex items-end justify-center lg:hidden"
-    aria-modal="true"
-    role="dialog"
-  >
-    <!-- Backdrop -->
-    <div
-      class="fixed inset-0 transition-opacity bg-black bg-opacity-50"
-      @click="open = false"
-      aria-hidden="true"
-    ></div>
-
-    <!-- Sheet Panel -->
-    <div
-      class="relative w-full max-h-[80vh] bg-white rounded-t-2xl p-6 overflow-y-auto transform transition-transform duration-300"
-      :class="open ? 'translate-y-0' : 'translate-y-full'"
-    >
-      <!-- Close Button -->
-      <button
-        class="absolute p-2 text-gray-500 rounded-full top-4 right-4 hover:text-gray-700 hover:bg-gray-100"
-        @click="open = false"
-        aria-label="Fermer le menu"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg"
-             class="w-6 h-6"
-             fill="none"
-             viewBox="0 0 24 24"
-             stroke="currentColor">
-          <path stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-      <x-navigation-site class="my-6" :isDesktop="false" />
-      <!-- Mobile Navigation Links -->
-    {{--   <nav class="space-y-4">
-        <a href="{{ route('home') }}"
-           class="block text-lg font-medium {{ request()->routeIs('home') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600' }} transition-colors duration-200">
-          Accueil
-        </a>
-        <a href="#"
-           class="block text-lg font-medium text-gray-700 transition-colors duration-200 hover:text-blue-600">
-          Chambres d'hôtel
-        </a>
-        <a href="{{ route('site.sallesfetes') }}"
-           class="block text-lg font-medium {{ request()->routeIs('site.sallesfetes') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600' }} transition-colors duration-200">
-          Salles de fêtes
-        </a>
-        <a href="{{ route('site.bl-about.about') }}"
-           class="block text-lg font-medium {{ request()->routeIs('site.bl-about.about') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600' }} transition-colors duration-200">
-          À propos
-        </a>
-        <a href="#"
-           class="block text-lg font-medium text-gray-700 transition-colors duration-200 hover:text-blue-600">
-          Contact
-        </a>
-      </nav> --}}
-
-      <!-- Mobile Authentication Buttons -->
-      <div class="flex items-center justify-center mt-6 ">
-        @include('site.layouts.partials.auth-btn')
-      </div>
-    </div>
-  </div>
+  
+  <!-- Mobile Menu -->
+  <x-navigation-site :isDesktop="false" />
 </header>
+
+    <!-- JavaScript for Mobile Menu Toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Add shadow to header on scroll
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 10) {
+                    header.classList.add('header-shadow');
+                } else {
+                    header.classList.remove('header-shadow');
+                }
+            });
+        });
+    </script>

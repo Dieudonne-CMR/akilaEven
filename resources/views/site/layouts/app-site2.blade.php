@@ -34,16 +34,27 @@
     <link rel="stylesheet" href="{{asset('assets_site/css/flag-icon.min.css')}}" />
   
     <link rel="stylesheet" href="{{asset('css/social-media.css')}}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    
+    <!-- Swiper pour le carrousel mobile -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    
+      <!-- Flatpickr pour le calendrier -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       .img-icone {width: 1.5rem; margin: 3px;}
     </style>
   </head>
-  <body>
+  <body class="bg-background">
     <!-- start cssload-loader -->
    <!--  <div class="preloader" id="preloader">
       <div class="loader">
@@ -88,10 +99,14 @@
   <script src="{{asset('assets_site/js/superslider-script.js')}}"></script>
 
   <script src="{{asset('assets_site/js/main.js')}}"></script>
-  
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+ {{--  <script src="https://unpkg.com/lucide@latest"></script> --}}
+  <script>
+    lucide.createIcons();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
   <!-- Scripts supplémentaires -->
   @stack('scripts')
 </body>
 
-<!-- Mirrored from techydevs.com/demos/themes/html/trizen-demo/html/index2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Mar 2025 18:49:46 GMT -->
 </html>

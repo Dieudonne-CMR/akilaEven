@@ -5,8 +5,9 @@ You are an AI embed in a project that use:
 - MySQL
 - HTML
 - CSS
-- JavaScript
+- Alpine.js
 - Bootstrap
+- TailwindCSS
 </context>
 
 <project>
@@ -25,17 +26,17 @@ The application will allow visitors (customers) to check the availability of rec
 
 ### Gestion des réservations
 
-L'utilisateur remplit un formulaire avec ses informations(son nom, prenom,adresse mail, numéro de téléphone, ville region, pays, heure d'arrivée, heure prévue, adresse) puis il clique sur réserver. L'administrateur ou le manager sont notifiés par mail, après la reservation est stockée dans la base de donnée avec un status à **pending** et un email est envoyé à l'utilisateur pour l'informer. Une réservation a un statut qui peut être:
+L'utilisateur remplit un formulaire avec ses informations(son nom, prenom,adresse mail, numéro de téléphone, ville region, pays, heure d'arrivée, heure prévue, adresse) puis il clique sur réserver. L'administrateur ou le manager sont notifiés par mail, après la reservation est stockée dans la base de donnée avec un status à **pending** et un email est envoyé à l'utilisateur pour l'informer que votre demande a bien été reçu et sera traité. Une réservation a un statut qui peut être:
 
 -   \*Pending\*\*: la réservation est en attente d'acceptation par l'administrateur.
 -   **Cancelled**: la réservation est annulée par l'administrateur.
 -   Booked: la réservation est confirmée par l'utilisateur et la salle est réservée.
 -   **Accepted**: la réservation est acceptée par l'administrateur.
 -   **Declined**: la réservation est refusée par l'administrateur.
-
 -   **Completed**: la réservation a été payée par l'utilisateur.
     Lorsque l'administrateur valide la reservation le status passe à **Accepted**, le client a alors 24H pour valider sa réservation, si elle n'est pas validée, la réservation passe à l'état **Cancelled**. l'utilisateur est notifié par email pour confirmer sa reservation. Une fois que l'utilisateur confirme sa reservation à travers son email, le statut passe à **Booked**. Une fois la salle payée, le statut passe à **Completed**.
-    Pour les chambres, le prix de la réservation est calculer en fonction du nombre de nuits passées(e.g:20 nuits = 20x10 euros = 200€ avec 5€ de taxe de séjour par nuitée = 200 + 5\*20 = 410€). L'utilisateur peut louer plusieurs chambres à la fois
+    Pour les chambres, le prix de la réservation est calculer en fonction du nombre de nuits passées(e.g:20 nuits = 20x10 euros = 200€ avec 5€ de taxe de séjour par nuitée = 200 + 5\*20 = 410€). L'utilisateur peut louer plusieurs chambres à la fois.
+    S'il y'a déjà 05 reservations liées à une salle avec un statut soit pending, accepted, booked, la salle ne peut plus être réservée (elle devient inddisponible). Les réservations avec le statut Accepted doivent être non expirées dans ce contexte. Le bouton pour afficher les disponibilités et le bouton de reservation sont dès lors désactivées. Lorsqu'une salle est à **Completed**, il est possible de la réserver à nouveau. On affichera juste un texte disant salle disponible à partir du (date à partir de laquelle la date de fin de la dernière réservation éffectuée arrive à son terme).
 
 ### Gestion des chambres
 

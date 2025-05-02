@@ -36,6 +36,9 @@ class EventHall extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    public function bookings(){
+        return $this->hasMany(Bookings::class);
+    }
 
     protected $casts = [
         'capacite' => 'integer',

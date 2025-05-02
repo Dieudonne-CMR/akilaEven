@@ -31,11 +31,9 @@
   $minPrix = EventHall::min('prix') ?: 50000;
   $maxPrix = EventHall::max('prix') ?: 1000000;
   
-  // Types d'événements
-  /* eventTypes = Event */
-  /* $eventTypes = EventTypeHelper::getEventTypes(); */
+
   $eventTypes = EventHall::distinct()->pluck('event_type')->toArray();
-  var_dump($eventTypes);
+  /* var_dump($eventTypes); */
   
   // Récupérer les filtres actuels(de l'url)
   $filters = request()->all();
@@ -248,8 +246,8 @@
       </button>
       <div x-show="open" class="mt-3 animate-fade-in">
         <div class="flex justify-between mb-2">
-          <span x-text="`${priceRange[0]}€`" class="text-sm text-muted-foreground"></span>
-          <span x-text="`${priceRange[1]}€`" class="text-sm text-muted-foreground"></span>
+          <span x-text="`${priceRange[0]}FCFA`" class="text-sm text-muted-foreground"></span>
+          <span x-text="`${priceRange[1]}FCFA`" class="text-sm text-muted-foreground"></span>
         </div>
         <div class="relative h-2 mb-6">
           <div class="range-track"></div>
@@ -280,7 +278,7 @@
         </div>
         <div class="flex justify-between gap-2 mt-4">
           <div class="relative flex-1">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">€</span>
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-sm text-muted-foreground">F</span>
             <input type="number" min="{{ $currentMinPrice }}" max="{{ $currentMaxPrice - $minGap}}" 
                   step="50"
                   x-model.number="priceRange[0]"
@@ -288,7 +286,7 @@
                   class="w-full py-2 pl-8 pr-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
           </div>
           <div class="relative flex-1">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">€</span>
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-sm text-muted-foreground">F</span>
             <input type="number" min="{{ $minPrix + $minGap }}" max="{{ $currentMaxPrice }}" 
                   step="50"
                   x-model.number="priceRange[1]"
@@ -362,14 +360,14 @@
         </div>
         <!-- Champ de recherche pour les villes -->
         <div class="relative mb-3">
-          <i class="absolute text-gray-400 -translate-y-1/2 left-3 top-1/2 ri-search-line"></i>
+          <i data-lucide="search" class="absolute text-gray-400 -translate-y-1/2 left-3 top-1/2 size-4"></i>
           <input type="text"
                 placeholder="Rechercher une ville..."
                 x-model="searchTerm"
                 @focus="showResults = true"
                 @blur="setTimeout(() => showResults = false, 200)"
                 @keydown="handleKeydown($event)"
-                class="w-full py-2 pl-10 pr-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
+                class="w-full py-2 pl-10 pr-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
           <div x-show="showResults && filteredCities().length" class="absolute w-full mt-1 overflow-auto bg-white border rounded-md max-h-40">
             <template x-for="(city, idx) in filteredCities()" :key="city">
               <div
@@ -425,7 +423,7 @@
         </div>
         <!-- Champ de recherche pour les types d'événements -->
         <div class="relative mb-3">
-          <i class="absolute text-gray-400 -translate-y-1/2 left-3 top-1/2 ri-search-line"></i>
+          <i data-lucide="search" class="absolute text-gray-400 -translate-y-1/2 left-3 top-1/2 size-4"></i>
           <input type="text"
                 placeholder="Rechercher un type d'événement..."
                 x-model="eventTypeSearchTerm"

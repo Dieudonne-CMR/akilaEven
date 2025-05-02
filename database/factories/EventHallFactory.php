@@ -9,6 +9,8 @@ use App\Models\Hotel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use App\Helpers\EventTypeHelper;
+
 //On crée le factory avec la commande php artisan make:factory EventHallFactory --model=EventHall
 
 class EventHallFactory extends Factory
@@ -42,7 +44,7 @@ class EventHallFactory extends Factory
             'photo2'             => null,
             'photo3'             => null,
             'photo4'             => null,
-            'event_type'         => $this->faker->randomElement(['conférence', 'mariage', 'concert', 'cocktail']),
+            'event_type'         => $this->faker->randomElement(EventTypeHelper::getEventTypes()),
             'ville_id'           => $villeId,
             'hotel_id'           => $hotelId,
             'user_id'            => $userId,

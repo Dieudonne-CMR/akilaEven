@@ -7,10 +7,17 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\siteController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\VilleController;
 
-/* Route::get('/villes', [VilleController::class, 'index'])->name('villes.index');
-Route::post('/soumettre-ville', [VilleController::class, 'store'])->name('villes.store'); */
+
+Route::get('/mailable', function () {
+
+    $booking = App\Models\Bookings::find(1);
+    return new App\Mail\EventHallBookingCreateEmailToAdmin($booking);
+
+});
+
+Route::post("/create-booking", [siteController::class, 'booking'])->name('booking.create');
+Route::get("/event-hall-confirm-booking/{token}", [siteController::class, 'eventHallConfirmBooking'])->name('site.event-hall-confirm-booking')->middleware('signed');
 Route::get("/rooms", [RoomController::class, 'index'])->name('site.bl-rooms.rooms');
 Route::get('', [siteController::class, 'index'])->name('home');
 route::get('/site-sallesfetes', [siteController::class, 'salleFete'])->name('site.sallesfetes');
@@ -38,12 +45,15 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function(){
+ /*    Route:get("/admin/dashboard", AdminDashboardController::class,) */
+    Route::controller(HotelController::class)->group(function () {
+        Route::get('/hotels/create', 'create')->name('hotels.create');
+        // enregistrer un hotel
+        Route::post('/hotels/store', 'store')->name('hotels.store');
+        // afficher la liste des hotels
+        Route::get('/hotel/select','selectHotel')->name('select-hotel');
+    });
     
-    Route::get('/hotels/create',[HotelController::class, 'create'])->name('hotels.create');
-    // enregistrer un hotel
-    Route::post('/hotels/store',[HotelController::class, 'store'])->name('hotels.store');
-    // afficher la liste des hotels
-    Route::get('/hotel/select',[HotelController::class, 'selectHotel'])->name('select-hotel');
 
     // Accès uniquement aux propriétaires du hotel
     Route::middleware(['check.hotel.owner'])->group(function(){
@@ -54,6 +64,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/hotels-{hotel}-event_halls-create',[EventHallController::class, 'storeEventhall'])->name('event_halls.store');
         // Afficher les salles de fête pour un hôtel donné
         Route::get('/hotels-{hotel}-event-halls', [EventHallController::class, 'index']) ->name('event-halls.index');
+        
 
     });
     route::middleware(['auth'])->group(function(){
@@ -64,8 +75,7 @@ Route::middleware(['auth'])->group(function(){
 
 });
 
-
-
-    
+// Routes du tableau de bord d'administration
+Route::get('/admin/dashboard', [App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
 require __DIR__.'/auth.php';

@@ -17,8 +17,10 @@ class DatabaseSeeder extends Seeder
        
         $this->call([
             /* VilleSeeder::class, */
-            EventHallSeeder::class,
+            /* EventHallSeeder::class, */
+            HotelSeeder::class
         ]);
+        
          /* User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',

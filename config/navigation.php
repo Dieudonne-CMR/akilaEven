@@ -29,5 +29,59 @@ return [
             'text' => 'Contact',
             'active' => ['site.bl-contact.contact']
         ]
+    ],
+    
+    // Liens pour la sidebar admin
+    'admin_links' => [
+        [
+            'route' => 'admin.dashboard',
+            'text' => 'Dashboard',
+            'icon' => 'layout-dashboard',
+            'active' => ['admin.dashboard']
+        ],
+        [
+            'route' => 'admin.hotels',
+            'text' => 'Hotels',
+            'icon' => 'hotel',
+            'active' => ['admin.hotels'],
+            'badge' => [
+                'text' => 'Pro',
+                'class' => 'bg-gray-100 text-gray-800'
+            ]
+        ],
+        [
+            'route' => 'admin.eventHalls',
+            'text' => 'Salles de fête',
+            'icon' => 'party-popper',
+            'active' => ['admin.eventHalls'],
+            'badge' => [
+                'text' => '3',
+                'class' => 'bg-blue-100 text-blue-800'
+            ]
+        ],
+        [
+            'route' => 'admin.bookings',
+            'text' => 'Réservations',
+            'icon' => 'ticket-check',
+            'active' => ['admin.bookings']
+        ],
+        /* [
+            'route' => 'admin.products',
+            'text' => 'Produits',
+            'icon' => 'shopping-bag',
+            'active' => ['admin.products']
+        ],
+        [
+            'route' => 'admin.login',
+            'text' => 'Connexion',
+            'icon' => 'log-in',
+            'active' => ['admin.login']
+        ],
+        [
+            'route' => 'admin.register',
+            'text' => 'Inscription',
+            'icon' => 'clipboard-signature',
+            'active' => ['admin.register']
+        ] */
     ]
 ];
