@@ -48,10 +48,9 @@ class EventHallController2 extends Controller
      */
     public function index()
         {
-            $eventHalls =  EventHall::all() ->with('ville') // Chargement relation ville (optionnel)
-            ->paginate(6); // Pagination
             
-            return view('admin.event-hall.eventHalls',compact("eventHalls"));
+            
+            return view('admin.event-hall.eventHalls');
 
         }
   

@@ -81,233 +81,241 @@
           </div>
           
           <!-- Table des hôtels -->
-          <x-dashboard.tab-content :active="true" x-show="activeTab === 'hotels'" 
-              title="Liste des hôtels" 
-              description="Gérez tous les hôtels partenaires de la plateforme">
-              
-              @if($hotels->isEmpty())
-                  <x-dashboard.empty-state 
-                      icon="building" 
-                      title="Aucun hôtel disponible" 
-                      message="Il n'y a pas encore d'hôtels enregistrés dans le système. Commencez par en ajouter un !" 
-                  />
-              @else
-                  <table class="w-full text-sm text-left text-gray-500">
-                      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                          <tr>
-                              <th scope="col" class="px-6 py-3">Hôtel</th>
-                              <th scope="col" class="px-6 py-3">Localisation</th>
-                              <th scope="col" class="px-6 py-3">Manager</th>
-                              <th scope="col" class="px-6 py-3">Téléphone</th>
-                              <th scope="col" class="px-6 py-3">Actions</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          @foreach($hotels as $hotel)
-                              <tr class="bg-white border-b hover:bg-gray-50">
-                                  <td class="flex items-center px-6 py-4">
-                                      @if($hotel->logo)
-                                          <img src="{{ asset('storage/' . $hotel->logo) }}" alt="{{ $hotel->nom_hotel }}" class="object-cover w-10 h-10 mr-3 rounded-full">
-                                      @else
-                                          <div class="flex items-center justify-center w-10 h-10 mr-3 rounded-full bg-primary-100">
-                                              <span class="font-bold text-primary-600">{{ substr($hotel->nom_hotel, 0, 2) }}</span>
-                                          </div>
-                                      @endif
-                                      <span class="font-bold text-gray-900">{{ $hotel->nom_hotel }}</span>
-                                  </td>
-                                  <td class="px-6 py-4">
-                                      <div class="flex items-center">
-                                          <i data-lucide="map-pin" class="w-4 h-4 mr-1 text-gray-400"></i>
-                                          {{ $hotel->ville }}
-                                      </div>
-                                  </td>
-                                  <td class="px-6 py-4">{{ $hotel->user ? $hotel->user->email : 'Non assigné' }}</td>
-                                  <td class="px-6 py-4">{{ $hotel->telephone ?? 'Non disponible' }}</td>
-                                  <td class="px-6 py-4">
-                                      <div class="relative" x-data="{ open: false }">
-                                          <button @click="open = !open" class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50" type="button">
-                                              <i data-lucide="more-vertical" class="w-5 h-5"></i>
-                                          </button>
-                                          <div x-show="open" @click.away="open = false" class="absolute right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
-                                              <ul class="py-2 text-sm text-gray-700">
-                                                  <li>
-                                                      <a href="{{ route('admin.hotels.show', $hotel->id) }}" class="block px-4 py-2 hover:bg-gray-100">Voir les détails</a>
-                                                  </li>
-                                                  <li>
-                                                      <form action="">
-                                                      {{-- <form action="{{ route('admin.hotels.destroy', $hotel->id) }}" method="POST" class="block"> --}}
-                                                          @csrf
-                                                          @method('DELETE')
-                                                          <button type="submit" class="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet hôtel ?')">Supprimer</button>
-                                                      </form>
-                                                  </li>
-                                              </ul>
-                                          </div>
-                                      </div>
-                                  </td>
-                              </tr>
-                          @endforeach
-                      </tbody>
-                  </table>
-              @endif
-          </x-dashboard.tab-content>
+          <div x-show="activeTab === 'hotels'" x-transition>
+            <x-dashboard.tab-content :active="true" 
+            title="Liste des hôtels" 
+            description="Gérez tous les hôtels partenaires de la plateforme">
+            
+            @if($hotels->isEmpty())
+                <x-dashboard.empty-state 
+                    icon="building" 
+                    title="Aucun hôtel disponible" 
+                    message="Il n'y a pas encore d'hôtels enregistrés dans le système. Commencez par en ajouter un !" 
+                />
+            @else
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Hôtel</th>
+                            <th scope="col" class="px-6 py-3">Localisation</th>
+                            <th scope="col" class="px-6 py-3">Manager</th>
+                            <th scope="col" class="px-6 py-3">Téléphone</th>
+                            <th scope="col" class="px-6 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($hotels as $hotel)
+                            <tr class="bg-white border-b hover:bg-gray-50">
+                                <td class="flex items-center px-6 py-4">
+                                    @if($hotel->logo)
+                                        <img src="{{ asset('storage/' . $hotel->logo) }}" alt="{{ $hotel->nom_hotel }}" class="object-cover w-10 h-10 mr-3 rounded-full">
+                                    @else
+                                        <div class="flex items-center justify-center w-10 h-10 mr-3 rounded-full bg-primary-100">
+                                            <span class="font-bold text-primary-600">{{ substr($hotel->nom_hotel, 0, 2) }}</span>
+                                        </div>
+                                    @endif
+                                    <span class="font-bold text-gray-900">{{ $hotel->nom_hotel }}</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <i data-lucide="map-pin" class="w-4 h-4 mr-1 text-gray-400"></i>
+                                        {{ $hotel->ville }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">{{ $hotel->user ? $hotel->user->email : 'Non assigné' }}</td>
+                                <td class="px-6 py-4">{{ $hotel->telephone ?? 'Non disponible' }}</td>
+                                <td class="px-6 py-4">
+                                    <div class="relative" x-data="{ open: false }">
+                                        <button @click="open = !open" class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50" type="button">
+                                            <i data-lucide="more-vertical" class="w-5 h-5"></i>
+                                        </button>
+                                        <div x-show="open" @click.away="open = false" class="absolute right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                                            <ul class="py-2 text-sm text-gray-700">
+                                                <li>
+                                                    <a href="{{ route('admin.hotels.show', $hotel->id) }}" class="block px-4 py-2 hover:bg-gray-100">Voir les détails</a>
+                                                </li>
+                                                <li>
+                                                    <form action="">
+                                                    {{-- <form action="{{ route('admin.hotels.destroy', $hotel->id) }}" method="POST" class="block"> --}}
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet hôtel ?')">Supprimer</button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+        </x-dashboard.tab-content>
+        
+          </div>
+          <div x-show="activeTab === 'partyRooms'" x-transition>
+            <!-- Table des salles de fêtes -->
+          <x-dashboard.tab-content :active="false" 
+          title="Liste des salles de fêtes" 
+          description="Gérez toutes les salles de fêtes disponibles pour la réservation">
           
-          <!-- Table des salles de fêtes -->
-          <x-dashboard.tab-content :active="false" x-show="activeTab === 'partyRooms'" 
-              title="Liste des salles de fêtes" 
-              description="Gérez toutes les salles de fêtes disponibles pour la réservation">
-              
-              @if($eventHalls->isEmpty())
-                  <x-dashboard.empty-state 
-                      icon="party-popper" 
-                      title="Aucune salle de fêtes disponible" 
-                      message="Il n'y a pas encore de salles de fêtes enregistrées dans le système." 
-                  />
-              @else
-                  <table class="w-full text-sm text-left text-gray-500">
-                      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                          <tr>
-                              <th scope="col" class="px-6 py-3">Salle</th>
-                              <th scope="col" class="px-6 py-3">Localisation</th>
-                              <th scope="col" class="px-6 py-3">Prix</th>
-                              <th scope="col" class="px-6 py-3">Surface</th>
-                              <th scope="col" class="px-6 py-3">Actions</th>
+          @if($eventHalls->isEmpty())
+              <x-dashboard.empty-state 
+                  icon="party-popper" 
+                  title="Aucune salle de fêtes disponible" 
+                  message="Il n'y a pas encore de salles de fêtes enregistrées dans le système." 
+              />
+          @else
+              <table class="w-full text-sm text-left text-gray-500">
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                      <tr>
+                          <th scope="col" class="px-6 py-3">Salle</th>
+                          <th scope="col" class="px-6 py-3">Localisation</th>
+                          <th scope="col" class="px-6 py-3">Prix</th>
+                          <th scope="col" class="px-6 py-3">Surface</th>
+                          <th scope="col" class="px-6 py-3">Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @foreach($eventHalls as $eventHall)
+                          <tr class="bg-white border-b hover:bg-gray-50">
+                              <td class="flex items-center px-6 py-4">
+                                  @if($eventHall->photo)
+                                      <img class="object-cover w-20 h-12 mr-3 rounded" src="{{ asset('storage/' . $eventHall->photo) }}" alt="{{ $eventHall->nom_salle }}">
+                                  @else
+                                      <div class="flex items-center justify-center w-20 h-12 mr-3 bg-gray-200 rounded">
+                                          <i data-lucide="image" class="w-6 h-6 text-gray-400"></i>
+                                      </div>
+                                  @endif
+                                  <span class="font-medium text-gray-900">{{ $eventHall->nom_salle }}</span>
+                              </td>
+                              <td class="px-6 py-4">
+                                  <div class="flex items-center">
+                                      <i data-lucide="map-pin" class="w-4 h-4 mr-1 text-gray-400"></i>
+                                      {{ $eventHall->ville ? $eventHall->ville->nom : $eventHall->localisation }}
+                                  </div>
+                              </td>
+                              <td class="px-6 py-4">{{ number_format($eventHall->prix, 0, ',', ' ') }} FCFA / jour</td>
+                              <td class="px-6 py-4">{{ $eventHall->area ?? 'N/A' }} m²</td>
+                              <td class="px-6 py-4">
+                                  <div class="relative" x-data="{ open: false }">
+                                      <button @click="open = !open" class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50" type="button">
+                                          <i data-lucide="more-vertical" class="w-5 h-5"></i>
+                                      </button>
+                                      <div x-show="open" @click.away="open = false" class="absolute right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                                          <ul class="py-2 text-sm text-gray-700">
+                                              <li>
+                                                  <a href="{{ route('admin.event-hall.show', $eventHall->id) }}" class="block px-4 py-2 hover:bg-gray-100">Voir les détails</a>
+                                              </li>
+                                              <li>
+                                                  <form action="">
+                                                 {{--  <form action="{{ route('admin.event-hall.destroy', $eventHall->id) }}" method="POST" class="block"> --}}
+                                                      @csrf
+                                                      @method('DELETE')
+                                                      <button type="submit" class="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette salle ?')">Supprimer</button>
+                                                  </form>
+                                              </li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                              </td>
                           </tr>
-                      </thead>
-                      <tbody>
-                          @foreach($eventHalls as $eventHall)
-                              <tr class="bg-white border-b hover:bg-gray-50">
-                                  <td class="flex items-center px-6 py-4">
-                                      @if($eventHall->photo)
-                                          <img class="object-cover w-20 h-12 mr-3 rounded" src="{{ asset('storage/' . $eventHall->photo) }}" alt="{{ $eventHall->nom_salle }}">
-                                      @else
-                                          <div class="flex items-center justify-center w-20 h-12 mr-3 bg-gray-200 rounded">
-                                              <i data-lucide="image" class="w-6 h-6 text-gray-400"></i>
-                                          </div>
-                                      @endif
-                                      <span class="font-medium text-gray-900">{{ $eventHall->nom_salle }}</span>
-                                  </td>
-                                  <td class="px-6 py-4">
-                                      <div class="flex items-center">
-                                          <i data-lucide="map-pin" class="w-4 h-4 mr-1 text-gray-400"></i>
-                                          {{ $eventHall->ville ? $eventHall->ville->nom : $eventHall->localisation }}
-                                      </div>
-                                  </td>
-                                  <td class="px-6 py-4">{{ number_format($eventHall->prix, 0, ',', ' ') }} FCFA / jour</td>
-                                  <td class="px-6 py-4">{{ $eventHall->area ?? 'N/A' }} m²</td>
-                                  <td class="px-6 py-4">
-                                      <div class="relative" x-data="{ open: false }">
-                                          <button @click="open = !open" class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50" type="button">
-                                              <i data-lucide="more-vertical" class="w-5 h-5"></i>
-                                          </button>
-                                          <div x-show="open" @click.away="open = false" class="absolute right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
-                                              <ul class="py-2 text-sm text-gray-700">
-                                                  <li>
-                                                      <a href="{{ route('admin.event-hall.show', $eventHall->id) }}" class="block px-4 py-2 hover:bg-gray-100">Voir les détails</a>
-                                                  </li>
-                                                  <li>
-                                                      <form action="">
-                                                     {{--  <form action="{{ route('admin.event-hall.destroy', $eventHall->id) }}" method="POST" class="block"> --}}
-                                                          @csrf
-                                                          @method('DELETE')
-                                                          <button type="submit" class="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette salle ?')">Supprimer</button>
-                                                      </form>
-                                                  </li>
-                                              </ul>
-                                          </div>
-                                      </div>
-                                  </td>
-                              </tr>
-                          @endforeach
-                      </tbody>
-                  </table>
-              @endif
-          </x-dashboard.tab-content>
+                      @endforeach
+                  </tbody>
+              </table>
+          @endif
+      </x-dashboard.tab-content>
+        </div>
+        <div x-show="activeTab === 'bookings'" x-transition>
+            <!-- Table des réservations -->
+            <x-dashboard.tab-content :active="false" 
+            title="Liste des réservations" 
+            description="Suivez et gérez toutes les réservations effectuées sur la plateforme">
           
-          <!-- Table des réservations -->
-          <x-dashboard.tab-content :active="false" x-show="activeTab === 'bookings'" 
-              title="Liste des réservations" 
-              description="Suivez et gérez toutes les réservations effectuées sur la plateforme">
-              
-              @if($bookings->isEmpty())
-                  <x-dashboard.empty-state 
-                      icon="calendar" 
-                      title="Aucune réservation disponible" 
-                      message="Il n'y a pas encore de réservations enregistrées dans le système." 
-                  />
-              @else
-                  <table class="w-full text-sm text-left text-gray-500">
-                      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                          <tr>
-                              <th scope="col" class="px-6 py-3">Client</th>
-                              <th scope="col" class="px-6 py-3">Contact</th>
-                              <th scope="col" class="px-6 py-3">Dates</th>
-                              <th scope="col" class="px-6 py-3">Prix</th>
-                              <th scope="col" class="px-6 py-3">Statut</th>
-                              <th scope="col" class="px-6 py-3">Adresse</th>
-                              <th scope="col" class="px-6 py-3">Actions</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          @foreach($bookings as $booking)
-                              <tr class="bg-white border-b hover:bg-gray-50">
-                                  <td class="px-6 py-4 font-medium text-gray-900">{{ $booking->full_name }}</td>
-                                  <td class="px-6 py-4">
-                                      <div class="flex flex-col">
-                                          <div class="flex items-center">
-                                              <i data-lucide="mail" class="w-4 h-4 mr-1 text-gray-400"></i>
-                                              {{ $booking->email }}
-                                          </div>
-                                          <div class="flex items-center mt-1">
-                                              <i data-lucide="phone" class="w-4 h-4 mr-1 text-gray-400"></i>
-                                              {{ $booking->phone }}
-                                          </div>
-                                      </div>
-                                  </td>
-                                  <td class="px-6 py-4">
-                                      <div class="flex flex-col">
-                                          <div>Arrivée: {{ $booking->arrival_time ? $booking->arrival_time->format('d-m-Y') : 'N/A' }}</div>
-                                          <div>Départ: {{ $booking->departure_time ? $booking->departure_time->format('d-m-Y') : 'N/A' }}</div>
-                                      </div>
-                                  </td>
-                                  <td class="px-6 py-4">{{ number_format($booking->total_price, 0, ',', ' ') }} FCFA</td>
-                                  <td class="px-6 py-4">
-                                      {!! App\Helpers\BookingStatusHelper::getStatusBadge($booking->status) !!}
-                                  </td>
-                                  <td class="px-6 py-4">
-                                      <div class="flex items-center">
-                                          <i data-lucide="map-pin" class="w-4 h-4 mr-1 text-gray-400"></i>
-                                          {{ $booking->address ?? 'N/A' }}
-                                      </div>
-                                  </td>
-                                  <td class="px-6 py-4">
-                                      <div class="relative" x-data="{ open: false }">
-                                          <button @click="open = !open" class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50" type="button">
-                                              <i data-lucide="more-vertical" class="w-5 h-5"></i>
-                                          </button>
-                                          <div x-show="open" @click.away="open = false" class="absolute right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
-                                              <ul class="py-2 text-sm text-gray-700">
-                                                  <li>
-                                                      <a href="{{ route('admin.booking.show', $booking->id) }}" class="block px-4 py-2 hover:bg-gray-100">Voir les détails</a>
-                                                  </li>
-                                                  <li>
-                                                      <form action="" method="POST" class="block">
-                                                     {{--  <form action="{{ route('admin.booking.destroy', $booking->id) }}" method="POST" class="block"> --}}
-                                                          @csrf
-                                                          @method('DELETE')
-                                                          <button type="submit" class="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réservation ?')">Supprimer</button>
-                                                      </form>
-                                                  </li>
-                                              </ul>
-                                          </div>
-                                      </div>
-                                  </td>
-                              </tr>
-                          @endforeach
-                      </tbody>
-                  </table>
-              @endif
-          </x-dashboard.tab-content>
+                @if($bookings->isEmpty())
+                <x-dashboard.empty-state 
+                    icon="calendar" 
+                    title="Aucune réservation disponible" 
+                    message="Il n'y a pas encore de réservations enregistrées dans le système."/>
+                @else
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Client</th>
+                            <th scope="col" class="px-6 py-3">Contact</th>
+                            <th scope="col" class="px-6 py-3">Dates</th>
+                            <th scope="col" class="px-6 py-3">Prix</th>
+                            <th scope="col" class="px-6 py-3">Statut</th>
+                            <th scope="col" class="px-6 py-3">Adresse</th>
+                            <th scope="col" class="px-6 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($bookings as $booking)
+                            <tr class="bg-white border-b hover:bg-gray-50">
+                                <td class="px-6 py-4 font-medium text-gray-900">{{ $booking->full_name }}</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex flex-col">
+                                        <div class="flex items-center">
+                                            <i data-lucide="mail" class="w-4 h-4 mr-1 text-gray-400"></i>
+                                            {{ $booking->email }}
+                                        </div>
+                                        <div class="flex items-center mt-1">
+                                            <i data-lucide="phone" class="w-4 h-4 mr-1 text-gray-400"></i>
+                                            {{ $booking->phone }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex flex-col">
+                                        <div>Arrivée: {{ $booking->arrival_time ? $booking->arrival_time->format('d-m-Y') : 'N/A' }}</div>
+                                        <div>Départ: {{ $booking->departure_time ? $booking->departure_time->format('d-m-Y') : 'N/A' }}</div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">{{ number_format($booking->total_price, 0, ',', ' ') }} FCFA</td>
+                                <td class="px-6 py-4">
+                                    {!! App\Helpers\BookingStatusHelper::getStatusBadge($booking->status) !!}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <i data-lucide="map-pin" class="w-4 h-4 mr-1 text-gray-400"></i>
+                                        {{ $booking->address ?? 'N/A' }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="relative" x-data="{ open: false }">
+                                        <button @click="open = !open" class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50" type="button">
+                                            <i data-lucide="more-vertical" class="w-5 h-5"></i>
+                                        </button>
+                                        <div x-show="open" @click.away="open = false" class="absolute right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                                            <ul class="py-2 text-sm text-gray-700">
+                                                <li>
+                                                    <a href="{{ route('admin.booking.show', $booking->id) }}" class="block px-4 py-2 hover:bg-gray-100">Voir les détails</a>
+                                                </li>
+                                                <li>
+                                                    <form action="" method="POST" class="block">
+                                                    {{--  <form action="{{ route('admin.booking.destroy', $booking->id) }}" method="POST" class="block"> --}}
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réservation ?')">Supprimer</button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+            </x-dashboard.tab-content>
+        </div>
+         
+          
+          
+          
       </div>
 
       <!-- Section des réservations récentes -->
