@@ -72,13 +72,12 @@
                   </div>
                </div>
                <div class="swiper-pagination"></div>
-               <div class="text-white swiper-button-next"></div>
-               <div class="text-white swiper-button-prev"></div>
+            
             </div>
             
             <!-- Profile Overlay -->
-            <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent profile-overlay">
-               <div class="z-[1000] container mx-auto flex flex-col md:flex-row items-end md:items-center justify-between">
+            <div class="absolute bottom-0 left-0 right-0 z-50 p-6 bg-gradient-to-t from-black/80 to-transparent profile-overlay">
+               <div class="container flex flex-col items-end justify-between mx-auto md:flex-row md:items-center">
                   <div class="flex items-center mb-4 md:mb-0">
                         <div class="w-20 h-20 overflow-hidden bg-white border-4 border-white rounded-full shadow-lg md:w-24 md:h-24">
                            <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2096&q=80" 
@@ -89,26 +88,13 @@
                            <h1 class="text-2xl font-bold text-white md:text-3xl">Grand Plaza Hotel</h1>
                            <div class="flex items-center mt-1">
                               <div class="flex items-center">
-                                    <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                    </svg>
-                                    <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                    </svg>
-                                    <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                    </svg>
-                                    <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                    </svg>
-                                    <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                    </svg>
-                                    <span class="ml-1 text-white">5.0</span>
+                                    <i data-lucide="phone" class="text-white size-4"></i>
+                                    
+                                    <span class="ml-1 text-white">+1 (212) 555-1234</span>
                               </div>
                               <span class="mx-2 text-white">•</span>
                               <span class="flex items-center text-white">
-                                    <i data-lucide="map-pin" class="w-4 h-4 mr-1"></i>
+                                    <i data-lucide="map-pin" class="mr-1 size-4"></i>
                                     New York, NY
                               </span>
                            </div>
@@ -116,12 +102,8 @@
                   </div>
                   <div class="flex space-x-2">
                         <button type="button" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300">
-                           <i data-lucide="calendar" class="w-4 h-4 mr-2"></i>
-                           Book Now
-                        </button>
-                        <button type="button" class="flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-200">
-                           <i data-lucide="share-2" class="w-4 h-4 mr-2"></i>
-                           Share
+                           <i data-lucide="image" class="w-4 h-4 mr-2"></i>
+                           Mettre à jour le logo
                         </button>
                   </div>
                </div>
@@ -131,7 +113,7 @@
       <!-- Dashboard Stats Section -->
       <div class="container px-4 py-8 mx-auto">
             <div class="mb-8 swiper statsSwiper">
-               <div class="swiper-wrapper">
+               <div class="swiper-wrapper" style="height: auto">
                   <!-- Total Reservations -->
                   <div class="swiper-slide">
                         <div class="h-full p-6 bg-white rounded-lg shadow-sm dark:bg-gray-800">

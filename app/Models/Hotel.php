@@ -50,6 +50,12 @@ class Hotel extends Model
                  $hotel->matricule_hotel = 'HOTEL-' . Str::upper(Str::random(6)) . now()->format('ymd');
              }
          });
+         static::deleting(function ($hotel) {
+            Log::info("Tentative de suppression de l'hôtel ID:{$hotel->id}");
+            
+            // Aucun code de blocage ici pour éviter les problèmes
+            return true;
+        });
      }
 
      public function rooms()

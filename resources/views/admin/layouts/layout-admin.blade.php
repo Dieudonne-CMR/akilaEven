@@ -19,21 +19,17 @@
     <link rel="stylesheet" href="{{asset('assets_site/css/jquery-ui.css')}}" />
     {{-- <link rel="stylesheet" href="{{asset('assets_site/css/style.css')}}" /> --}}
     <link rel="stylesheet" href="{{asset('assets_site/styles.css')}}" />
-
-    <!-- Template CSS Files -->
- 
+    <!-- Template CSS Files --> 
     <link rel="stylesheet" href="{{asset('assets_site/css/select2.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/line-awesome.css')}}" />
 
     <link rel="stylesheet" href="{{asset('assets_site/css/jquery.fancybox.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/daterangepicker.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets_site/css/animated-headline.css')}}" />
-   
+    <link rel="stylesheet" href="{{asset('assets_site/css/animated-headline.css')}}" />   
     <link rel="stylesheet" href="{{asset('assets_site/css/flag-icon.min.css')}}" />
   
     <link rel="stylesheet" href="{{asset('css/social-media.css')}}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     
     <!-- Swiper pour le carrousel mobile -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
@@ -45,19 +41,12 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>   
      
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+    <script src="https://cdn.tailwindcss.com"></script>    
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
-    <!-- Flowbite -->
-{{--     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
-     --}}
     <!-- Swiper.js -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
@@ -66,44 +55,38 @@
     </style>
   </head>
   <body class=" bg-background">
-
     @include("admin.layouts.header-admin")
-
     @include("admin.layouts.sidebar")
-    {{-- @include('site.layouts.partials.site-header')
- --}}
-    
-    @yield('content')
-    
-   
-
-    {{-- @include('site.layouts.partials.site-footer') --}}
+    @yield('content-admin')
 
   <!-- Template JS Files -->
-  <script src="{{asset('assets_site/js/jquery-3.7.1.min.js')}}"></script>
- 
- <!--  <script src="{{asset('assets_site/js/jquery-3.4.1.min.js')}}"></script> -->
-  <script src="{{asset('assets_site/js/jquery-ui.js')}}"></script>
+<script src="{{asset('assets_site/js/jquery-3.7.1.min.js')}}"></script>
+
+<!--  <script src="{{asset('assets_site/js/jquery-3.4.1.min.js')}}"></script> -->
+<script src="{{asset('assets_site/js/jquery-ui.js')}}"></script>
 
 
-  <script src="{{asset('assets_site/js/moment.min.js')}}"></script>
-  <script src="{{asset('assets_site/js/daterangepicker.js')}}"></script>
+<script src="{{asset('assets_site/js/moment.min.js')}}"></script>
+<script src="{{asset('assets_site/js/daterangepicker.js')}}"></script>
 
-  <script src="{{asset('assets_site/js/jquery.fancybox.min.js')}}"></script>
-  <script src="{{asset('assets_site/js/jquery.countTo.min.js')}}"></script>
-  <script src="{{asset('assets_site/js/animated-headline.js')}}"></script>
-  <script src="{{asset('assets_site/js/jquery.ripples-min.js')}}"></script>
-  <script src="{{asset('assets_site/js/quantity-input.js')}}"></script>
+<script src="{{asset('assets_site/js/jquery.fancybox.min.js')}}"></script>
+<script src="{{asset('assets_site/js/jquery.countTo.min.js')}}"></script>
+<script src="{{asset('assets_site/js/animated-headline.js')}}"></script>
+<script src="{{asset('assets_site/js/jquery.ripples-min.js')}}"></script>
+<script src="{{asset('assets_site/js/quantity-input.js')}}"></script>
 
 
-  <script src="{{asset('assets_site/js/main.js')}}"></script>
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
- {{--  <script src="https://unpkg.com/lucide@latest"></script> --}}
-  <script>
-    lucide.createIcons();
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-  <!-- Scripts supplémentaires -->
+<script src="{{asset('assets_site/js/main.js')}}"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+{{--  <script src="https://unpkg.com/lucide@latest"></script> --}}
+<!-- Initialize Lucide Icons -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      lucide.createIcons();
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+<!-- Scripts supplémentaires -->
   @stack('scripts')
 </body>
 

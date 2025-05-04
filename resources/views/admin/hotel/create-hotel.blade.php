@@ -5,7 +5,7 @@
     <div class="">
       <div class="max-w-full p-6 mb-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
           <!-- Bouton Retour -->
-          <a href="{{ route("admin.hotels.show") }}" class="inline-flex items-center mb-6 text-gray-600 transition-colors hover:text-blue-600">
+          <a href="{{ route("admin.hotels") }}" class="inline-flex items-center mb-6 text-gray-600 transition-colors hover:text-blue-600">
               <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
               </svg>

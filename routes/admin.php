@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HotelController2;
 use App\Http\Controllers\EventHallController2;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,7 +20,10 @@ use Illuminate\Support\Facades\Route;
         Route::post('/hotels/store', 'store')->name('hotels.store');
         // Afficher les détails d'un hôtel
         Route::get('/hotels/{hotel}', 'show')->name('hotels.show');
-        
+        // Supprimer un hôtel
+        Route::delete('/hotels/delete/{hotel}', 'destroy')->name('hotels.destroy');
+        // Supprimer plusieurs hôtels
+        Route::delete('/hotels', 'bulkDestroy')->name('hotels.bulk-delete');
     });
     
     
@@ -42,6 +46,12 @@ use Illuminate\Support\Facades\Route;
         
     });
 
+    Route::controller(RoomController::class)->group(function () {
+        // Créer une chambre d'hôtel
+        Route::get("/rooms/create/{hotel}", 'create')->name("rooms.create");
+        // Enregistrer une chambre d'hôtel
+        Route::post("/rooms/create/{hotel}", 'store')->name("rooms.store");
+    });
     
     
 /* });    

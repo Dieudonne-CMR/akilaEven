@@ -4,6 +4,8 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Blade;
+use App\Helpers\ToastHelper;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Enregistrement du helper pour les toasts
+        $this->app->singleton('toast', function () {
+            return new ToastHelper();
+        });
     }
 
     /**
@@ -44,6 +49,12 @@ class AppServiceProvider extends ServiceProvider
                 ]),
                 $adminLinks
             ));
+            
+        });
+
+        // Ajout des directives Blade personnalisées
+        Blade::directive('toast', function ($expression) {
+            return "<?php echo view('components.ui.toast', $expression)->render(); ?>";
         });
     }
 }

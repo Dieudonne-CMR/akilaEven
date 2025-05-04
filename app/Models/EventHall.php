@@ -23,6 +23,9 @@ class EventHall extends Model
         'hotel_id',
         "area",
         "event_type",
+        "equipments",
+        "rules",
+        "status",
     ];
 
     public function hotel()
@@ -44,6 +47,8 @@ class EventHall extends Model
         'capacite' => 'integer',
         'area'     => 'decimal:2',
         'prix'     => 'decimal:2',
+        'equipments' => 'array',
+        'rules' => 'array',     
     ];
     
 }

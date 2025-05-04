@@ -224,7 +224,7 @@
                                           :id="'checkbox-table-' + booking.id" 
                                           type="checkbox" 
                                           x-model="selectedBookings"
-                                          :value="booking.id"
+                                          :value="parseInt(booking.id)"
                                           @change="updateSelectAll"
                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                     >
@@ -497,16 +497,24 @@
               },
               
               toggleSelectAll() {
-                  if (this.selectAll) {
+                  if (!this.selectAll) {
+                      // Si on coche la case, sélectionner tous les éléments de la page actuelle
                       this.selectedBookings = this.paginatedBookings.map(booking => booking.id);
+                      this.selectAll = true;
                   } else {
+                      // Si on décoche la case, désélectionner tous les éléments
                       this.selectedBookings = [];
+                      this.selectAll = false;
                   }
                   this.notifySelectionChange();
               },
               
               updateSelectAll() {
-                  this.selectAll = this.selectedBookings.length === this.paginatedBookings.length;
+                  // Vérifie si tous les éléments de la page actuelle sont sélectionnés
+                  const allSelected = this.paginatedBookings.every(booking => 
+                      this.selectedBookings.includes(parseInt(booking.id))
+                  );
+                  this.selectAll = allSelected && this.paginatedBookings.length > 0;
               },
               
               sortBy(field) {
@@ -517,6 +525,13 @@
                       this.sortDirection = 'asc';
                   }
                   this.applyFiltersAndSort();
+              },
+              
+              updateIcons() {
+                  // Utiliser setTimeout pour s'assurer que le DOM est mis à jour avant de recréer les icônes
+                  setTimeout(() => {
+                      lucide.createIcons();
+                  },0);
               },
               
               applyFiltersAndSort() {
@@ -565,12 +580,24 @@
                   if (this.currentPage > this.totalPages) {
                       this.currentPage = 1;
                   }
+                  
+                  // Mettre à jour l'état de selectAll après le filtrage
+                  this.$nextTick(() => {
+                      this.updateSelectAll();
+                      this.updateIcons();
+                  });
               },
               
               updatePaginatedBookings() {
                   const start = (this.currentPage - 1) * this.itemsPerPage;
                   const end = start + this.itemsPerPage;
                   this.paginatedBookings = this.filteredBookings.slice(start, end);
+                  
+                  // Mettre à jour l'état de selectAll après mise à jour des éléments paginés
+                  this.$nextTick(() => {
+                      this.updateSelectAll();
+                      this.updateIcons();
+                  });
               },
               
               prevPage() {
@@ -615,12 +642,23 @@
                   });
                   
                   this.$watch('selectedBookings', () => {
+                     console.log('selectedBookings changed:', this.selectedBookings);
                       this.updateSelectAll();
                       this.notifySelectionChange();
                   });
                   
                   this.$watch('currentPage', () => {
                       this.updatePaginatedBookings();
+                  });
+
+                  // Ajouter un watcher sur filteredBookings pour recréer les icônes
+                  this.$watch('filteredBookings', () => {
+                      this.updateIcons();
+                  });
+
+                  // Ajouter un watcher sur paginatedBookings pour recréer les icônes également
+                  this.$watch('paginatedBookings', () => {
+                      this.updateIcons();
                   });
               }
           }
