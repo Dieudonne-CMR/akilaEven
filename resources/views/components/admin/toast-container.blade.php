@@ -9,7 +9,7 @@
             });
             setTimeout(() => {
                 this.remove(toast.id);
-            }, 5000);
+            }, 1000);
         },
         remove(id) {
             this.toasts = this.toasts.filter(toast => toast.id !== id);
@@ -20,7 +20,7 @@
             add(event.detail);
         })
     "
-    class="fixed right-4 top-4 z-50 space-y-4"
+    class="fixed space-y-4 z-[60] right-4 top-4"
 >
     <template x-for="toast in toasts" :key="toast.id">
         <div 

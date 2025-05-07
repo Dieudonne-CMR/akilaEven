@@ -20,8 +20,10 @@ use Illuminate\Support\Facades\Route;
         Route::post('/hotels/store', 'store')->name('hotels.store');
         // Afficher les détails d'un hôtel
         Route::get('/hotels/{hotel}', 'show')->name('hotels.show');
+        // Mettre à jour les médias d'un hôtel (logo et bannières)
+        Route::post('/hotels/{hotel}/media', 'updateMedia')->name('hotels.update-media');
         // Supprimer un hôtel
-        Route::delete('/hotels/delete/{hotel}', 'destroy')->name('hotels.destroy');
+        Route::delete('/hotels/{hotel}', 'destroy')->name('hotels.destroy');
         // Supprimer plusieurs hôtels
         Route::delete('/hotels', 'bulkDestroy')->name('hotels.bulk-delete');
     });
@@ -32,12 +34,17 @@ use Illuminate\Support\Facades\Route;
         Route::get("/bookings", 'index')->name("bookings");
         // Afficher les détails d'une réservation
         Route::get("/bookings/{booking}",'show')->name("booking.show");
-        
+        // Supprimer une réservation
+        Route::delete("/bookings/{id}", 'destroy')->name("booking.destroy");
+        // Suppression groupée de réservations
+        Route::delete("/bookings/bulk-delete", 'bulkDestroy')->name("booking.bulk-destroy");
+        // Mettre à jour le statut d'une réservation
+        Route::patch("/bookings/{booking}/status", 'updateStatus')->name("booking.update-status");
     });
     Route::controller(EventHallController2::class)->group(function () {
         // Afficher la liste des salles de fêtes
         Route::get("/eventHalls", 'index')->name("eventHalls");
-        // Créer une salle de fête
+        // Afficher le formulaire de création d'une salle de fête
         Route::get("/event-halls/create/{hotel}", 'create')->name("event-hall.create");
         // Enregistrer une salle de fête
         Route::post("/event-halls/create/{hotel}", 'store')->name("event-hall.store");

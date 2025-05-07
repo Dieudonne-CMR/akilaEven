@@ -203,7 +203,7 @@ class siteController extends Controller
             $booking->update(['status' => 'cancelled']);
             
             return redirect()->route('site.event-hall-confirm-booking')
-                ->with('error', 'Cette réservation a expiré. Veuillez effectuer une nouvelle demande.');
+                ->with('error', 'Cette réservation a expirée. Veuillez effectuer une nouvelle demande.');
         }
 
         // 4. Mettre à jour le statut et la date de confirmation

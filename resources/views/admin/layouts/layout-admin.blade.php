@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
     <title>AkilaEven - Dashboard</title>
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.png" />
@@ -55,6 +56,7 @@
     </style>
   </head>
   <body class=" bg-background">
+    <x-admin.toast-container />
     @include("admin.layouts.header-admin")
     @include("admin.layouts.sidebar")
     @yield('content-admin')

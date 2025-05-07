@@ -16,7 +16,8 @@ class Room extends Model
         'photo',
         'photo1',
         'photo2',
-        'photo3'
+        'photo3',
+        'status'
     ];
 
     public function hotel()

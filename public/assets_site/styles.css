@@ -219,3 +219,19 @@ input[type="range"]::-moz-range-thumb {
         font-size: 14px !important;
     }
 }
+/* Styles pour le composant Tiptap */
+.ProseMirror:focus {
+    outline: none;
+}
+
+.tiptap ul p,
+.tiptap ol p {
+    display: inline;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+}

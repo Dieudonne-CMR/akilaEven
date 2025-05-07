@@ -5,12 +5,12 @@
 
   <div class="dashboard-main-body">
 
-      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
-          <h6 class="fw-semibold mb-0">Créer un Hotel</h6>
-          <ul class="d-flex align-items-center gap-2">
+      <div class="flex-wrap gap-3 mb-24 d-flex align-items-center justify-content-between">
+          <h6 class="mb-0 fw-semibold">Créer un Hotel</h6>
+          <ul class="gap-2 d-flex align-items-center">
               <li class="fw-medium">
-                  <a href="index.html" class="d-flex align-items-center gap-1 hover-text-primary">
-                      <iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>
+                  <a href="index.html" class="gap-1 d-flex align-items-center hover-text-primary">
+                      <iconify-icon icon="solar:home-smile-angle-outline" class="text-lg icon"></iconify-icon>
                       Dashboard
                   </a>
               </li>
@@ -23,7 +23,7 @@
           <div class="col-lg-12">
               <div class="card">
                   <div class="card-header">
-                      <h5 class="card-title mb-0">Créer un Hotel</h5>
+                      <h5 class="mb-0 card-title">Créer un Hotel</h5>
                   </div>
                     @if(session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>

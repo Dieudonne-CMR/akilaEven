@@ -2,7 +2,7 @@
 
 <div 
     x-data="hotelTableComponent({{ json_encode($hotels) }})" 
-    class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg"
+    class="relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg"
 >
     <div class="overflow-x-auto">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -70,7 +70,7 @@
                                     <img :src="'/storage/' + hotel.logo" class="object-cover w-full h-full" :alt="hotel.nom_hotel">
                                 </template>
                                 <template x-if="!hotel.logo">
-                                    <span class="font-bold text-blue-600" x-text="getInitials(hotel.nom_hotel)"></span>
+                                    <span class="font-bold text-blue-600" x-text="hotel.initials"></span>
                                 </template>
                             </div>
                             <div>
@@ -125,28 +125,16 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <form :id="'delete-hotel-form-' + hotel.id" 
-                                          :action="'/admin/hotels/delete/' + hotel.id" 
-                                          method="POST" 
-                                          style="display: none;">
-                                        @csrf
-                                        @method('DELETE')
-                                          
-                                        </form>
-                                      
-                                      <button @click="confirmDelete(hotel.id , hotel.nom_hotel)">
-                                          Supprimer
-                                      </button>
-                                       {{--  <a 
+                                        <a 
                                             @click="deleteHotel(hotel.id, hotel.nom_hotel)" 
-                                            class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                            class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100"
                                         >
                                             <i data-lucide="trash-2" class="w-4 h-4 mr-2 text-red-500"></i>
                                             Supprimer
-                                        </a> --}}
+                                        </a>
                                     </li>
                                     <li>
-                                        <a :href="'/admin/event-halls/create/' + hotel.id" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <a :href="'/admin/event-halls/create/' + hotel.id" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100">
                                             <i data-lucide="home" class="w-4 h-4 mr-2 text-green-500"></i>
                                             Ajouter une salle
                                         </a>
@@ -164,11 +152,13 @@
                 </template>
                 <tr x-show="filteredHotels.length === 0" class="border-b dark:border-gray-600">
                     <td colspan="6" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
-                        <div class="flex flex-col items-center justify-center">
-                            <i data-lucide="search-x" class="w-10 h-10 mb-2 text-gray-400"></i>
-                            <span class="text-lg font-medium">Aucun résultat trouvé</span>
-                            <p class="mt-1">Essayez de modifier vos critères de recherche.</p>
-                        </div>
+                        <x-admin.empty-state 
+                            icon="search-x" 
+                            title="Aucun hôtel trouvé" 
+                            message="Essayez de modifier vos critères de recherche ou d'ajouter un nouvel hôtel."
+                            bgClass="bg-blue-50"
+                            iconClass="text-blue-500"
+                        />
                     </td>
                 </tr>
             </tbody>
@@ -257,10 +247,10 @@
                 return { start, end };
             },
             // Afficher les initiales du nom de l'hôtel
-            getInitials(name) {
+        /*     getInitials(name) {
                 if (!name) return '';
                 return name.split(' ').map(word => word[0]).join('').toUpperCase();
-            },
+            }, */
 
             // Selectionner tous les hôtels
             toggleSelectAll() {
@@ -270,8 +260,7 @@
                   this.selectedHotels = [...new Set([...this.selectedHotels, ...visibleHotelIds])];
               } else {
                   this.selectedHotels = [];
-              }
-              
+              }              
               this.notifySelectionChange();
             },
             // Trier par nom, téléphone, email, localisation au niveau des en-têtes des colonnes
@@ -353,12 +342,6 @@
                 this.searchQuery = event.detail.query;
                 this.currentPage = 1; // Réinitialiser à la première page
                 this.applyFiltersAndSort();
-            },
-            confirmDelete(id, name) {
-              console.log('id', id);
-                  if (confirm(`Êtes-vous sûr de vouloir supprimer l'hôtel "${name}" avec l'identifiant ${id} ?`)) {
-                    document.getElementById(`delete-hotel-form-${id}`).submit();
-                }
             },
             // Supprimer un hôtel
             deleteHotel(id, name) {

@@ -1,14 +1,17 @@
 @extends('admin.layouts.layout-admin')
 @section('content-admin')
+
+@if(session()->has('errors') && session('errors')->has('general'))
+    <x-ui.toast type="error" message="{{ $errors->first('general') }}" position="bottom-right" />
+@endif
+
 <x-admin.dashboard-panel class="">
     <!-- Contenu Principal -->
     <div class="">
       <div class="max-w-full p-6 mb-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
           <!-- Bouton Retour -->
           <a href="{{ route("admin.hotels") }}" class="inline-flex items-center mb-6 text-gray-600 transition-colors hover:text-blue-600">
-              <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
-              </svg>
+              <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i>
               Retour aux hôtels
           </a>
           
@@ -21,149 +24,152 @@
       
       
       <!-- Carte du formulaire -->
-      <div class="p-6 mb-8 bg-white rounded-lg shadow-md" x-data="hotelForm()">
+      <div class="p-6 mb-8 bg-white rounded-lg shadow-md">
           <div class="mb-8">
               <h2 class="mb-1 text-xl font-semibold text-gray-900">Informations sur l'hôtel</h2>
               <p class="text-sm text-gray-500">Tous les champs marqués d'un * sont obligatoires</p>
           </div>
+    
           
-          <form @submit.prevent="submitForm">
+          <form action="{{ route('admin.hotels.store') }}" method="POST" enctype="multipart/form-data">
+              @csrf              
               <!-- Upload du logo -->
               <div class="mb-6">
-                  <label class="block mb-2 text-sm font-medium text-gray-900" for="hotel_logo">
+                  <label class="block mb-2 text-sm font-medium text-gray-900" for="logo">
                       Logo de l'hôtel <span class="text-red-500">*</span>
                   </label>
                   <div class="flex items-center justify-center w-full">
-                      <label for="hotel_logo" class="relative flex flex-col items-center justify-center w-full h-40 overflow-hidden border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-                          :class="{'border-blue-500 bg-blue-50': logoPreview}">
-                          <template x-if="!logoPreview">
-                              <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                  <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                                  </svg>
-                                  <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Cliquez pour uploader</span> ou glisser-déposer</p>
-                                  <p class="text-xs text-gray-500">SVG, PNG ou JPG (MAX. 800x400px)</p>
-                              </div>
-                          </template>
-                          <template x-if="logoPreview">
-                              <div class="absolute inset-0 flex items-center justify-center">
-                                  <img :src="logoPreview" class="object-contain max-w-full max-h-full" alt="Aperçu du logo">
-                                  <button @click.prevent="removeLogo" type="button" class="absolute p-1 text-white bg-red-500 rounded-full top-2 right-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">
-                                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                      </svg>
-                                  </button>
-                              </div>
-                          </template>
-                          <input id="hotel_logo" name="hotel_logo" type="file" class="hidden" accept="image/*" @change="handleLogoUpload" required />
+                      <label for="logo" class="relative flex flex-col items-center justify-center w-full h-40 overflow-hidden border-2  border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 {{ session()->has('errors') && session('errors')->has('logo') ? 'border-red-500' : 'border-gray-300'}}">
+                          <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                              <i data-lucide="upload-cloud" class="w-10 h-10 mb-3 text-gray-400"></i>
+                              <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Cliquez pour uploader</span> ou glisser-déposer</p>
+                              <p class="text-xs text-gray-500">PNG, JPG ou JPEG (MAX. 4 Mo)</p>
+                          </div>
+                          <input id="logo" name="logo" type="file" class="hidden" accept="image/jpeg,image/png,image/jpg" />
                       </label>
                   </div>
-                  <p class="mt-1 text-sm text-gray-500">Uploader un logo clair et de haute qualité représentant votre hôtel.</p>
+                  @if(session()->has('errors') && session('errors')->has('logo'))
+                      <p class="mt-1 text-sm text-red-600">{{ session('errors')->first('logo') }}</p>
+                  @endif
               </div>
               
               <!-- Nom de l'hôtel -->
               <div class="mb-6">
-                  <label for="hotel_name" class="block mb-2 text-sm font-medium text-gray-900">
+                  <label for="nom_hotel" class="block mb-2 text-sm font-medium text-gray-900">
                       Nom de l'hôtel <span class="text-red-500">*</span>
                   </label>
-                  <input type="text" id="hotel_name" name="hotel_name" x-model="formData.hotelName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Entrez le nom de l'hôtel" required>
+                  <input type="text" id="nom_hotel" name="nom_hotel" value="{{ old('nom_hotel')}}" class="bg-gray-50 border {{ session()->has('errors') && session('errors')->has('nom_hotel') ? 'border-red-500' : 'border-gray-300'}} text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Entrez le nom de l'hôtel" required>
+                  @if(session()->has('errors') && session('errors')->has('nom_hotel'))
+                      <p class="mt-1 text-sm text-red-600">{{ session('errors')->first('nom_hotel') }}</p>
+                  @endif
               </div>
               
               <!-- Email et Téléphone du manager -->
               <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-2">
                   <div>
-                      <label for="manager_email" class="block mb-2 text-sm font-medium text-gray-900">
-                          Email du manager <span class="text-red-500">*</span>
+                      <label for="email" class="block mb-2 text-sm font-medium text-gray-900">
+                          Email <span class="text-red-500">*</span>
                       </label>
-                      <input type="email" id="manager_email" name="manager_email" x-model="formData.managerEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="manager@exemple.com" required>
-                      <p x-show="errors.email" x-text="errors.email" class="mt-1 text-sm text-red-600"></p>
+                      <div class="relative">
+                          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                              <i data-lucide="mail" class="w-5 h-5 text-gray-400"></i>
+                          </div>
+                          <input type="email" id="email" name="email" value="{{ old('email') }}" class="bg-gray-50 border {{ session()->has('errors') && session('errors')->has('email') ? 'border-red-500' : 'border-gray-300' }} text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="hotel@exemple.com" required>
+                      </div>
+                      @if(session()->has('errors') && session('errors')->has('email'))
+                          <p class="mt-1 text-sm text-red-600">{{ session('errors')->first('email') }}</p>
+                      @endif
                   </div>
                   <div>
-                      <label for="manager_phone" class="block mb-2 text-sm font-medium text-gray-900">
-                          Téléphone du manager <span class="text-red-500">*</span>
+                      <label for="telephone" class="block mb-2 text-sm font-medium text-gray-900">
+                          Téléphone <span class="text-red-500">*</span>
                       </label>
-                      <input type="tel" id="manager_phone" name="manager_phone" x-model="formData.managerPhone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="+33 6 12 34 56 78" required>
-                      <p x-show="errors.phone" x-text="errors.phone" class="mt-1 text-sm text-red-600"></p>
+                      <div class="relative">
+                          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                              <i data-lucide="phone" class="w-5 h-5 text-gray-400"></i>
+                          </div>
+                          <input type="tel" id="telephone" name="telephone" value="{{ old('telephone') }}" class="bg-gray-50 border {{ session()->has('errors') && session('errors')->has('telephone') ? 'border-red-500' : 'border-gray-300' }} text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="6xxxxxxxx" required>
+                      </div>
+                      @if(session()->has('errors') && session('errors')->has('telephone'))
+                          <p class="mt-1 text-sm text-red-600">{{ session('errors')->first('telephone') }}</p>
+                      @endif
                   </div>
               </div>
               
               <!-- Sélection de la ville -->
               <div class="mb-6">
-                  <label for="city" class="block mb-2 text-sm font-medium text-gray-900">
+                  <label for="ville" class="block mb-2 text-sm font-medium text-gray-900">
                       Ville <span class="text-red-500">*</span>
                   </label>
-                  <select id="city" name="city" x-model="formData.city" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-                      <option value="" selected disabled>Sélectionnez une ville</option>
-                      <option value="paris">Paris</option>
-                      <option value="lyon">Lyon</option>
-                      <option value="marseille">Marseille</option>
-                      <option value="toulouse">Toulouse</option>
-                      <option value="nice">Nice</option>
-                      <option value="nantes">Nantes</option>
-                      <option value="strasbourg">Strasbourg</option>
-                      <option value="montpellier">Montpellier</option>
-                      <option value="bordeaux">Bordeaux</option>
-                      <option value="lille">Lille</option>
-                  </select>
+                  <div class="relative">
+                      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                          <i data-lucide="map-pin" class="w-5 h-5 text-gray-400"></i>
+                      </div>
+                      <select id="ville" name="ville" class="bg-gray-50 border {{ session()->has('errors') && session('errors')->has('ville') ? 'border-red-500' : 'border-gray-300' }} text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" required>
+                          <option value="" selected disabled>Sélectionnez une ville</option>
+                          @foreach($villes as $ville)
+                              <option value="{{ $ville->id }}" {{ old('ville') == $ville->id ? 'selected' : '' }}>{{ $ville->nom }}</option>
+                          @endforeach
+                      </select>
+                  </div>
+                  @if(session()->has('errors') && session('errors')->has('ville'))
+                      <p class="mt-1 text-sm text-red-600">{{ session('errors')->first('ville') }}</p>
+                  @endif
               </div>
               
               <!-- Description -->
               <div class="mb-6">
-                  <label for="description" class="block mb-2 text-sm font-medium text-gray-900">
+                  <label for="description_hotel" class="block mb-2 text-sm font-medium text-gray-900">
                       Description <span class="text-red-500">*</span>
                   </label>
-                  <textarea id="description" name="description" rows="4" x-model="formData.description" @input="countWords" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Décrivez votre hôtel, ses caractéristiques uniques et ce que les clients peuvent attendre..." required></textarea>
-                  <div class="flex justify-between mt-1">
-                      <p class="text-sm text-gray-500">Maximum 300 mots</p>
-                      <p class="text-sm" :class="wordCount > 300 ? 'text-red-600' : 'text-gray-500'">
-                          <span x-text="wordCount"></span>/300 mots
-                      </p>
-                  </div>
+                  <textarea id="description_hotel" name="description_hotel" rows="4" class="bg-gray-50 border {{ session()->has('errors') && session('errors')->has('description_hotel') ? 'border-red-500' : 'border-gray-300' }} text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Décrivez votre hôtel, ses caractéristiques uniques et ce que les clients peuvent attendre..." required>{{ old('description_hotel') }}</textarea>
+                  @if(session()->has('errors') && session('errors')->has('description_hotel'))
+                      <p class="mt-1 text-sm text-red-600">{{ session('errors')->first('description_hotel') }}</p>
+                  @endif
               </div>
               
               <!-- Géolocalisation -->
               <div class="mb-6">
-                  <label for="geolocation" class="block mb-2 text-sm font-medium text-gray-900">
-                      Adresse/Géolocalisation <span class="text-red-500">*</span>
+                  <label for="localisation" class="block mb-2 text-sm font-medium text-gray-900">
+                      Adresse/Localisation <span class="text-red-500">*</span>
                   </label>
-                  <div class="flex">
-                      <input type="text" id="geolocation" name="geolocation" x-model="formData.geolocation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Entrez l'adresse complète ou les coordonnées" required>
-                      <button type="button" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-l-0 border-gray-300 rounded-r-lg hover:bg-gray-300">
-                          <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
-                              <path d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
-                          </svg>
-                      </button>
+                  <div class="relative">
+                      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                          <i data-lucide="map" class="w-5 h-5 text-gray-400"></i>
+                      </div>
+                      <input type="text" id="localisation" name="localisation" value="{{ old('localisation') }}" class="bg-gray-50 border {{ session()->has('errors') && session('errors')->has('localisation') ? 'border-red-500' : 'border-gray-300' }} text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Entrez l'adresse complète de l'hôtel" required>
                   </div>
-                  <p class="mt-1 text-sm text-gray-500">Entrez l'adresse complète ou les coordonnées GPS de votre hôtel</p>
+                  @if(session()->has('errors') && session('errors')->has('localisation'))
+                      <p class="mt-1 text-sm text-red-600">{{ session('errors')->first('localisation') }}</p>
+                  @endif
               </div>
               
               <!-- Services -->
-              <div class="mb-6">
+              <div class="mb-6" x-data="tagInput()" x-init="init()">
                   <label class="block mb-2 text-sm font-medium text-gray-900">
                       Services & Équipements
                   </label>
                   <div class="flex flex-wrap items-center gap-2 mb-3" id="services-container">
-                      <template x-for="(service, index) in formData.services" :key="index">
+                      <template x-for="(service, index) in services" :key="index">
                           <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-1 rounded-full flex items-center">
                               <span x-text="service"></span>
+                              <input type="hidden" name="services[]" :value="service">
                               <button @click="removeService(index)" type="button" class="ml-1 text-blue-800 hover:text-blue-900 focus:outline-none">
-                                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                  </svg>
+                                  <i data-lucide="x" class="w-3 h-3"></i>
                               </button>
                           </span>
                       </template>
                   </div>
                   <div class="flex">
-                      <input type="text" id="service_input" x-model="newService" @keydown.enter.prevent="addService" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ajouter un service (ex: WiFi, Piscine, Spa)">
-                      <button type="button" @click="addService" class="inline-flex items-center px-3 text-sm text-white bg-blue-600 border border-blue-600 rounded-r-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                          </svg>
+                      <input type="text" x-model="newService" @keydown.enter.prevent="addService()" class="bg-gray-50 border border-gray-300 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ajouter un service (ex: WiFi, Piscine, Spa)">
+                      <button type="button" @click="addService()" class="inline-flex items-center px-3 text-sm text-white bg-blue-600 border border-blue-600 rounded-r-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                          <i data-lucide="plus" class="w-4 h-4"></i>
                       </button>
                   </div>
                   <p class="mt-1 text-sm text-gray-500">Ajoutez jusqu'à 10 services ou équipements proposés par votre hôtel</p>
-                  <p x-show="errors.services" x-text="errors.services" class="mt-1 text-sm text-red-600"></p>
+                  @if(session()->has('errors') && session('errors')->has('services'))
+                      <p class="mt-1 text-sm text-red-600">{{ session('errors')->first('services') }}</p>
+                  @endif
               </div>
               
               <!-- Upload des bannières -->
@@ -171,98 +177,57 @@
                   <label class="block mb-2 text-sm font-medium text-gray-900">
                       Bannières de l'hôtel <span class="text-red-500">*</span>
                   </label>
-                  <p class="mb-3 text-sm text-gray-500">Uploader 3 images de haute qualité montrant votre hôtel (vue principale, chambres, équipements)</p>
+                  <p class="mb-3 text-sm text-gray-500">Uploader au moins une image de haute qualité montrant votre hôtel</p>
                   
                   <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
                       <!-- Bannière 1 -->
                       <div class="relative">
-                          <label for="banner_1" class="relative flex flex-col items-center justify-center w-full h-40 overflow-hidden border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-                              :class="{'border-blue-500 bg-blue-50': bannerPreviews[0]}">
-                              <template x-if="!bannerPreviews[0]">
-                                  <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                      <svg class="w-8 h-8 mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                      </svg>
-                                      <p class="text-xs text-gray-500">Vue principale</p>
-                                  </div>
-                              </template>
-                              <template x-if="bannerPreviews[0]">
-                                  <div class="absolute inset-0">
-                                      <img :src="bannerPreviews[0]" class="object-cover w-full h-full" alt="Aperçu de la bannière">
-                                      <button @click.prevent="removeBanner(0)" type="button" class="absolute p-1 text-white bg-red-500 rounded-full top-2 right-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">
-                                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                          </svg>
-                                      </button>
-                                  </div>
-                              </template>
-                              <input id="banner_1" name="banner_1" type="file" class="hidden" accept="image/*" @change="handleBannerUpload($event, 0)" required />
+                          <label for="bannier1" class="relative flex flex-col items-center justify-center w-full h-40 overflow-hidden border-2  border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 {{ session()->has('errors') && session('errors')->has('bannier1') ? 'border-red-500' : 'border-gray-300' }}">
+                              <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                  <i data-lucide="image" class="w-8 h-8 mb-2 text-gray-400"></i>
+                                  <p class="text-xs text-gray-500">Vue principale</p>
+                              </div>
+                              <input id="bannier1" name="bannier1" type="file" class="hidden" accept="image/jpeg,image/png,image/jpg" />
                           </label>
                           <span class="absolute -top-2 left-2 bg-blue-500 text-white text-xs font-medium px-2.5 py-0.5 rounded">1</span>
                       </div>
                       
                       <!-- Bannière 2 -->
                       <div class="relative">
-                          <label for="banner_2" class="relative flex flex-col items-center justify-center w-full h-40 overflow-hidden border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-                              :class="{'border-blue-500 bg-blue-50': bannerPreviews[1]}">
-                              <template x-if="!bannerPreviews[1]">
-                                  <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                      <svg class="w-8 h-8 mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                      </svg>
-                                      <p class="text-xs text-gray-500">Chambres</p>
-                                  </div>
-                              </template>
-                              <template x-if="bannerPreviews[1]">
-                                  <div class="absolute inset-0">
-                                      <img :src="bannerPreviews[1]" class="object-cover w-full h-full" alt="Aperçu de la bannière">
-                                      <button @click.prevent="removeBanner(1)" type="button" class="absolute p-1 text-white bg-red-500 rounded-full top-2 right-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">
-                                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                          </svg>
-                                      </button>
-                                  </div>
-                              </template>
-                              <input id="banner_2" name="banner_2" type="file" class="hidden" accept="image/*" @change="handleBannerUpload($event, 1)" required />
+                          <label for="bannier2" class="relative flex flex-col items-center justify-center w-full h-40 overflow-hidden border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 {{ session()->has('errors') && session('errors')->has('bannier2') ? 'border-red-500' : '' }}">
+                              <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                  <i data-lucide="image" class="w-8 h-8 mb-2 text-gray-400"></i>
+                                  <p class="text-xs text-gray-500">Deuxième vue</p>
+                              </div>
+                              <input id="bannier2" name="bannier2" type="file" class="hidden" accept="image/jpeg,image/png,image/jpg" />
                           </label>
                           <span class="absolute -top-2 left-2 bg-blue-500 text-white text-xs font-medium px-2.5 py-0.5 rounded">2</span>
                       </div>
                       
                       <!-- Bannière 3 -->
                       <div class="relative">
-                          <label for="banner_3" class="relative flex flex-col items-center justify-center w-full h-40 overflow-hidden border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-                              :class="{'border-blue-500 bg-blue-50': bannerPreviews[2]}">
-                              <template x-if="!bannerPreviews[2]">
-                                  <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                      <svg class="w-8 h-8 mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                      </svg>
-                                      <p class="text-xs text-gray-500">Équipements</p>
-                                  </div>
-                              </template>
-                              <template x-if="bannerPreviews[2]">
-                                  <div class="absolute inset-0">
-                                      <img :src="bannerPreviews[2]" class="object-cover w-full h-full" alt="Aperçu de la bannière">
-                                      <button @click.prevent="removeBanner(2)" type="button" class="absolute p-1 text-white bg-red-500 rounded-full top-2 right-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">
-                                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                          </svg>
-                                      </button>
-                                  </div>
-                              </template>
-                              <input id="banner_3" name="banner_3" type="file" class="hidden" accept="image/*" @change="handleBannerUpload($event, 2)" required />
+                          <label for="bannier3" class="relative flex flex-col items-center justify-center w-full h-40 overflow-hidden border-2  border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 {{ session()->has('errors') && session('errors')->has('bannier3') ? 'border-red-500' : 'border-gray-300' }}">
+                              <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                  <i data-lucide="image" class="w-8 h-8 mb-2 text-gray-400"></i>
+                                  <p class="text-xs text-gray-500">Troisième vue</p>
+                              </div>
+                              <input id="bannier3" name="bannier3" type="file" class="hidden" accept="image/jpeg,image/png,image/jpg" />
                           </label>
                           <span class="absolute -top-2 left-2 bg-blue-500 text-white text-xs font-medium px-2.5 py-0.5 rounded">3</span>
                       </div>
                   </div>
+                  @if(session()->has('errors') && session('errors')->has('bannieres'))
+                      <p class="mt-1 text-sm text-red-600">{{ session('errors')->first('bannieres') }}</p>
+                  @endif
+                  @if(session()->has('errors') && (session('errors')->has('bannier1') || session('errors')->has('bannier2') || session('errors')->has('bannier3')))
+                      <p class="mt-1 text-sm text-red-600">Veuillez vérifier le format et la taille des images.</p>
+                  @endif
               </div>
               
               <!-- Bouton de soumission -->
               <div class="flex justify-end">
                   <button type="submit" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
-                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
-                      </svg>
+                      <i data-lucide="save" class="w-5 h-5 mr-2"></i>
                       Enregistrer l'hôtel
                   </button>
               </div>
@@ -271,207 +236,106 @@
   </div>
   </x-admin.dashboard-panel>
   
-  <!-- Alpine.js Form Logic -->
   <script>
-    function hotelForm() {
-        return {
-            formData: {
-                hotelName: '',
-                managerEmail: '',
-                managerPhone: '',
-                city: '',
-                description: '',
-                geolocation: '',
-                services: []
-            },
-            logoFile: null,
-            logoPreview: null,
-            bannerFiles: [null, null, null],
-            bannerPreviews: [null, null, null],
-            newService: '',
-            wordCount: 0,
-            errors: {
-                email: '',
-                phone: '',
-                services: ''
-            },
-            
-            // Gérer l'upload du logo
-            handleLogoUpload(event) {
-                const file = event.target.files[0];
-                if (!file) return;
-                
-                // Vérifier le type de fichier
-                if (!file.type.match('image.*')) {
-                    alert('Veuillez uploader une image valide (JPEG, PNG, SVG)');
-                    return;
-                }
-                
-                this.logoFile = file;
-                this.logoPreview = URL.createObjectURL(file);
-            },
-            
-            // Supprimer le logo
-            removeLogo() {
-                this.logoFile = null;
-                this.logoPreview = null;
-                document.getElementById('hotel_logo').value = '';
-            },
-            
-            // Gérer l'upload des bannières
-            handleBannerUpload(event, index) {
-                const file = event.target.files[0];
-                if (!file) return;
-                
-                // Vérifier le type de fichier
-                if (!file.type.match('image.*')) {
-                    alert('Veuillez uploader une image valide (JPEG, PNG)');
-                    return;
-                }
-                
-                this.bannerFiles[index] = file;
-                this.bannerPreviews[index] = URL.createObjectURL(file);
-            },
-            
-            // Supprimer une bannière
-            removeBanner(index) {
-                this.bannerFiles[index] = null;
-                this.bannerPreviews[index] = null;
-                document.getElementById(`banner_${index + 1}`).value = '';
-            },
-            
-            // Ajouter un service
-            addService() {
-                if (!this.newService.trim()) return;
-                
-                if (this.formData.services.length >= 10) {
-                    this.errors.services = 'Maximum 10 services autorisés';
-                    return;
-                }
-                
-                const serviceText = this.newService.trim();
-                if (!this.formData.services.includes(serviceText)) {
-                    this.formData.services.push(serviceText);
-                }
-                
-                this.newService = '';
-                this.errors.services = '';
-                
-                // Focus sur l'input après ajout
-                document.getElementById('service_input').focus();
-            },
-            
-            // Supprimer un service
-            removeService(index) {
-                this.formData.services.splice(index, 1);
-                this.errors.services = '';
-            },
-            
-            // Compter les mots dans la description
-            countWords() {
-                const text = this.formData.description.trim();
-                this.wordCount = text ? text.split(/\s+/).length : 0;
-            },
-            
-            // Valider l'email
-            validateEmail() {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(this.formData.managerEmail)) {
-                    this.errors.email = 'Veuillez entrer une adresse email valide';
-                    return false;
-                }
-                this.errors.email = '';
-                return true;
-            },
-            
-            // Valider le téléphone
-            validatePhone() {
-                const phoneRegex = /^\+?[0-9\s\-()]{10,20}$/;
-                if (!phoneRegex.test(this.formData.managerPhone)) {
-                    this.errors.phone = 'Veuillez entrer un numéro de téléphone valide';
-                    return false;
-                }
-                this.errors.phone = '';
-                return true;
-            },
-            
-            // Soumettre le formulaire
-            submitForm() {
-                // Valider le formulaire
-                const isEmailValid = this.validateEmail();
-                const isPhoneValid = this.validatePhone();
-                
-                // Vérifier le nombre de mots
-                if (this.wordCount > 300) {
-                    alert('La description dépasse le nombre maximum de mots (300)');
-                    return;
-                }
-                
-                // Vérifier si le logo est uploadé
-                if (!this.logoFile) {
-                    alert('Veuillez uploader un logo pour votre hôtel');
-                    return;
-                }
-                
-                // Vérifier qu’au moins une bannière est uploadée
-                const hasAtLeastOneBanner = this.bannerFiles.some(Boolean);
-                if (!hasAtLeastOneBanner) {
-                    alert('Veuillez uploader au moins une bannière');
-                    return;
-                }
+     function tagInput() {
+            return {
+                services: [],
+                newService: '',
 
-                
-                // Si toutes les validations passent
-                if (isEmailValid && isPhoneValid) {
-                    // Dans une application réelle, vous soumettriez les données du formulaire à votre serveur ici
-                    console.log('Formulaire soumis:', {
-                        ...this.formData,
-                        logo: this.logoFile,
-                        banners: this.bannerFiles
-                    });
-                    
-                    // Afficher un message de succès
-                    alert('Hôtel ajouté avec succès!');
-                    
-                    // Réinitialiser le formulaire (optionnel)
-                    // this.resetForm();
-                }
-            },
-            
-            // Réinitialiser le formulaire
-            resetForm() {
-                this.formData = {
-                    hotelName: '',
-                    managerEmail: '',
-                    managerPhone: '',
-                    city: '',
-                    description: '',
-                    geolocation: '',
-                    services: []
-                };
-                this.logoFile = null;
-                this.logoPreview = null;
-                this.bannerFiles = [null, null, null];
-                this.bannerPreviews = [null, null, null];
-                this.newService = '';
-                this.wordCount = 0;
-                this.errors = {
-                    email: '',
-                    phone: '',
-                    services: ''
-                };
-                
-                // Réinitialiser les inputs de fichier
-                document.getElementById('hotel_logo').value = '';
-                document.getElementById('banner_1').value = '';
-                document.getElementById('banner_2').value = '';
-                document.getElementById('banner_3').value = '';
-            }
+                init() {
+                    if (window.lucide) {
+            window.lucide.createIcons();
         }
-    }
-  </script>
-  <script>
+                // appel initial pour remplacer les icônes déjà en DOM
+                lucide.replace()
+                },
+
+                addService() {
+                if (this.newService.trim()) {
+                    this.services.push(this.newService.trim())
+                    this.newService = ''
+                    // attendre la mise à jour du DOM, puis remplacer l’icône
+                    this.$nextTick(() => {
+                        if (window.lucide) {
+            window.lucide.createIcons();
+        }
+                    })
+                }
+                },
+
+                removeService(index) {
+                this.services.splice(index, 1)
+                this.$nextTick(() => {
+                    if (window.lucide) {
+            window.lucide.createIcons();
+        }
+                })
+                }
+            }
+        };
+        
     document.addEventListener('DOMContentLoaded', function() {
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
         lucide.createIcons();
+
+        // Prévisualisation des images uploadées
+        const setupImagePreview = (inputId) => {
+            const input = document.getElementById(inputId);
+            const label = input.parentElement;
+            
+            input.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const fileType = file.type;
+                if (!fileType.startsWith('image/')) {
+                    alert('Veuillez sélectionner une image valide.');
+                    return;
+                }
+                
+                // Créer une prévisualisation
+                const preview = document.createElement('div');
+                preview.className = 'absolute inset-0';
+                
+                const img = document.createElement('img');
+                img.className = 'object-cover w-full h-full';
+                img.src = URL.createObjectURL(file);
+                img.alt = 'Aperçu';
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'absolute p-1 text-white bg-red-500 rounded-full top-2 right-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400';
+                removeBtn.innerHTML = '<i data-lucide="x" class="w-4 h-4"></i>';
+                removeBtn.addEventListener('click', function(evt) {
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                    input.value = '';
+                    label.removeChild(preview);
+                    lucide.createIcons();
+                });
+                
+                preview.appendChild(img);
+                preview.appendChild(removeBtn);
+                
+                // Supprimer l'ancienne prévisualisation si elle existe
+                const oldPreview = label.querySelector('.absolute.inset-0');
+                if (oldPreview) {
+                    label.removeChild(oldPreview);
+                }
+                
+                // Ajouter la nouvelle prévisualisation
+                label.appendChild(preview);
+                lucide.createIcons();
+            });
+        };
+       
+        // Configurer les prévisualisations pour toutes les images
+        setupImagePreview('logo');
+        setupImagePreview('bannier1');
+        setupImagePreview('bannier2');
+        setupImagePreview('bannier3');
     });
   </script>
+
+@endsection

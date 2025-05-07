@@ -4,8 +4,16 @@
 @import "flowbite/src/themes/default";
 @plugin "flowbite/plugin";
 @source "../../node_modules/flowbite";
-
+/* Preline UI */
+@import "../../node_modules/preline/variants.css";
+@source "../../node_modules/preline/dist/*.js";
+/* Plugins */
+@plugin "@tailwindcss/forms";
 @layer base {
+    button:not(:disabled),
+    [role="button"]:not(:disabled) {
+        cursor: pointer;
+    }
     :root {
         --background: 208 100% 97.06%;
         --foreground: 216.92 19.12% 26.67%;
@@ -110,3 +118,5 @@
         --shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
     }
 }
+/* Defaults hover styles on all devices */
+@custom-variant hover (&:hover);

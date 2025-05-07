@@ -59,7 +59,7 @@ class StorebookingsRequest extends FormRequest
             'country'          => 'nullable|string|max:255',
             'arrival_time'     => 'required|date|after:now',
             'departure_time'   => 'required|date|after:arrival_time',
-            'message'          => 'nullable|string|max:500',
+            'message'          => 'nullable|text|max:500',
         ];
     }
 

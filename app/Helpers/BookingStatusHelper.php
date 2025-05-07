@@ -41,7 +41,7 @@ class BookingStatusHelper
                 'bg' => 'bg-orange-100',
                 'text' => 'text-orange-800',
                 'icon' => 'thumbs-down',
-                'label' => 'Refusée'
+            'label' => 'Refusée'
             ],
             'completed' => [
                 'bg' => 'bg-green-100',
@@ -74,5 +74,18 @@ class BookingStatusHelper
                     <i data-lucide="' . $style['icon'] . '" class="w-3 h-3 mr-1"></i>
                     ' . $style['label'] . '
                 </span>';
+    }
+    public static function getPaymentStatusMessage($status)
+    {
+        $message = [
+            'completed' => 'Payé',
+            'pending' => 'En attente',
+            'refunded' => 'Remboursé',
+            'cancelled' => 'Annulé',
+            'booked' => 'En attente de paiement',
+            'accepted' => 'En attente de confirmation par l\'utilisateur',
+            
+        ];
+        return $message[$status] ?? $message['pending'];
     }
 } 

@@ -49,7 +49,7 @@ Fonctionnalités ultérieures
 7.  Audit trail
 
     Stocker pour chaque changement de statut : identifiant de l’acteur (admin ou système), date/heure UTC, ancien et nouveau statut, raison (commentaire):
-    À chaque fois qu’un événement important survient sur une réservation (création, changement de statut, annulation, modification de date…), vous enregistrez une entrée dans une table dédiée(reservation_audit) avec les informations suivantes :
+    À chaque fois qu’un événement important survient sur une réservation (création, changement de statut, annulation, modification de date…), vous enregistrez une entrée dans une table dédiée(notification) avec les informations suivantes :
     id Identifiant unique de l’entrée d’audit
     reservation_id La réservation concernée
     actor_type « user » (client) ou « admin » ou « system »

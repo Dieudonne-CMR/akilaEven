@@ -78,4 +78,25 @@ Route::middleware(['auth'])->group(function(){
 // Routes du tableau de bord d'administration
 Route::get('/admin/dashboard', [App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
+// Routes pour la partie admin
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+    // Routes pour les hôtels
+    Route::get('/hotels', [App\Http\Controllers\HotelController2::class, 'index'])->name('hotels');
+    Route::get('/hotels/create', [App\Http\Controllers\HotelController2::class, 'create'])->name('hotels.create');
+    Route::post('/hotels', [App\Http\Controllers\HotelController2::class, 'store'])->name('hotels.store');
+    Route::get('/hotels/{hotel}', [App\Http\Controllers\HotelController2::class, 'show'])->name('hotels.show');
+    Route::delete('/hotels/{hotel}', [App\Http\Controllers\HotelController2::class, 'destroy'])->name('hotels.destroy');
+    Route::post('/hotels/bulk-delete', [App\Http\Controllers\HotelController2::class, 'bulkDestroy'])->name('hotels.bulk-delete');
+    Route::post('/hotels/{hotel}/update-media', [App\Http\Controllers\HotelController2::class, 'updateMedia'])->name('hotels.update-media');
+    
+    // Routes pour les salles de fête
+    Route::get('/hotels/{hotel}/event-halls/create', [App\Http\Controllers\EventHallController::class, 'create'])->name('event-hall.create');
+    Route::post('/hotels/{hotel}/event-halls', [App\Http\Controllers\EventHallController::class, 'store'])->name('event-hall.store');
+    Route::get('/event-halls/{eventHall}', [App\Http\Controllers\EventHallController::class, 'show'])->name('event-halls.show');
+    Route::get('/event-halls/{eventHall}/edit', [App\Http\Controllers\EventHallController::class, 'edit'])->name('event-halls.edit');
+    Route::put('/event-halls/{eventHall}', [App\Http\Controllers\EventHallController::class, 'update'])->name('event-halls.update');
+    Route::delete('/event-halls/{eventHall}', [App\Http\Controllers\EventHallController::class, 'destroy'])->name('event-halls.destroy');
+    Route::delete('/event-halls/bulk-delete', [App\Http\Controllers\EventHallController::class, 'bulkDestroy'])->name('event-halls.bulk-delete');
+});
+
 require __DIR__.'/auth.php';
