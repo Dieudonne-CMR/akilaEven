@@ -22,7 +22,7 @@
         Des centaines de salles disponibles pour vos mariages, anniversaires, séminaires et autres célébrations.
       </p>
       
-      <!-- Barre de recherche -->
+  {{--     <!-- Barre de recherche -->
       <div class="flex flex-col items-center w-full max-w-3xl gap-3 p-2 bg-white rounded-lg shadow-lg sm:p-3 sm:flex-row">
         <div class="w-full sm:w-1/3">
           <label for="location" class="sr-only">Lieu</label>
@@ -63,7 +63,7 @@
         <button type="submit" class="flex-shrink-0 w-full px-6 py-3 font-medium text-white transition duration-150 ease-in-out bg-purple-600 rounded-md sm:w-auto hover:bg-purple-700">
           Rechercher
         </button>
-      </div>
+      </div> --}}
       
       <!-- Badges de catégories -->
       <div class="flex flex-wrap gap-2 mt-8">

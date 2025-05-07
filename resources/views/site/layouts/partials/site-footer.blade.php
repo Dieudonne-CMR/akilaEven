@@ -58,9 +58,14 @@
     <!-- Footer Bottom Section -->
     <div class="flex flex-col items-center">
       <!-- Logo -->
-      <div class="flex items-center mb-4">        
+      {{-- <div class="flex items-center mb-4">        
         <span class="text-2xl font-bold">Akila Even</span>
-      </div>
+      </div> --}}
+      <div class="relative">
+        <i data-lucide="building-2" class="w-8 h-8 text-primary drop-shadow-[0_0_8px_rgba(147,51,234,0.7)]"></i>
+        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500 to-purple-600 opacity-20 blur-sm"></div>
+    </div>
+    <span class="text-xl font-bold text-purple-500ml-2 heading">Akila Immo</span>
 
       <!-- Copyright -->
       <div class="mb-6 text-sm text-gray-500">

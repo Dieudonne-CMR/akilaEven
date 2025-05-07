@@ -1,7 +1,7 @@
 <!-- Barre de recherche améliorée avec toggle -->
-<div class="w-full max-w-3xl" x-data="searchForm()">
+<div class="w-full max-w-6xl" x-data="searchForm()">
   <!-- Toggle switch entre salles et chambres -->
-  <div class="flex justify-center mb-4">
+  <div class="flex mb-4">
     <div class="inline-flex p-1 rounded-full bg-white/20 backdrop-blur-md">
       <button type="button" id="venuesBtn" 
               @click="activeTab = 'venues'" 

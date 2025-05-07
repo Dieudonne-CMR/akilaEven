@@ -184,6 +184,7 @@
             showReservationModal: false,
             showConfirmationModal: false,
             startDate: null,
+            price: null,
             endDate: null,
             calendar: null,
             form: {

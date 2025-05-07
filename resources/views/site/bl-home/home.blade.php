@@ -13,10 +13,10 @@ START HERO-WRAPPER AREA
       </ul>
     </div>
     <!-- End background slider -->
-    <div class="container">
+    <div class="container py-5">
       <div class="row">
         <div class="col-lg-12">
-          <div class="pb-5 hero-content">
+          <div class="pb-4 hero-content">
             <div class="section-heading">
               <span class="mb-3 badge text-bg-primary fw-500">Réservations Faciles & Rapides</span>
               <h2 class="text-white sec__title text-shadow-lg">
@@ -31,7 +31,7 @@ START HERO-WRAPPER AREA
            <!-- Barre de recherche pour les chambres et les salles de fêtes-->
               @include("site.bl-home.partials.search-rooms-halls")
           <!-- Tabs Search Container -->
-          <div class="p-4 bg-white rounded shadow-lg search-fields-container" x-data="{ activeTab: 'rooms' }">
+        {{--   <div class="p-4 bg-white rounded shadow-lg search-fields-container" x-data="{ activeTab: 'rooms' }">
             <!-- Tabs Navigation -->
             <ul class="mb-3 nav nav-tabs" id="searchTabs" role="tablist">
               <li class="nav-item" role="presentation">
@@ -60,7 +60,7 @@ START HERO-WRAPPER AREA
                 @include('site.layouts.partials.search-events')
               </div>
             </div>
-          </div>
+          </div> --}}
         </div>
         <!-- end col-lg-12 -->
       </div>
@@ -173,7 +173,7 @@ END ABOUT AREA
       </div>
 
       <!-- Hotel Rooms Block -->
-      <div class="mb-16">
+     {{--  <div class="mb-16">
           <div class="flex items-center justify-between mb-8">
               <h3 class="pl-4 text-2xl font-bold border-l-4 heading !border-primary">Chambres d'hôtel</h3>
               <a href="#" class="flex items-center gap-2 font-medium group text-primary/80 hover:text-primary">
@@ -190,9 +190,7 @@ END ABOUT AREA
                       <div class="absolute px-3 py-1 text-sm font-semibold text-white rounded-full top-4 right-4 bg-primary">
                            $199/nuit
                       </div>
-                    {{--   <div class="absolute flex items-center gap-1 px-3 py-1 text-sm font-semibold rounded-full top-4 left-4 bg-white/90 text-amber-600">
-                          <i class="fas fa-star text-amber-500"></i> 4.9 (128)
-                      </div> --}}
+                  
                   </div>
                   <div class="p-6">
                       <div class="flex items-start justify-between mb-2">
@@ -275,6 +273,7 @@ END ABOUT AREA
               </div>
           </div>
       </div>
+    --}}
 
       <!-- Event Spaces Block -->
       @include("site.bl-home.partials.event-space")
@@ -283,7 +282,7 @@ END ABOUT AREA
 
 
 <!-- Listing hotels -->
-@include('site.bl-home.partials.listing-hotel')
+{{-- @include('site.bl-home.partials.listing-hotel') --}}
 
   <!-- Swiper -->
 {{--   <div class="swiper hotel-swiper"   
@@ -600,7 +599,7 @@ END ABOUT AREA
 
 
  <!-- Call to Action -->
-@include('site.bl-home.partials.cta-home')
+{{-- @include('site.bl-home.partials.cta-home') --}}
 
 @endsection
 

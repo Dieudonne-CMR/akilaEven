@@ -157,55 +157,97 @@
                                     <!-- Actions spécifiques selon le statut -->
                                     <template x-if="booking.status === 'pending'">
                                         <li>
-                                            <a @click="updateStatus(booking.id, 'accepted')" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                                <i data-lucide="check" class="w-4 h-4 mr-2 text-blue-500"></i>
-                                                Accepter
-                                            </a>
+                                            <form
+                                                x-bind:action="`/admin/bookings/${booking.id}/status`"
+                                                method="POST"
+                                                class="inline"
+                                            >
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="accepted">
+                                                <a href="#" onclick="event.preventDefault(); if(confirm('Confirmer l\'acceptation ?')) this.closest('form').submit();" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100">
+                                                    <i data-lucide="check" class="w-4 h-4 mr-2 text-blue-500"></i>
+                                                    Accepter
+                                                </a>
+                                            </form>
                                         </li>
                                     </template>
                                     
                                     <template x-if="booking.status === 'pending'">
                                         <li>
-                                            <a @click="updateStatus(booking.id, 'cancelled')" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                                <i data-lucide="x-circle" class="w-4 h-4 mr-2 text-red-500"></i>
-                                                Annuler
-                                            </a>
+                                            <form
+                                                x-bind:action="`/admin/bookings/${booking.id}/status`"
+                                                method="POST"
+                                                class="inline"
+                                            >
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="cancelled">
+                                                <a href="#" onclick="event.preventDefault(); if(confirm('Confirmer l\'annulation ?')) this.closest('form').submit();" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100">
+                                                    <i data-lucide="x-circle" class="w-4 h-4 mr-2 text-red-500"></i>
+                                                    Annuler
+                                                </a>
+                                            </form>
                                         </li>
                                     </template>
                                     
                                     <template x-if="booking.status === 'accepted'">
                                         <li>
-                                            <a @click="updateStatus(booking.id, 'cancelled')" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                                <i data-lucide="x-circle" class="w-4 h-4 mr-2 text-red-500"></i>
-                                                Annuler
-                                            </a>
+                                            <form
+                                                x-bind:action="`/admin/bookings/${booking.id}/status`"
+                                                method="POST"
+                                                class="inline"
+                                            >
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="cancelled">
+                                                <a href="#" onclick="event.preventDefault(); if(confirm('Confirmer l\'annulation ?')) this.closest('form').submit();" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100">
+                                                    <i data-lucide="x-circle" class="w-4 h-4 mr-2 text-red-500"></i>
+                                                    Annuler
+                                                </a>
+                                            </form>
                                         </li>
                                     </template>
                                     
                                     <template x-if="booking.status === 'booked'">
                                         <li>
-                                            <a @click="updateStatus(booking.id, 'completed')" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                                <i data-lucide="check-circle" class="w-4 h-4 mr-2 text-green-500"></i>
-                                                Compléter
-                                            </a>
+                                            <form
+                                                x-bind:action="`/admin/bookings/${booking.id}/status`"
+                                                method="POST"
+                                                class="inline"
+                                            >
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="completed">
+                                                <a href="#" onclick="event.preventDefault(); if(confirm('Confirmer la complétion ?')) this.closest('form').submit();" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100">
+                                                    <i data-lucide="check-circle" class="w-4 h-4 mr-2 text-green-500"></i>
+                                                    Compléter
+                                                </a>
+                                            </form>
                                         </li>
                                     </template>
                                     
                                     <template x-if="booking.status === 'booked'">
                                         <li>
-                                            <a @click="updateStatus(booking.id, 'cancelled')" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                                <i data-lucide="x-circle" class="w-4 h-4 mr-2 text-red-500"></i>
-                                                Annuler
-                                            </a>
+                                            <form
+                                                x-bind:action="`/admin/bookings/${booking.id}/status`"
+                                                method="POST"
+                                                class="inline"
+                                            >
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="cancelled">
+                                                <a href="#" onclick="event.preventDefault(); if(confirm('Confirmer l\'annulation ?')) this.closest('form').submit();" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100">
+                                                    <i data-lucide="x-circle" class="w-4 h-4 mr-2 text-red-500"></i>
+                                                    Annuler
+                                                </a>
+                                            </form>
                                         </li>
                                     </template>
                                     
                                     <template x-if="booking.status === 'completed'">
                                         <li>
-                                            {{-- <a @click="updateStatus(booking.id, 'refunded')" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                                <i data-lucide="refresh-cw" class="w-4 h-4 mr-2 text-yellow-500"></i>
-                                                Rembourser
-                                            </a> --}}
+                                         
                                             <form
                                             x-bind:action="`/admin/bookings/${booking.id}/status`"  {{-- récupère booking.id --}}
                                             method="POST"
@@ -215,17 +257,11 @@
                                             @csrf
                                             @method('PATCH')
                                             <input type="hidden" name="status" value="refunded">
-                                            <a href="#" onclick="event.preventDefault(); if(confirm('Confirmer l’acceptation ?')) this.closest('form').submit();" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            <a href="#" onclick="event.preventDefault(); if(confirm('Confirmer l’acceptation ?')) this.closest('form').submit();" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 ">
                                                 <i data-lucide="refresh-cw" class="w-4 h-4 mr-2 text-yellow-500"></i>
                                                 Rembourser
                                             </a>
-                                           {{--  <button
-                                              type="submit"
-                                              class="px-2 py-1 text-white bg-green-600 rounded hover:bg-green-700"
-                                              onclick="return confirm('Confirmer l’acceptation ?')"
-                                            >
-                                              Accepter
-                                            </button> --}}
+                                       
                                           </form>
                                             
                                         </li>

@@ -33,10 +33,11 @@
           <!-- Logo -->
           <div class="flex items-center">
               <a href="#" class="flex items-center">
-                  <svg class="w-8 h-8 text-amber-600" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                  </svg>
-                  <span class="ml-2 text-xl font-bold heading">VenueHub</span>
+                  <div class="relative">
+                      <i data-lucide="building-2" class="w-8 h-8 text-primary drop-shadow-[0_0_8px_rgba(147,51,234,0.7)]"></i>
+                      <div class="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500 to-purple-600 opacity-20 blur-sm"></div>
+                  </div>
+                  <span class="ml-2 text-lg font-bold text-transparent heading bg-gradient-to-r from-purple-300 to-purple-600 bg-clip-text drop-shadow-sm">Akila Immo</span>
               </a>
           </div>
            <!-- Desktop Navigation -->

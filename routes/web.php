@@ -17,7 +17,9 @@ Route::get('/mailable', function () {
 });
 
 Route::post("/create-booking", [siteController::class, 'booking'])->name('booking.create');
-Route::get("/event-hall-confirm-booking/{token}", [siteController::class, 'eventHallConfirmBooking'])->name('site.event-hall-confirm-booking')->middleware('signed');
+Route::get("/event-hall-confirm-booking/{token}", [siteController::class, 'eventHallConfirmBooking'])->name('site.event-hall-confirm-booking');
+/* Route::get("/event-hall-confirm-booking-page", [siteController::class, 'eventHallConfirmBooking'])->name('site.confirm-booking-event-hall-page'); */
+/* ->middleware('signed'); */
 Route::get("/rooms", [RoomController::class, 'index'])->name('site.bl-rooms.rooms');
 Route::get('', [siteController::class, 'index'])->name('home');
 route::get('/site-sallesfetes', [siteController::class, 'salleFete'])->name('site.sallesfetes');

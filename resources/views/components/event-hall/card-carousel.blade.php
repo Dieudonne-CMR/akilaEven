@@ -67,7 +67,7 @@
         @endif
         
         <!-- Badge de type d'événement -->
-        <span class="z-10 absolute top-[15px] left-[15px] text-white text-xs font-medium me-2 px-2 py-1.5 rounded-full {{ $eventColor }} "> <i class="la {{ $eventIcon }}"></i> {{ $eventType }}</span> 
+       {{--  <span class="z-10 absolute top-[15px] left-[15px] text-white text-xs font-medium me-2 px-2 py-1.5 rounded-full {{ $eventColor }} "> <i class="la {{ $eventIcon }}"></i> {{ $eventType }}</span>  --}}
         
         <!-- Badge de prix -->
         <div class="z-10 absolute px-3 py-1 text-sm font-semibold text-white rounded-full top-4 right-4 !bg-primary">

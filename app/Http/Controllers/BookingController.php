@@ -142,6 +142,7 @@ class BookingController extends Controller
         
         try {
             DB::beginTransaction();
+            
             // 2) Appliquer et sauvegarder
             $booking->status = $data['status'];
             
@@ -169,30 +170,17 @@ class BookingController extends Controller
             
             $booking->save();
 
-            // Envoyer les notifications appropriées
-            switch ($data['status']) {
-                case 'accepted':
-                    // Notifier le client
-                    \Illuminate\Support\Facades\Notification::route('mail', [
-                        $booking->email => $booking->full_name,
-                    ])->notify(new \App\Notifications\EventHallBookingAccepted($booking));
-                    break;
+            // 3) Envoyer les notifications appropriées
+            if (in_array($data['status'], ['accepted', 'completed', 'cancelled'])) {
+                // Envoyer un email au client
+                \Illuminate\Support\Facades\Mail::to($booking->email)
+                    ->send(new \App\Mail\Client\EventHallBookingStatusChanged($booking, $data['status']));
 
-                case 'completed':
-                    // Notifier le client
-                    \Illuminate\Support\Facades\Notification::route('mail', [
-                        $booking->email => $booking->full_name,
-                    ])->notify(new \App\Notifications\EventHallBookingCompleted($booking));
-                    break;
-
-                case 'cancelled':
-                    // Notifier le client
-                    \Illuminate\Support\Facades\Notification::route('mail', [
-                        $booking->email => $booking->full_name,
-                    ])->notify(new \App\Notifications\EventHallBookingCancelled($booking));
-                    break;
+                // Envoyer une notification à l'administrateur
+                $admin = $booking->eventHall->hotel->user;
+                $admin->notify(new \App\Notifications\Admin\EventHallBookingStatusChanged($booking, $data['status']));
             }
-            
+
             DB::commit();
             
             return redirect()
@@ -202,9 +190,8 @@ class BookingController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()
-            ->back()
-            ->with('error', 'Erreur inattendue lors de la mise à jour.');
-          
+                ->back()
+                ->with('error', 'Erreur inattendue lors de la mise à jour.' . $e->getMessage());
         }
     }
     

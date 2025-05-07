@@ -42,6 +42,7 @@
           <input type="hidden" name="event_hall_id" value="{{ $eventHall->id }}">
           <input type="hidden" name="arrival_time" x-model="startDate">
           <input type="hidden" name="departure_time" x-model="endDate">
+         {{--  <input type="hidden" name="price" value="{{ $eventHall->prix }}"> --}}
 
           <!-- Informations personnelles -->
           <div class="space-y-4">
@@ -169,14 +170,14 @@
               <span class="">Sous-total</span>
               <span class="text-sm font-medium text-muted-foreground" x-text="formatPrice(calculateNights() * {{ $eventHall->prix }})"></span>
             </div>
-            <div class="flex justify-between">
+           {{--  <div class="flex justify-between">
               <span class="">Frais de service (10%)</span>
               <span class="text-sm font-medium text-muted-foreground" x-text="formatPrice(calculateNights() * {{ $eventHall->prix }} * 0.1)"></span>
-            </div>
-            <div class="flex justify-between pt-2 mt-2 font-bold border-t border-gray-200">
+            </div> --}}
+           {{--  <div class="flex justify-between pt-2 mt-2 font-bold border-t border-gray-200">
               <span>Total</span>
               <span class="text-lg font-bold text-primary" x-text="formatPrice(calculateNights() * {{ $eventHall->prix }} * 1.1)"></span>
-            </div>
+            </div> --}}
           </div>
         </form>
       </div>

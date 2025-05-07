@@ -117,6 +117,7 @@ class siteController extends Controller
             // Vérifier si la salle est déjà réservée aux dates demandées
             $arrival = Carbon::parse($data['arrival_time']);
             $departure = Carbon::parse($data['departure_time']);
+            
 
             // Vérifier que la date de départ est après celle d'arrivée
             if ($departure->lt($arrival)) {
@@ -125,26 +126,10 @@ class siteController extends Controller
                     ->with('error', 'La date de départ doit être postérieure à la date d\'arrivée.');
             }
 
-            // Vérifier les réservations existantes
-            $conflictingBookings = Bookings::where('event_hall_id', $hall->id)
-                ->where(function (Builder $query) use ($arrival, $departure) {
-                    $query->where(function (Builder $q) use ($arrival, $departure) {
-                        $q->where('arrival_time', '<=', $departure)
-                          ->where('departure_time', '>=', $arrival);
-                    });
-                })
-                ->whereIn('status', ['pending', 'accepted', 'booked'])
-                ->count();
+  
 
-            if ($conflictingBookings >= 5) {
-                return redirect()
-                    ->back()
-                    ->withInput()
-                    ->with('error', 'Cette salle est déjà complètement réservée aux dates choisies. Veuillez sélectionner d\'autres dates.');
-            }
-
-            // Calcul de la durée en heures
-            $duration = $departure->diffInHours($arrival);
+            // Calcul de la durée en jours
+            $duration = $arrival->diffInDays($departure) + 1;
 
             // Calcul du prix total
             $data['total_price'] = $duration * $hall->prix;
@@ -171,9 +156,9 @@ class siteController extends Controller
             }
 
             // Envoyer un email au client
-            \Illuminate\Support\Facades\Notification::route('mail', [
+          /*   \Illuminate\Support\Facades\Notification::route('mail', [
                 $booking->email => $booking->full_name,
-            ])->notify(new EventHallReservationCreate($booking));
+            ])->notify(new EventHallReservationCreate($booking)); */
 
             DB::commit();
 
@@ -210,8 +195,9 @@ class siteController extends Controller
 
             // 2. Vérifier que le statut est toujours 'Accepted'
             if ($booking->status !== 'accepted') {
-                return redirect()->route('site.event-hall-confirm-booking')
+                return view('site.bl-booking.event-hall-confirmation-booking', compact('booking','booking'))
                     ->with('error', 'Cette réservation ne peut pas être confirmée. Son statut actuel est ' . $booking->status);
+                   /*  ->with('booking', $booking); */
             }
 
             // 3. Vérifier que la réservation n'a pas expiré
@@ -219,19 +205,23 @@ class siteController extends Controller
                 $booking->update(['status' => 'cancelled']);
                 
                 // Notifier le client de l'annulation
-                \Illuminate\Support\Facades\Notification::route('mail', [
-                    $booking->email => $booking->full_name,
-                ])->notify(new EventHallBookingCancelled($booking));
+                \Illuminate\Support\Facades\Mail::to($booking->email)
+                ->send(new \App\Mail\EventHallBookingCancelledEmail($booking));
                 
-                return redirect()->route('site.event-hall-confirm-booking')
+                return view('site.bl-booking.event-hall-confirmation-booking', compact('booking','booking'))
                     ->with('error', 'Cette réservation a expirée. Veuillez effectuer une nouvelle demande.');
+                 /*    ->with('booking', $booking); */
+            }
+            if (!is_null($booking->confirmed_at)) {
+                return view('site.bl-booking.event-hall-confirmation-booking', compact('booking','booking'))
+                    ->with('error', 'Cette réservation a déjà été confirmée.');
             }
 
             // 4. Mettre à jour le statut et la date de confirmation
             $booking->update([
                 'status' => 'booked',
                 'confirmed_at' => now(),
-                'confirmation_token' => null,
+                /* 'confirmation_token' => null, */
             ]);
 
             // 5. Notifier l'administrateur de la salle
@@ -242,15 +232,14 @@ class siteController extends Controller
 
             DB::commit();
 
-            return redirect()
-                ->route('site.event-hall-confirm-booking', $booking)
+            return view('site.bl-booking.event-hall-confirmation-booking', compact('booking','booking'))
                 ->with('success', 'Votre réservation est confirmée ! Nous vous remercions pour votre confiance.');
+               
 
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Erreur lors de la confirmation de la réservation : ' . $e->getMessage());
-            return redirect()
-                ->back()
+            return view('site.bl-booking.event-hall-confirmation-booking')
                 ->with('error', 'Une erreur est survenue lors de la confirmation de votre réservation. Veuillez réessayer.');
         }
     }
