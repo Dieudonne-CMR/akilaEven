@@ -18,6 +18,9 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 use \Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+use App\Notifications\EventHallBookingCancelled;
+
 class siteController extends Controller
 {
     /**
@@ -102,80 +105,90 @@ class siteController extends Controller
      */
     public function booking(StorebookingsRequest $request)
     {
-        /*  dd($request); */
-        /*Log::info('Test d\'emplacement');
-        Log::info('Processing form submission', $request->validated());
-        var_dump($request->validated()); */
-        // Récupération des données validées
-        $data = $request->validated();
+        try {
+            DB::beginTransaction();
+            
+            // Récupération des données validées
+            $data = $request->validated();
 
-        // Récupérer la salle
-        $hall = EventHall::findOrFail($data['event_hall_id']);
+            // Récupérer la salle
+            $hall = EventHall::findOrFail($data['event_hall_id']);
 
-        // Vérifier si la salle est déjà réservée aux dates demandées
-        $arrival = Carbon::parse($data['arrival_time']);
-        $departure = Carbon::parse($data['departure_time']);
+            // Vérifier si la salle est déjà réservée aux dates demandées
+            $arrival = Carbon::parse($data['arrival_time']);
+            $departure = Carbon::parse($data['departure_time']);
 
-        // Compter les réservations actives pour cette salle aux dates demandées
-        $conflictingBookings = Bookings::where('event_hall_id', $hall->id)
-            ->where(function (Builder $query) use ($arrival, $departure) {
-                // Recherche des chevauchements : 
-                // (start1 <= end2) && (end1 >= start2)
-                $query->where(function (Builder $q) use ($arrival, $departure) {
-                    $q->where('arrival_time', '<=', $departure)
-                      ->where('departure_time', '>=', $arrival);
-                });
-            })
-            ->whereIn('status', ['pending', 'accepted', 'booked'])
-            ->count();
+            // Vérifier que la date de départ est après celle d'arrivée
+            if ($departure->lt($arrival)) {
+                return back()
+                    ->withInput()
+                    ->with('error', 'La date de départ doit être postérieure à la date d\'arrivée.');
+            }
 
-        // Si on a déjà 5 réservations actives, on refuse la nouvelle
-        if ($conflictingBookings >= 5) {
+            // Vérifier les réservations existantes
+            $conflictingBookings = Bookings::where('event_hall_id', $hall->id)
+                ->where(function (Builder $query) use ($arrival, $departure) {
+                    $query->where(function (Builder $q) use ($arrival, $departure) {
+                        $q->where('arrival_time', '<=', $departure)
+                          ->where('departure_time', '>=', $arrival);
+                    });
+                })
+                ->whereIn('status', ['pending', 'accepted', 'booked'])
+                ->count();
+
+            if ($conflictingBookings >= 5) {
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->with('error', 'Cette salle est déjà complètement réservée aux dates choisies. Veuillez sélectionner d\'autres dates.');
+            }
+
+            // Calcul de la durée en heures
+            $duration = $departure->diffInHours($arrival);
+
+            // Calcul du prix total
+            $data['total_price'] = $duration * $hall->prix;
+
+            // Définir l'expiration
+            $data['expires_at'] = Carbon::now()->addHours(24);
+
+            // Générer un token de confirmation
+            $data['confirmation_token'] = Str::random(64);
+
+            // Définir le statut initial
+            $data['status'] = 'pending';
+
+            // Création de la réservation
+            $booking = Bookings::create($data);
+
+            // Charger les relations pour les notifications
+            $booking->load('eventHall.user', 'eventHall.hotel');
+
+            // Notifier l'administrateur de la salle
+            $creator = $booking->eventHall->user;
+            if ($creator) {
+                $creator->notify(new EventHallReservationCreateToAdmin($booking));
+            }
+
+            // Envoyer un email au client
+            \Illuminate\Support\Facades\Notification::route('mail', [
+                $booking->email => $booking->full_name,
+            ])->notify(new EventHallReservationCreate($booking));
+
+            DB::commit();
+
+            return redirect()
+                ->route('site.detailSallesfetes', $hall->id)
+                ->with('success', 'Votre demande de réservation a bien été reçue et est en attente de validation par l\'administrateur.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Erreur lors de la création de la réservation : ' . $e->getMessage());
             return redirect()
                 ->back()
                 ->withInput()
-                ->with('error', 'Cette salle est déjà complètement réservée aux dates choisies. Veuillez sélectionner d\'autres dates.');
+                ->with('error', 'Une erreur est survenue lors de la création de votre réservation. Veuillez réessayer.');
         }
-
-        // Calcul de la durée en heures
-        $duration = $departure->diffInHours($arrival);
-
-        // Calcul du prix total (prix de la salle x durée)
-        $data['total_price'] = $duration * $hall->prix;
-
-        // Définir l'expiration (sera mis à jour après acceptation)
-        $data['expires_at'] = Carbon::now()->addHours(24);
-
-        // Générer un token de confirmation aléatoire
-        $data['confirmation_token'] = Str::random(64);
-
-        // Définir le statut initial
-        $data['status'] = 'pending';
-
-        // Création de la réservation
-        $booking = Bookings::create($data);
-
-        // Charger les relations pour les notifications
-        $booking->load('eventHall.user', 'eventHall.hotel');
-        Mail::raw('Contenu de test', function($msg){
-            $msg->to('borismbakop611@gmail.com')
-                ->subject('Test simple');
-        });
-        // Notifier l'administrateur de la salle
-        $creator = $booking->eventHall->user;
-        \Illuminate\Support\Facades\Mail::to('borismbakop611@gmail.com')
-            ->send(new \App\Mail\EventHallBookingCreateEmailToAdmin($booking));
-
-        $creator->notify(new \App\Notifications\EventHallReservationCreateToAdmin($booking));
-        
-        // Envoyer un email au client
-        /* Notification::route('mail', [
-            $booking->email => $booking->full_name,
-        ])->notify(new EventHallReservationCreate($booking));
- */
-        return redirect()
-            ->route('site.detailSallesfetes', $hall->id)
-            ->with('success', 'Votre demande de réservation a bien été reçue et est en attente de validation par l\'administrateur.');
     }
 
     /**
@@ -187,39 +200,58 @@ class siteController extends Controller
      */
     public function eventHallConfirmBooking(Request $request, $token)
     {
-        // 1. Vérifier que le token est valide
-        $booking = Bookings::with('eventHall.user', 'eventHall.hotel')
-            ->where('confirmation_token', $token)
-            ->firstOrFail();
+        try {
+            DB::beginTransaction();
 
-        // 2. Vérifier que le statut est toujours 'Accepted'
-        if ($booking->status !== 'accepted') {
-            return redirect()->route('site.event-hall-confirm-booking')
-                ->with('error', 'Cette réservation ne peut pas être confirmée. Son statut actuel est ' . $booking->status);
+            // 1. Vérifier que le token est valide
+            $booking = Bookings::with('eventHall.user', 'eventHall.hotel')
+                ->where('confirmation_token', $token)
+                ->firstOrFail();
+
+            // 2. Vérifier que le statut est toujours 'Accepted'
+            if ($booking->status !== 'accepted') {
+                return redirect()->route('site.event-hall-confirm-booking')
+                    ->with('error', 'Cette réservation ne peut pas être confirmée. Son statut actuel est ' . $booking->status);
+            }
+
+            // 3. Vérifier que la réservation n'a pas expiré
+            if (Carbon::now()->gt($booking->expires_at)) {
+                $booking->update(['status' => 'cancelled']);
+                
+                // Notifier le client de l'annulation
+                \Illuminate\Support\Facades\Notification::route('mail', [
+                    $booking->email => $booking->full_name,
+                ])->notify(new EventHallBookingCancelled($booking));
+                
+                return redirect()->route('site.event-hall-confirm-booking')
+                    ->with('error', 'Cette réservation a expirée. Veuillez effectuer une nouvelle demande.');
+            }
+
+            // 4. Mettre à jour le statut et la date de confirmation
+            $booking->update([
+                'status' => 'booked',
+                'confirmed_at' => now(),
+                'confirmation_token' => null,
+            ]);
+
+            // 5. Notifier l'administrateur de la salle
+            $creator = $booking->eventHall->user;
+            if ($creator) {
+                $creator->notify(new EventHallBookingConfirmation($booking));
+            }
+
+            DB::commit();
+
+            return redirect()
+                ->route('site.event-hall-confirm-booking', $booking)
+                ->with('success', 'Votre réservation est confirmée ! Nous vous remercions pour votre confiance.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Erreur lors de la confirmation de la réservation : ' . $e->getMessage());
+            return redirect()
+                ->back()
+                ->with('error', 'Une erreur est survenue lors de la confirmation de votre réservation. Veuillez réessayer.');
         }
-
-        // 3. Vérifier que la réservation n'a pas expiré
-        if (Carbon::now()->gt($booking->expires_at)) {
-            $booking->update(['status' => 'cancelled']);
-            
-            return redirect()->route('site.event-hall-confirm-booking')
-                ->with('error', 'Cette réservation a expirée. Veuillez effectuer une nouvelle demande.');
-        }
-
-        // 4. Mettre à jour le statut et la date de confirmation
-        $booking->update([
-            'status'            => 'booked',
-            'confirmed_at'      => now(),
-            'confirmation_token' => null, // Invalider le token après utilisation
-        ]);
-
-        // 5. Notifier l'administrateur de la salle que la réservation a été confirmée
-        $creator = $booking->eventHall->user;
-        if ($creator) {
-            $creator->notify(new EventHallBookingConfirmation($booking));
-        }
-
-        return redirect()->route('site.event-hall-confirm-booking', $booking)
-                    ->with('success', 'Votre réservation est confirmée ! Nous vous remercions pour votre confiance.');
     }
 }

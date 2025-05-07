@@ -137,10 +137,6 @@ class BookingController extends Controller
         $allowed = $this->isStatusTransitionAllowed($oldStatus, $data['status']);
          
         if (!$allowed) {
-            /* return response()->json([
-                'success' => false,
-                'message' => "La transition de statut de '{$oldStatus}' à '{$data['status']}' n'est pas autorisée."
-            ], 422); */
             return redirect()->back()->with('error', "Le changement de statut de {$oldStatus} à {$data['status']} n'est pas autorisée.");
         }
         
@@ -158,8 +154,8 @@ class BookingController extends Controller
             if ($booking->eventHall) {
                 $eventHall = $booking->eventHall;
                 
-                // Si le statut passe à "booked", on marque la salle comme indisponible
-                if ($data['status'] === 'booked') {
+                // Si le statut passe à "completed", on marque la salle comme indisponible
+                if ($data['status'] === 'completed') {
                     $eventHall->status = 'unavailable';
                     $eventHall->save();
                 }
@@ -172,6 +168,30 @@ class BookingController extends Controller
             }
             
             $booking->save();
+
+            // Envoyer les notifications appropriées
+            switch ($data['status']) {
+                case 'accepted':
+                    // Notifier le client
+                    \Illuminate\Support\Facades\Notification::route('mail', [
+                        $booking->email => $booking->full_name,
+                    ])->notify(new \App\Notifications\EventHallBookingAccepted($booking));
+                    break;
+
+                case 'completed':
+                    // Notifier le client
+                    \Illuminate\Support\Facades\Notification::route('mail', [
+                        $booking->email => $booking->full_name,
+                    ])->notify(new \App\Notifications\EventHallBookingCompleted($booking));
+                    break;
+
+                case 'cancelled':
+                    // Notifier le client
+                    \Illuminate\Support\Facades\Notification::route('mail', [
+                        $booking->email => $booking->full_name,
+                    ])->notify(new \App\Notifications\EventHallBookingCancelled($booking));
+                    break;
+            }
             
             DB::commit();
             
