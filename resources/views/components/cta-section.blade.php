@@ -1,6 +1,6 @@
 @props([
     'title' => 'Prêt à organiser votre prochain événement ?',
-    'subtitle' => 'Découvrez nos hôtels et salles de fêtes disponibles pour votre prochain événement.',
+    'subtitle' => 'Découvrez nos agences et salles de fêtes disponibles pour votre prochain événement.',
     'buttonText' => 'Réserver maintenant',
     'buttonUrl' => route('home')
 ])

@@ -1,31 +1,31 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HotelController2;
+use App\Http\Controllers\AgenceController2;
 use App\Http\Controllers\EventHallController2;
 use App\Http\Controllers\BookingController;
-use App\Http\Controllers\RoomController;
+use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 
 
 
 /* Route::middleware('auth')->group(function () { */
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::controller(HotelController2::class)->group(function () {
-        // Afficher la liste des hôtels
-        Route::get("/hotels",'index')->name("hotels");
-        // Afficher le formulaire de création d'hôtels
-        Route::get('/hotels/create', 'create')->name('hotels.create');
-        // Enregistrer un hôtel
-        Route::post('/hotels/store', 'store')->name('hotels.store');
-        // Afficher les détails d'un hôtel
-        Route::get('/hotels/{hotel}', 'show')->name('hotels.show');
-        // Mettre à jour les médias d'un hôtel (logo et bannières)
-        Route::post('/hotels/{hotel}/media', 'updateMedia')->name('hotels.update-media');
-        // Supprimer un hôtel
-        Route::delete('/hotels/{hotel}', 'destroy')->name('hotels.destroy');
-        // Supprimer plusieurs hôtels
-        Route::delete('/hotels', 'bulkDestroy')->name('hotels.bulk-delete');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware(['auth', 'verified']);
+    Route::controller(AgenceController2::class)->group(function () {
+        // Afficher la liste des agences
+        Route::get("/agences",'index')->name("agences");
+        // Afficher le formulaire de création d'agences
+        Route::get('/agences/create', 'create')->name('agences.create');
+        // Enregistrer une agence
+        Route::post('/agences/store', 'store')->name('agences.store');
+        // Afficher les détails d'une agence
+        Route::get('/agences/{agence}', 'show')->name('agences.show');
+        // Mettre à jour les médias d'une agence (logo et bannières)
+        Route::post('/agences/{agence}/media', 'updateMedia')->name('agences.update-media');
+        // Supprimer une agence
+        Route::delete('/agences/{agence}', 'destroy')->name('agences.destroy');
+        // Supprimer plusieurs agences
+        Route::delete('/agences', 'bulkDestroy')->name('agences.bulk-delete');
     });
     
     
@@ -45,19 +45,33 @@ use Illuminate\Support\Facades\Route;
         // Afficher la liste des salles de fêtes
         Route::get("/eventHalls", 'index')->name("eventHalls");
         // Afficher le formulaire de création d'une salle de fête
-        Route::get("/event-halls/create/{hotel}", 'create')->name("event-hall.create");
+        Route::get("/event-halls/create/{agence}", 'create')->name("event-hall.create");
         // Enregistrer une salle de fête
-        Route::post("/event-halls/create/{hotel}", 'store')->name("event-hall.store");
+        Route::post("/event-halls/create/{agence}", 'store')->name("event-hall.store");
         // Voir les détails d'une salle de fête
         Route::get("/event-halls/{event-hall}",'show')->name("event-hall.show");
+        // Supprimer une salle de fête
+        Route::delete("/event-halls/{event-hall}", 'destroy')->name("event-hall.destroy");
+        // Suppression groupée des salles de fête
+        Route::delete("/event-halls/bulk-delete", 'bulkDestroy')->name("event-halls.bulk-delete");
         
     });
 
-    Route::controller(RoomController::class)->group(function () {
-        // Créer une chambre d'hôtel
-        Route::get("/rooms/create/{hotel}", 'create')->name("rooms.create");
-        // Enregistrer une chambre d'hôtel
-        Route::post("/rooms/create/{hotel}", 'store')->name("rooms.store");
+    Route::controller(LocationController::class)->group(function () {
+        // Créer une location d'agence
+        Route::get("/locations/create/{agence}", 'create')->name("location.create");
+        // Enregistrer une location d'agence
+        Route::post("/locations/create/{agence}", 'store')->name("location.store");
+        // Afficher la liste des locations
+        Route::get("/locations", 'index')->name("locations.index");
+        // Afficher les détails d'une location
+        Route::get("/locations/{location}", 'show')->name("location.show");
+        // Mettre à jour une location
+        Route::put("/locations/{location}", 'update')->name("location.update");
+        // Supprimer une location   
+        Route::delete("/locations/{location}", 'destroy')->name("location.destroy");
+        // Suppression groupée des locations
+        Route::delete("/locations/bulk-delete", 'bulkDestroy')->name("locations.bulk-delete");
     });
     
     

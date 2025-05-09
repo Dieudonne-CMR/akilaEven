@@ -37,7 +37,7 @@
 <!-- ================================
    START HALL DETAIL AREA
 ================================= -->
-<div x-data="roomDetails()" class="container px-4 py-8 mx-auto max-w-7xl">
+<div x-data="locationDetails()" class="container px-4 py-8 mx-auto max-w-7xl">
     <!-- Contenu principal -->
     <div class="flex flex-col gap-8 lg:flex-row">
         <!-- Section détails de la salle (partie gauche) -->
@@ -47,7 +47,7 @@
                 <div>
                     <h1 class="text-3xl font-bold text-gray-900">{{ $eventHall->nom_salle }}</h1>
                     <div class="flex flex-wrap items-center gap-2 mt-2 text-sm event-hall-subtitle">
-                        <span><i class="text-blue-500 fa-solid fa-hotel"></i> {{ $eventHall->hotel->nom_hotel ?? 'Hôtel non spécifié' }}</span>                       
+                        <span><i class="text-blue-500 fa-solid fa-agence"></i> {{ $eventHall->agence->nom_agence ?? 'Agence non spécifié' }}</span>                       
                       {{--   <div data-orientation="vertical" role="none" class="shrink-0 bg-border w-[1px] h-4"></div> --}}
                         <span><i class="text-orange-500 fas fa-map-marker-alt"></i> {{ $eventHall->ville->nom ?? 'Ville non spécifiée' }}, {{ $eventHall->localisation ?? 'Localisation non spécifiée' }}</span>
                        
@@ -176,7 +176,7 @@
     });
     
     // Fonction principale Alpine.js
-    function roomDetails() {
+    function locationDetails() {
         return {
             // Variables d'état
             activeTab: 'description',

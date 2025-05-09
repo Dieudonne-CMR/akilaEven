@@ -77,12 +77,12 @@
 	        - Flight Sidebar
 	        - Flight Details
 	        - Flight Booking
-	 + Hotel
-	        - Hotel Grid
-	        - Hotel List
-	        - Hotel Sidebar
-	        - Hotel Details
-	        - Hotel Booking
+	 + Agence
+	        - Agence Grid
+	        - Agence List
+	        - Agence Sidebar
+	        - Agence Details
+	        - Agence Booking
 	 + Car
 	        - Car Grid
 	        - Car List
@@ -2565,8 +2565,8 @@ body {
     color: #5d646d;
 }
 
-.roomInc,
-.roomDec,
+.locationInc,
+.locationDec,
 .qtyInc,
 .qtyDec {
     width: 28px;
@@ -2588,15 +2588,15 @@ body {
     -o-transition: all 0.3s;
     transition: all 0.3s;
 }
-.roomInc:hover,
-.roomDec:hover,
+.locationInc:hover,
+.locationDec:hover,
 .qtyInc:hover,
 .qtyDec:hover {
     background-color: #287dfa;
     color: #fff;
 }
 
-.roomBtn input,
+.locationBtn input,
 .qtyBtn input {
     width: 35px;
     border: none;
@@ -6369,13 +6369,13 @@ body {
     }
 }
 
-/* room-card */
+/* location-card */
 @media (max-width: 425px) {
-    .room-card .card-attributes ul {
+    .location-card .card-attributes ul {
         flex-wrap: wrap;
     }
 }
-.room-card:hover {
+.location-card:hover {
     -webkit-transform: translateY(0);
     -moz-transform: translateY(0);
     -ms-transform: translateY(0);
@@ -7145,42 +7145,42 @@ body {
     padding-top: 150px;
 }
 
-/*======== hotel-area =========*/
+/*======== agence-area =========*/
 @media (max-width: 575px) {
-    .hotel-area.padding-right-100px {
+    .agence-area.padding-right-100px {
         padding-right: 0;
         padding-left: 0;
     }
 }
 
-/*======== room-type-content =========*/
-.room-type-content {
+/*======== location-type-content =========*/
+.location-type-content {
     overflow: hidden;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
     margin-bottom: 30px;
 }
-.room-type-content .image-box img {
+.location-type-content .image-box img {
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     -ms-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s;
 }
-.room-type-content .image-box a:hover img {
+.location-type-content .image-box a:hover img {
     -webkit-transform: scale(1.03);
     -moz-transform: scale(1.03);
     -ms-transform: scale(1.03);
     -o-transform: scale(1.03);
     transform: scale(1.03);
 }
-.room-type-content .image-box a:hover .room-type-link {
+.location-type-content .image-box a:hover .location-type-link {
     right: 30px;
 }
 
-/*======== room-type-link =========*/
-.room-type-link {
+/*======== location-type-link =========*/
+.location-type-link {
     position: absolute;
     bottom: 30px;
     right: 50px;
@@ -7198,16 +7198,16 @@ body {
     -o-transition: all 0.3s;
     transition: all 0.3s;
 }
-.room-type-link:hover {
+.location-type-link:hover {
     background-color: #287dfa;
     color: #fff;
 }
 
-/*======= hotel-card-carousel ========*/
-.hotel-card-carousel .owl-stage-outer {
+/*======= agence-card-carousel ========*/
+.agence-card-carousel .owl-stage-outer {
     overflow: inherit;
 }
-.hotel-card-carousel
+.agence-card-carousel
     .owl-stage-outer
     .owl-item:not(.active)
     .card-item::before {
@@ -7223,7 +7223,7 @@ body {
     border-radius: 5px;
     z-index: 1;
 }
-.hotel-card-carousel .owl-stage-outer .owl-item:not(.active) .card-item:hover {
+.agence-card-carousel .owl-stage-outer .owl-item:not(.active) .card-item:hover {
     -webkit-transform: translateY(0);
     -moz-transform: translateY(0);
     -ms-transform: translateY(0);
@@ -7231,11 +7231,11 @@ body {
     transform: translateY(0);
 }
 
-/*======= hotel-card-carousel-2 ========*/
-.hotel-card-carousel-2 .card-item {
+/*======= agence-card-carousel-2 ========*/
+.agence-card-carousel-2 .card-item {
     margin-bottom: 0;
 }
-.hotel-card-carousel-2 .card-item .card-img .badge {
+.agence-card-carousel-2 .card-item .card-img .badge {
     top: 20px;
 }
 

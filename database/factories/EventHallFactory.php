@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\EventHall;
 use App\Models\Ville;
 use App\Models\User;
-use App\Models\Hotel;
+use App\Models\Agence;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +21,7 @@ class EventHallFactory extends Factory
     {
         // Récupère aléatoirement un id existant pour les relations
         $villeId = Ville::inRandomOrder()->first()?->id;
-        $hotelId = Hotel::inRandomOrder()->first()?->id;
+        $agenceId = Agence::inRandomOrder()->first()?->id;
         $userId  = User::inRandomOrder()->first()?->id;
         // 1. Parcours le dossier public/.../event_halls
         $files = File::files(public_path('assets_site/images_site/event_halls'));
@@ -46,7 +46,7 @@ class EventHallFactory extends Factory
             'photo4'             => null,
             'event_type'         => $this->faker->randomElement(EventTypeHelper::getEventTypes()),
             'ville_id'           => $villeId,
-            'hotel_id'           => $hotelId,
+            'agence_id'           => $agenceId,
             'user_id'            => $userId,
         ];
     }

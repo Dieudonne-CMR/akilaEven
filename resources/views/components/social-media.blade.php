@@ -39,7 +39,7 @@
     <h4 class="mb-3">Suivez-nous</h4>
     <ul class="mb-0 list-inline">
         @foreach($networks as $network)
-            <li class="list-inline-item me-2">
+            <li class=" list-inline-item me-2">
                 <a 
                     href="{{ $network['url'] }}" 
                     target="_blank" 

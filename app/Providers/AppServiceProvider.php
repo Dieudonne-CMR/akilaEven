@@ -9,7 +9,7 @@ use App\Helpers\ToastHelper;
 use App\Helpers\BookingStatusHelper;
 use App\Helpers\BookingFilterHelper;
 use App\Helpers\InitialsHelper;
-use App\Helpers\HotelStatsHelper;
+use App\Helpers\AgenceStatsHelper;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,9 +23,9 @@ class AppServiceProvider extends ServiceProvider
             return new ToastHelper();
         });
         
-        // Enregistrement du helper pour les statistiques d'hôtel
-        $this->app->singleton('hotel.stats', function () {
-            return new HotelStatsHelper();
+        // Enregistrement du helper pour les statistiques d'agence
+        $this->app->singleton('agence.stats', function () {
+            return new AgenceStatsHelper();
         });
     }
 
@@ -80,8 +80,8 @@ class AppServiceProvider extends ServiceProvider
             return "<?php echo \App\Helpers\InitialsHelper::avatarBadge($expression); ?>";
         });
         
-        // Directive pour afficher les services d'un hôtel sous forme de tags
-        Blade::directive('hotelServices', function ($expression) {
+        // Directive pour afficher les services d'un agence sous forme de tags
+        Blade::directive('agenceServices', function ($expression) {
             return "<?php
                 \$services = is_array($expression) ? $expression : json_decode($expression, true);
                 if (\$services && count(\$services) > 0) {

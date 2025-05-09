@@ -17,11 +17,11 @@ class CheckHotlSelect
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Vérifiez si l'utilisateur a sélectionné un hôtel
-        if(!session('selected_hotel')){
-            // Redirigez vers la page de sélection d'hôtel
-            // return redirect()->route('hotels.switch-hotel')->with('error', 'Veuillez sélectionner un hôtel.');
-            return redirect()->back()->with('error', 'Veuillez sélectionner un hôtel.');
+        // Vérifiez si l'utilisateur a sélectionné un agence
+        if(!session('selected_agence')){
+            // Redirigez vers la page de sélection d'agence
+            // return redirect()->route('agences.switch-agence')->with('error', 'Veuillez sélectionner un agence.');
+            return redirect()->back()->with('error', 'Veuillez sélectionner un agence.');
         }
         return $next($request);
     }

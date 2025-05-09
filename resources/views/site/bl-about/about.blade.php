@@ -35,7 +35,7 @@
                 <div class="section-heading text-center mb-5">
                     <h2 class="sec__title">Notre Plateforme de Réservation</h2>
                     <p class="sec__desc pt-3">
-                        Bienvenue sur notre plateforme de réservation d'hôtels et de salles de fêtes. 
+                        Bienvenue sur notre plateforme de réservation d'agences et de salles de fêtes. 
                         Nous vous proposons une large sélection d'hébergements et d'espaces pour vos événements.
                     </p>
                 </div>
@@ -48,7 +48,7 @@
                 <div class="about-content mb-4">
                     <h3 class="mb-3">Notre Mission</h3>
                     <p class="mb-3">
-                        Notre mission est de faciliter la réservation d'hôtels et de salles de fêtes pour tous vos besoins, 
+                        Notre mission est de faciliter la réservation d'agences et de salles de fêtes pour tous vos besoins, 
                         qu'il s'agisse d'un séjour d'affaires, de vacances en famille ou d'un événement spécial comme un mariage.
                     </p>
                     <p>

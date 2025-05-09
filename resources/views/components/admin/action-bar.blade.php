@@ -79,7 +79,7 @@
             search() {
                 console.log('Recherche:', this.searchQuery);
                 // Émettre un événement global pour informer le tableau
-                document.dispatchEvent(new CustomEvent('search-hotels', { 
+                document.dispatchEvent(new CustomEvent('search-agences', { 
                     detail: { query: this.searchQuery },
                     bubbles: true,
                     cancelable: true
@@ -87,13 +87,13 @@
             },
             
             bulkDelete() {
-                if(confirm('Êtes-vous sûr de vouloir supprimer les hôtels sélectionnés?')) {
-                    const selectedIds = document.querySelectorAll('input[name="selected_hotels[]"]:checked');
+                if(confirm('Êtes-vous sûr de vouloir supprimer les agences sélectionnés?')) {
+                    const selectedIds = document.querySelectorAll('input[name="selected_agences[]"]:checked');
                     if(selectedIds.length === 0) return;
                     
                     const ids = Array.from(selectedIds).map(el => el.value);
                     
-                    fetch('{{ route("admin.hotels.bulk-delete") }}', {
+                    fetch('{{ route("admin.agences.bulk-delete") }}', {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',

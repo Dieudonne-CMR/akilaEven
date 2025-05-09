@@ -25,7 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
          // Ajouter les 01/04/2025
         $middleware->alias([
             'aliasMiddleware' => CheckHotlSelect::class,
-            'check.hotel.owner' => \App\Http\Middleware\CheckHotelOwner::class,
+            'check.agence.owner' => \App\Http\Middleware\CheckAgenceOwner::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
@@ -33,9 +33,9 @@ return Application::configure(basePath: dirname(__DIR__))
     })
 
     ->create();
-    // Ajouter le middleware de vérification de l'hôtel
+    // Ajouter le middleware de vérification de l'agence
 
     // $app->routeMiddleware([
-    //     'check.hotel.owner' => \App\Http\Middleware\CheckHotelOwner::class,
+    //     'check.agence.owner' => \App\Http\Middleware\CheckAgenceOwner::class,
     // ]);
     

@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\HotelController;
-use App\Http\Controllers\RoomController;
+use App\Http\Controllers\AgenceController;
+use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -30,22 +30,22 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/salles', [HomeController::class, 'salles'])->name('salles');
     Route::get('/add-salle', [HomeController::class, 'addsalle'])->name('add-salle');
-    //  creer un hotel
-    Route::get('/hotels/create',[HotelController::class, 'create'])->name('hotels.create');
-    // enregistrer un hotel
-    Route::post('/hotels/store',[HotelController::class, 'store'])->name('hotels.store');
-    // liste des hotels
-    // Route::get('/hotels/liste_hotels',[HotelController::class, 'liste_hotels'])->name('hotels.liste_hotels');
-    // Route::get('/hotels/{{hotel}}/manage',[HotelController::class, 'manageHotel'])->name('hotels.manage');
+    //  creer un agence
+    Route::get('/agences/create',[AgenceController::class, 'create'])->name('agences.create');
+    // enregistrer un agence
+    Route::post('/agences/store',[AgenceController::class, 'store'])->name('agences.store');
+    // liste des agences
+    // Route::get('/agences/liste_agences',[AgenceController::class, 'liste_agences'])->name('agences.liste_agences');
+    // Route::get('/agences/{{agence}}/manage',[AgenceController::class, 'manageAgence'])->name('agences.manage');
     
-    // Route::get('/switch-hotel', [HotelController::class, 'showSwitchForm'])->name('hotels.switch');
-    // Route::post('/switch-hotel', [HotelController::class, 'switchHotel'])->name('hotels.switch');
-    Route::get('/hotels/switch-hotel', [HotelController::class, 'showSwitchForm'])->name('hotels.switch');
-    Route::post('/hotels/switch-hotel', [HotelController::class, 'switchHotel']);
-    Route::get('/hotels/manager',[HotelController::class, 'manageHotel'])->name('hotels.manage');
+    // Route::get('/switch-agence', [AgenceController::class, 'showSwitchForm'])->name('agences.switch');
+    // Route::post('/switch-agence', [AgenceController::class, 'switchAgence'])->name('agences.switch');
+    Route::get('/agences/switch-agence', [AgenceController::class, 'showSwitchForm'])->name('agences.switch');
+    Route::post('/agences/switch-agence', [AgenceController::class, 'switchAgence']);
+    Route::get('/agences/manager',[AgenceController::class, 'manageAgence'])->name('agences.manage');
 
-    Route::get('/hotels/rooms/create',[RoomController::class, 'createRoom'])->name('rooms.create');
-    Route::post('/hotels/rooms/store',[RoomController::class, 'storeRoom'])->name('rooms.store');
+    Route::get('/agences/locations/create',[LocationController::class, 'createLocation'])->name('locations.create');
+    Route::post('/agences/locations/store',[LocationController::class, 'storeLocation'])->name('locations.store');
     
 
 });

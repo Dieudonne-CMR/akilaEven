@@ -22,7 +22,7 @@
         <h2 class="mb-4 text-sm font-bold tracking-wider uppercase !text-primary">Nos services</h2>
         <ul class="space-y-3 text-sm text-muted-foreground">
           <li><a href="{{ route('site.sallesfetes') }}" class="">Salles de fêtes</a></li>
-          <li><a class="hover:text-primary" href="#" class="">Chambres d'hôtel</a></li>
+          <li><a class="hover:text-primary" href="#" class="">Locations</a></li>
           <li><a class="hover:text-primary" href="#" class="">Partenaires</a></li>
           <li><a class="hover:text-primary" href="{{ route('register') }}" class="">Créer un espace</a></li>
         </ul>
@@ -40,7 +40,7 @@
       <!-- INFO WEBSITE Column -->
       <div class="col-span-2">
         <h2 class="mb-4 text-sm font-bold tracking-wider uppercase !text-primary">INFO</h2>
-        <p class="max-w-xl mb-4 text-lg text-muted-foreground"> Akia Even, Votre plateforme pour la réservation de <span class="!text-primary">salles de fêtes</span> et <span class="!text-primary">chambres d'hôtel</span> partout au Cameroun</p>
+        <p class="max-w-xl mb-4 text-lg text-muted-foreground"> Akia Even, Votre plateforme pour la réservation de <span class="!text-primary">salles de fêtes</span> et <span class="!text-primary">locations d'agence</span> partout au Cameroun</p>
         <ul class="space-y-3 text-sm text-muted-foreground">          
           <li> Douala, Cameroun<br />
             Avenue de la Liberté</li>

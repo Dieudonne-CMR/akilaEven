@@ -58,8 +58,8 @@
                     </div>
                     
                     <div>
-                        <p class="mb-2 text-sm font-medium text-gray-500">Hôtel</p>
-                        <p class="text-gray-900">{{ $booking->eventHall->hotel->nom_hotel }}</p>
+                        <p class="mb-2 text-sm font-medium text-gray-500">Agence</p>
+                        <p class="text-gray-900">{{ $booking->eventHall->agence->nom_agence }}</p>
                     </div>
                     
                     <div>

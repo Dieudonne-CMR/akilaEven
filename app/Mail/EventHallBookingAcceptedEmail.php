@@ -20,7 +20,7 @@ class EventHallBookingAcceptedEmail extends Mailable
 
     public function build()
     {
-        return $this->subject('Votre réservation a été acceptée - Akila Even')
+        return $this->subject('Votre réservation a été acceptée - Akila Immo')
                     ->view('emails.EventHallBookingAccepted')
                     ->with([
                         'booking' => $this->booking,

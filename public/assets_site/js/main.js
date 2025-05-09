@@ -1,5 +1,5 @@
 /*---------------------------------------------
-Template name:  Trizen - Travel, hotel Booking HTML5 Template
+Template name:  Trizen - Travel, agence Booking HTML5 Template
 Version:        3.0.0
 Author:         TechyDevs
 Author Email:   contact@tecydevs.com
@@ -16,7 +16,7 @@ Author Email:   contact@tecydevs.com
 07: Navbar offset top
 08: Page scroll anchor menu
 09: Back to top button
-10: Hotel-card-carousel
+10: Agence-card-carousel
 11: Car-carousel
 12: Trending-carousel
 13: Gallery-carousel
@@ -42,177 +42,196 @@ Author Email:   contact@tecydevs.com
     "use strict";
     var $window = $(window);
 
-    $window.on('load', function () {
+    $window.on("load", function () {
         var $document = $(document);
-        var $dom = $('html, body');
-        var preloader = $('#preloader');
-        var dropdownMenu = $('.main-menu-content .dropdown-menu-item');
+        var $dom = $("html, body");
+        var preloader = $("#preloader");
+        var dropdownMenu = $(".main-menu-content .dropdown-menu-item");
         var isMenuOpen = false;
-        var topNav = document.querySelector('.header-menu-wrapper');
-        var scrollTopBtn = $('#back-to-top');
-        var scrollLink = $('#single-content-nav .scroll-link');
-        var hotelCardCarousel = $('.hotel-card-carousel');
-        var hotelCardCarouselTwo = $('.hotel-card-carousel-2');
-        var cardImgCarousel = $('.card-img-carousel');
-        var carCarousel = $('.car-carousel');
-        var trendingCarousel = $('.trending-carousel');
-        var galleryCarousel = $('.gallery-carousel');
-        var clientCarousel = $('.client-logo');
-        var testimonialCarousel = $('.testimonial-carousel');
-        var testimonialCarouselTwo = $('.testimonial-carousel-2');
-        var testimonialCarouselThree = $('.testimonial-carousel-3');
+        var topNav = document.querySelector(".header-menu-wrapper");
+        var scrollTopBtn = $("#back-to-top");
+        var scrollLink = $("#single-content-nav .scroll-link");
+        var agenceCardCarousel = $(".agence-card-carousel");
+        var agenceCardCarouselTwo = $(".agence-card-carousel-2");
+        var cardImgCarousel = $(".card-img-carousel");
+        var carCarousel = $(".car-carousel");
+        var trendingCarousel = $(".trending-carousel");
+        var galleryCarousel = $(".gallery-carousel");
+        var clientCarousel = $(".client-logo");
+        var testimonialCarousel = $(".testimonial-carousel");
+        var testimonialCarouselTwo = $(".testimonial-carousel-2");
+        var testimonialCarouselThree = $(".testimonial-carousel-3");
         var fancyVideo = $('[data-fancybox="video"]');
         var fancyGallery = $('[data-fancybox="gallery"]');
-        var rippleBg = $('.ripple-bg');
-        var masonryGrid = $('.grid-masonry');
-        var rangeSlider = $('#slider-range');
-        var rangeSliderAmount = $('#amount');
-        var rangeSliderTwo = $('#slider-range2');
-        var rangeSliderAmountTwo = $('#amount2');
+        var rippleBg = $(".ripple-bg");
+        var masonryGrid = $(".grid-masonry");
+        var rangeSlider = $("#slider-range");
+        var rangeSliderAmount = $("#amount");
+        var rangeSliderTwo = $("#slider-range2");
+        var rangeSliderAmountTwo = $("#amount2");
         var dateRangePicker = $('input[name="daterange"]');
         var dateRangePickerTwo = $('input[name="daterange-single"]');
-        var select2Menu = $('.select-contain-select');
-        var numberCounter = $('.counter');
-        var fullWidthSlider = $('.full-width-slider');
+        var select2Menu = $(".select-contain-select");
+        var numberCounter = $(".counter");
+        var fullWidthSlider = $(".full-width-slider");
 
         /* ======= Preloader ======= */
-        preloader.delay('500').fadeOut(2000);
+        preloader.delay("500").fadeOut(2000);
 
         /*=========== Header top bar menu ============*/
-        $document.on('click', '.down-button', function () {
-            $(this).toggleClass('active');
-            $('.header-top-bar').slideToggle(200);
+        $document.on("click", ".down-button", function () {
+            $(this).toggleClass("active");
+            $(".header-top-bar").slideToggle(200);
         });
 
         /*=========== Responsive Mobile menu ============*/
-        $document.on('click', '.menu-toggler', function () {
-            $(this).toggleClass('active');
-            $('.main-menu-content').slideToggle(200);
+        $document.on("click", ".menu-toggler", function () {
+            $(this).toggleClass("active");
+            $(".main-menu-content").slideToggle(200);
         });
 
         /*=========== Dropdown menu ============*/
-        dropdownMenu.parent('li').children('a').append(function() {
-            return '<button class="drop-menu-toggler" type="button"><i class="la la-angle-down"></i></button>';
-        });
+        dropdownMenu
+            .parent("li")
+            .children("a")
+            .append(function () {
+                return '<button class="drop-menu-toggler" type="button"><i class="la la-angle-down"></i></button>';
+            });
 
         /*=========== Dropdown menu ============*/
-        $document.on('click', '.main-menu-content .drop-menu-toggler', function() {
-            var Self = $(this);
-            Self.parent().parent().children('.dropdown-menu-item').toggle();
-            return false;
-        });
+        $document.on(
+            "click",
+            ".main-menu-content .drop-menu-toggler",
+            function () {
+                var Self = $(this);
+                Self.parent().parent().children(".dropdown-menu-item").toggle();
+                return false;
+            },
+        );
 
         /*=========== Sub menu ============*/
-        $('.main-menu-content .dropdown-menu-item .sub-menu').parent('li').children('a').append(function() {
-            return '<button class="sub-menu-toggler" type="button"><i class="la la-plus"></i></button>';
-        });
+        $(".main-menu-content .dropdown-menu-item .sub-menu")
+            .parent("li")
+            .children("a")
+            .append(function () {
+                return '<button class="sub-menu-toggler" type="button"><i class="la la-plus"></i></button>';
+            });
 
         /*=========== Dropdown menu ============*/
-        $document.on('click', '.main-menu-content .dropdown-menu-item .sub-menu-toggler', function() {
-            var Self = $(this);
-            Self.parent().parent().children('.sub-menu').toggle();
-            return false;
-        });
+        $document.on(
+            "click",
+            ".main-menu-content .dropdown-menu-item .sub-menu-toggler",
+            function () {
+                var Self = $(this);
+                Self.parent().parent().children(".sub-menu").toggle();
+                return false;
+            },
+        );
 
         /*=========== Canvas menu open ============*/
-        $document.on('click', '.user-menu-open', function () {
-            $('.user-canvas-container').addClass('active');
+        $document.on("click", ".user-menu-open", function () {
+            $(".user-canvas-container").addClass("active");
         });
 
         /*=========== Canvas menu close ============*/
-        $document.on('click', '.side-menu-close', function () {
-            $('.user-canvas-container, .sidebar-nav').removeClass('active');
+        $document.on("click", ".side-menu-close", function () {
+            $(".user-canvas-container, .sidebar-nav").removeClass("active");
         });
 
         /*=========== Dashboard menu ============*/
-        $document.on('click', '.menu-toggler', function () {
-            $('.sidebar-nav').toggleClass('active');
+        $document.on("click", ".menu-toggler", function () {
+            $(".sidebar-nav").toggleClass("active");
         });
 
         /*=========== When window will resize then this action will work ============*/
-        $window.on('resize', function () {
+        $window.on("resize", function () {
             if ($window.width() > 991) {
-                $('.main-menu-content').show();
-                $('.dropdown-menu-item').show();
-                $('.sub-menu').show();
-                $('.header-top-bar').show();
-            }else {
+                $(".main-menu-content").show();
+                $(".dropdown-menu-item").show();
+                $(".sub-menu").show();
+                $(".header-top-bar").show();
+            } else {
                 if (isMenuOpen) {
-                    $('.main-menu-content').show();
-                    $('.dropdown-menu-item').show();
-                    $('.sub-menu').show();
-                    $('.header-top-bar').show();
-                }else {
-                    $('.main-menu-content').hide();
-                    $('.dropdown-menu-item').hide();
-                    $('.sub-menu').hide();
-                    $('.header-top-bar').hide();
+                    $(".main-menu-content").show();
+                    $(".dropdown-menu-item").show();
+                    $(".sub-menu").show();
+                    $(".header-top-bar").show();
+                } else {
+                    $(".main-menu-content").hide();
+                    $(".dropdown-menu-item").hide();
+                    $(".sub-menu").hide();
+                    $(".header-top-bar").hide();
                 }
             }
         });
 
         /*=========== Navbar offset top ============*/
-        if($(topNav).length) {
+        if ($(topNav).length) {
             var topOfNav = topNav.offsetTop;
         }
 
-        $window.on('scroll', function () {
-
+        $window.on("scroll", function () {
             if ($window.scrollTop() >= topOfNav) {
-                document.body.style.paddingTop = topNav.offsetHeight + 'px';
-                document.body.classList.add('fixed-nav');
-            }
-            else {
-                document.body.style.paddingTop = '0px';
-                document.body.classList.remove('fixed-nav');
+                document.body.style.paddingTop = topNav.offsetHeight + "px";
+                document.body.classList.add("fixed-nav");
+            } else {
+                document.body.style.paddingTop = "0px";
+                document.body.classList.remove("fixed-nav");
             }
 
             //back to top button control
             if ($window.scrollTop() > 500) {
-                $(scrollTopBtn).addClass('active');
+                $(scrollTopBtn).addClass("active");
             } else {
-                $(scrollTopBtn).removeClass('active');
+                $(scrollTopBtn).removeClass("active");
             }
 
             //page scroll position
             findPosition();
-
         });
 
         /*========== Page scroll ==========*/
 
-        scrollLink.on('click',function(e){
-            var target = $($(this).attr('href'));
+        scrollLink.on("click", function (e) {
+            var target = $($(this).attr("href"));
 
-            $($dom).animate({
-                scrollTop:target.offset().top
-            },600);
+            $($dom).animate(
+                {
+                    scrollTop: target.offset().top,
+                },
+                600,
+            );
 
-            $(this).addClass('active');
+            $(this).addClass("active");
 
             e.preventDefault();
         });
 
-        function findPosition (){
-            $('.page-scroll').each(function(){
-                if(($(this).offset().top - $(window).scrollTop()) < 20){
-                    scrollLink.removeClass('active');
-                    $('#single-content-nav').find('[data-scroll="'+ $(this).attr('id') +'"]').addClass('active');
+        function findPosition() {
+            $(".page-scroll").each(function () {
+                if ($(this).offset().top - $(window).scrollTop() < 20) {
+                    scrollLink.removeClass("active");
+                    $("#single-content-nav")
+                        .find('[data-scroll="' + $(this).attr("id") + '"]')
+                        .addClass("active");
                 }
             });
         }
 
         /*===== Back to top button ======*/
-        $document.on("click", "#back-to-top", function() {
-            $($dom).animate({
-                scrollTop: 0
-            }, 800);
+        $document.on("click", "#back-to-top", function () {
+            $($dom).animate(
+                {
+                    scrollTop: 0,
+                },
+                800,
+            );
             return false;
         });
 
-        /*==== Hotel-card-carousel =====*/
-        if ($(hotelCardCarousel).length) {
-            $(hotelCardCarousel).owlCarousel({
+        /*==== Agence-card-carousel =====*/
+        if ($(agenceCardCarousel).length) {
+            $(agenceCardCarousel).owlCarousel({
                 loop: true,
                 items: 4,
                 nav: true,
@@ -221,31 +240,34 @@ Author Email:   contact@tecydevs.com
                 autoplay: false,
                 active: true,
                 margin: 30,
-                navText: ['<i class="la la-angle-left"></i>', '<i class="la la-angle-right"></i>'],
-                responsive : {
+                navText: [
+                    '<i class="la la-angle-left"></i>',
+                    '<i class="la la-angle-right"></i>',
+                ],
+                responsive: {
                     // breakpoint from 0 up
-                    0 : {
-                        items: 1
+                    0: {
+                        items: 1,
                     },
                     // breakpoint from 991 up
-                    768 : {
-                        items: 2
+                    768: {
+                        items: 2,
                     },
                     // breakpoint from 992 up
-                    992 : {
-                        items: 3
+                    992: {
+                        items: 3,
                     },
                     // breakpoint from 1441 up
-                    1441 : {
-                        items: 4
-                    }
-                }
+                    1441: {
+                        items: 4,
+                    },
+                },
             });
         }
 
-        /*==== Hotel-card-carousel 2 =====*/
-        if ($(hotelCardCarouselTwo).length) {
-            $(hotelCardCarouselTwo).owlCarousel({
+        /*==== Agence-card-carousel 2 =====*/
+        if ($(agenceCardCarouselTwo).length) {
+            $(agenceCardCarouselTwo).owlCarousel({
                 loop: true,
                 items: 3,
                 nav: true,
@@ -254,21 +276,24 @@ Author Email:   contact@tecydevs.com
                 autoplay: false,
                 active: true,
                 margin: 30,
-                navText: ['<i class="la la-angle-left"></i>', '<i class="la la-angle-right"></i>'],
-                responsive : {
+                navText: [
+                    '<i class="la la-angle-left"></i>',
+                    '<i class="la la-angle-right"></i>',
+                ],
+                responsive: {
                     // breakpoint from 0 up
-                    0 : {
-                        items: 1
+                    0: {
+                        items: 1,
                     },
                     // breakpoint from 991 up
-                    768 : {
-                        items: 2
+                    768: {
+                        items: 2,
                     },
                     // breakpoint from 992 up
-                    992 : {
-                        items: 3
+                    992: {
+                        items: 3,
                     },
-                }
+                },
             });
         }
 
@@ -283,7 +308,10 @@ Author Email:   contact@tecydevs.com
                 autoplay: false,
                 active: true,
                 margin: 30,
-                navText: ['<i class="la la-angle-left"></i>', '<i class="la la-angle-right"></i>']
+                navText: [
+                    '<i class="la la-angle-left"></i>',
+                    '<i class="la la-angle-right"></i>',
+                ],
             });
         }
 
@@ -298,21 +326,24 @@ Author Email:   contact@tecydevs.com
                 autoplay: false,
                 active: true,
                 margin: 30,
-                navText: ['<i class="la la-angle-left"></i>', '<i class="la la-angle-right"></i>'],
-                responsive : {
+                navText: [
+                    '<i class="la la-angle-left"></i>',
+                    '<i class="la la-angle-right"></i>',
+                ],
+                responsive: {
                     // breakpoint from 167 up
-                    0 : {
-                        items: 1
+                    0: {
+                        items: 1,
                     },
                     // breakpoint from 768 up
-                    768 : {
-                        items: 2
+                    768: {
+                        items: 2,
                     },
                     // breakpoint from 992 up
-                    992 : {
-                        items: 3
-                    }
-                }
+                    992: {
+                        items: 3,
+                    },
+                },
             });
         }
 
@@ -326,21 +357,24 @@ Author Email:   contact@tecydevs.com
                 smartSpeed: 700,
                 autoplay: false,
                 margin: 30,
-                navText: ['<i class="la la-long-arrow-left"></i>', '<i class="la la-long-arrow-right"></i>'],
-                responsive : {
+                navText: [
+                    '<i class="la la-long-arrow-left"></i>',
+                    '<i class="la la-long-arrow-right"></i>',
+                ],
+                responsive: {
                     // breakpoint from 0 up
-                    0 : {
-                        items: 1
+                    0: {
+                        items: 1,
                     },
                     // breakpoint from 768 up
-                    768 : {
-                        items: 2
+                    768: {
+                        items: 2,
                     },
                     // breakpoint from 992 up
-                    992 : {
-                        items: 3
-                    }
-                }
+                    992: {
+                        items: 3,
+                    },
+                },
             });
         }
 
@@ -353,7 +387,10 @@ Author Email:   contact@tecydevs.com
                 dots: true,
                 smartSpeed: 700,
                 margin: 20,
-                navText: ['<i class="la la-long-arrow-left"></i>', '<i class="la la-long-arrow-right"></i>']
+                navText: [
+                    '<i class="la la-long-arrow-left"></i>',
+                    '<i class="la la-long-arrow-right"></i>',
+                ],
             });
         }
 
@@ -366,28 +403,28 @@ Author Email:   contact@tecydevs.com
                 dots: false,
                 smartSpeed: 700,
                 autoplay: true,
-                responsive : {
+                responsive: {
                     // breakpoint from 0 up
-                    0 : {
-                        items: 1
+                    0: {
+                        items: 1,
                     },
                     // breakpoint from 425 up
-                    425 : {
-                        items: 2
+                    425: {
+                        items: 2,
                     },
                     // breakpoint from 480 up
-                    480 : {
-                        items: 2
+                    480: {
+                        items: 2,
                     },
                     // breakpoint from 767 up
-                    767 : {
-                        items: 4
+                    767: {
+                        items: 4,
                     },
                     // breakpoint from 992 up
-                    992 : {
-                        items: 6
-                    }
-                }
+                    992: {
+                        items: 6,
+                    },
+                },
             });
         }
 
@@ -401,18 +438,20 @@ Author Email:   contact@tecydevs.com
                 smartSpeed: 700,
                 autoplay: false,
                 margin: 30,
-                navText: ['<i class="la la-angle-left"></i>', '<i class="la la-angle-right"></i>'],
-                responsive : {
+                navText: [
+                    '<i class="la la-angle-left"></i>',
+                    '<i class="la la-angle-right"></i>',
+                ],
+                responsive: {
                     // breakpoint from 0 up
-                    0 : {
-                        items: 1
+                    0: {
+                        items: 1,
                     },
                     // breakpoint from 900 up
-                    900 : {
-                        items: 2
-                    }
-
-                }
+                    900: {
+                        items: 2,
+                    },
+                },
             });
         }
 
@@ -426,21 +465,24 @@ Author Email:   contact@tecydevs.com
                 smartSpeed: 700,
                 autoplay: false,
                 margin: 30,
-                navText: ['<i class="la la-long-arrow-left"></i>', '<i class="la la-long-arrow-right"></i>'],
-                responsive : {
+                navText: [
+                    '<i class="la la-long-arrow-left"></i>',
+                    '<i class="la la-long-arrow-right"></i>',
+                ],
+                responsive: {
                     // breakpoint from 0 up
-                    0 : {
-                        items: 1
+                    0: {
+                        items: 1,
                     },
                     // breakpoint from 768 up
-                    768 : {
-                        items: 2
+                    768: {
+                        items: 2,
                     },
                     // breakpoint from 992 up
-                    992 : {
-                        items: 3
-                    }
-                }
+                    992: {
+                        items: 3,
+                    },
+                },
             });
         }
         /*==== testimonial-carousel-3 =====*/
@@ -453,18 +495,17 @@ Author Email:   contact@tecydevs.com
                 smartSpeed: 700,
                 autoplay: false,
                 margin: 30,
-                navText: ['<i class="la la-angle-left"></i>', '<i class="la la-angle-right"></i>'],
+                navText: [
+                    '<i class="la la-angle-left"></i>',
+                    '<i class="la la-angle-right"></i>',
+                ],
             });
         }
 
         /*==== Fancybox for video =====*/
         if ($(fancyVideo).length) {
             $(fancyVideo).fancybox({
-                buttons: [
-                    "share",
-                    "fullScreen",
-                    "close"
-                ]
+                buttons: ["share", "fullScreen", "close"],
             });
         }
 
@@ -477,8 +518,8 @@ Author Email:   contact@tecydevs.com
                     "fullScreen",
                     "download",
                     "thumbs",
-                    "close"
-                ]
+                    "close",
+                ],
             });
         }
 
@@ -487,7 +528,7 @@ Author Email:   contact@tecydevs.com
             $(rippleBg).ripples({
                 resolution: 500,
                 dropRadius: 20,
-                perturbance: 0
+                perturbance: 0,
             });
         }
 
@@ -501,14 +542,20 @@ Author Email:   contact@tecydevs.com
                 range: true,
                 min: 0,
                 max: 1000,
-                values: [ 40, 800 ],
-                slide: function( event, ui ) {
-                    $(rangeSliderAmount).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-                }
+                values: [40, 800],
+                slide: function (event, ui) {
+                    $(rangeSliderAmount).val(
+                        "$" + ui.values[0] + " - $" + ui.values[1],
+                    );
+                },
             });
         }
-        $(rangeSliderAmount).val( "$" + $(rangeSlider).slider( "values", 0 ) +
-            " - $" + $(rangeSlider).slider( "values", 1 ) );
+        $(rangeSliderAmount).val(
+            "$" +
+                $(rangeSlider).slider("values", 0) +
+                " - $" +
+                $(rangeSlider).slider("values", 1),
+        );
 
         /*======= ui price range slider 2 ========*/
         if ($(rangeSliderTwo).length) {
@@ -516,24 +563,29 @@ Author Email:   contact@tecydevs.com
                 range: true,
                 min: 0,
                 max: 1000,
-                values: [ 40, 800 ],
-                slide: function( event, ui ) {
-                    $(rangeSliderAmountTwo).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-                }
+                values: [40, 800],
+                slide: function (event, ui) {
+                    $(rangeSliderAmountTwo).val(
+                        "$" + ui.values[0] + " - $" + ui.values[1],
+                    );
+                },
             });
         }
 
-        $(rangeSliderAmountTwo).val( "$" + $(rangeSliderTwo).slider( "values", 0 ) +
-            " - $" + $(rangeSliderTwo).slider( "values", 1 ) );
-
+        $(rangeSliderAmountTwo).val(
+            "$" +
+                $(rangeSliderTwo).slider("values", 0) +
+                " - $" +
+                $(rangeSliderTwo).slider("values", 1),
+        );
 
         /*==== Daterangepicker =====*/
         if ($(dateRangePicker).length) {
             $(dateRangePicker).daterangepicker({
-                opens: 'right',
+                opens: "right",
                 locale: {
-                    format: 'DD/MM/YYYY',
-                }
+                    format: "DD/MM/YYYY",
+                },
             });
         }
 
@@ -541,26 +593,25 @@ Author Email:   contact@tecydevs.com
         if ($(dateRangePickerTwo).length) {
             $(dateRangePickerTwo).daterangepicker({
                 singleDatePicker: true,
-                opens: 'right',
+                opens: "right",
                 locale: {
-                    format: 'DD/MM/YYYY',
-                }
+                    format: "DD/MM/YYYY",
+                },
             });
         }
 
-        
-           /*==== select2  =====*/
+        /*==== select2  =====*/
 
-           if ($(select2Menu).length) {
+        if ($(select2Menu).length) {
             $(select2Menu).select2({
-                minimumResultsForSearch: Infinity
+                minimumResultsForSearch: Infinity,
             });
         }
 
         /*==== counter =====*/
-        if(numberCounter.length) {
+        if (numberCounter.length) {
             numberCounter.countTo({
-                speed: 1200
+                speed: 1200,
             });
         }
 
@@ -570,43 +621,65 @@ Author Email:   contact@tecydevs.com
         }
 
         /*==== When you will click the add another flight btn then this action will be work =====*/
-        $document.on('click', '.add-flight-btn', function () {
-
-            if ( $('.multi-flight-field').length < 3 ) {
-                $('.multi-flight-field:last').clone().insertAfter('.multi-flight-field:last');
+        $document.on("click", ".add-flight-btn", function () {
+            if ($(".multi-flight-field").length < 3) {
+                $(".multi-flight-field:last")
+                    .clone()
+                    .insertAfter(".multi-flight-field:last");
             }
 
-            $(this).closest('.multi-flight-wrap').find('.multi-flight-field:last').children('.multi-flight-delete-wrap').show();
+            $(this)
+                .closest(".multi-flight-wrap")
+                .find(".multi-flight-field:last")
+                .children(".multi-flight-delete-wrap")
+                .show();
 
-            $('.date-multi-picker').daterangepicker('destroy');
+            $(".date-multi-picker").daterangepicker("destroy");
 
             var i = 0;
-            $('.date-multi-picker').each(function () {
+            $(".date-multi-picker").each(function () {
                 var $this = $(this);
-                $this.attr('id', 'date' + i).daterangepicker({
+                $this.attr("id", "date" + i).daterangepicker({
                     singleDatePicker: true,
-                    opens: 'right',
+                    opens: "right",
                     local: {
-                       format: 'DD/MM/YYYY'
-                    }
+                        format: "DD/MM/YYYY",
+                    },
                 });
                 i++;
             });
-
         });
 
         /*=========== multi-flight-remove ============*/
-        $document.on('click', '.multi-flight-remove', function() {
-            $('.multi-flight-remove').closest('.multi-flight-wrap').find('.multi-flight-field').not(':first').last().remove();
+        $document.on("click", ".multi-flight-remove", function () {
+            $(".multi-flight-remove")
+                .closest(".multi-flight-wrap")
+                .find(".multi-flight-field")
+                .not(":first")
+                .last()
+                .remove();
         });
 
         /*====  mobile dropdown menu  =====*/
-        $document.on('click', '.toggle-menu > li .toggle-menu-icon', function (e) {
-            e.preventDefault();
-            $(this).closest('li').siblings().removeClass('active').find('.toggle-drop-menu, .dropdown-menu-item').slideUp(200);
-            $(this).closest('li').toggleClass('active').find('.toggle-drop-menu, .dropdown-menu-item').slideToggle(200);
-            return false;
-        });
+        $document.on(
+            "click",
+            ".toggle-menu > li .toggle-menu-icon",
+            function (e) {
+                e.preventDefault();
+                $(this)
+                    .closest("li")
+                    .siblings()
+                    .removeClass("active")
+                    .find(".toggle-drop-menu, .dropdown-menu-item")
+                    .slideUp(200);
+                $(this)
+                    .closest("li")
+                    .toggleClass("active")
+                    .find(".toggle-drop-menu, .dropdown-menu-item")
+                    .slideToggle(200);
+                return false;
+            },
+        );
 
         /*====== Dropdown btn ======*/
         // $('.dropdown-btn').on('click', function (e) {
@@ -616,17 +689,25 @@ Author Email:   contact@tecydevs.com
         // });
 
         /*====== When you click on the outside of dropdown menu item then its will be hide ======*/
-        $document.on('click', function(event){
-            var $trigger = $('.dropdown-contain');
-            if($trigger !== event.target && !$trigger.has(event.target).length){
-                $('.dropdown-menu-wrap').slideUp(300);
+        $document.on("click", function (event) {
+            var $trigger = $(".dropdown-contain");
+            if (
+                $trigger !== event.target &&
+                !$trigger.has(event.target).length
+            ) {
+                $(".dropdown-menu-wrap").slideUp(300);
             }
         });
 
-        $('.progressbar-line').each(function(){
-            $(this).find('.progressbar-line-item').animate({
-                width:$(this).attr('data-percent')
-            },6000);
+        $(".progressbar-line").each(function () {
+            $(this)
+                .find(".progressbar-line-item")
+                .animate(
+                    {
+                        width: $(this).attr("data-percent"),
+                    },
+                    6000,
+                );
         });
 
         if ($(fullWidthSlider).length) {
@@ -638,59 +719,68 @@ Author Email:   contact@tecydevs.com
                 loop: true,
                 margin: 10,
                 smartSpeed: 500,
-                navText: ['<i class="la la-long-arrow-left"></i>', '<i class="la la-long-arrow-right"></i>'],
-                responsive:{
-                    0:{
-                        items:1,
-                        autoplay: true
+                navText: [
+                    '<i class="la la-long-arrow-left"></i>',
+                    '<i class="la la-long-arrow-right"></i>',
+                ],
+                responsive: {
+                    0: {
+                        items: 1,
+                        autoplay: true,
                     },
-                    576:{
-                        items:2
-                    }
-                }
+                    576: {
+                        items: 2,
+                    },
+                },
             });
         }
 
         /*======= Recommended tag =======*/
-        $document.on('click', '.recommended-tag', function () {
-            $(this).addClass('active');
-            $('.undo-btn').addClass('active');
-            $(this).siblings().removeClass('active');
+        $document.on("click", ".recommended-tag", function () {
+            $(this).addClass("active");
+            $(".undo-btn").addClass("active");
+            $(this).siblings().removeClass("active");
         });
 
         /*======= Undo btn =======*/
-        $document.on('click', '.undo-btn', function () {
-            $(this).removeClass('active');
-            $('.recommended-tag').removeClass('active');
+        $document.on("click", ".undo-btn", function () {
+            $(this).removeClass("active");
+            $(".recommended-tag").removeClass("active");
         });
 
         /*======= paste-btn =======*/
-        $document.on('click', '.paste-btn', function (e) {
+        $document.on("click", ".paste-btn", function (e) {
             e.preventDefault();
-            $('#resume_text').toggle();
+            $("#resume_text").toggle();
         });
 
         /*========= Ajax contact form ========*/
-        let submitBtn = $('#send-message-btn');
-        let form = $('#contact-form');
-        let message = $('#contact-success-message');
+        let submitBtn = $("#send-message-btn");
+        let form = $("#contact-form");
+        let message = $("#contact-success-message");
         let formData;
 
         // Success function
         function doneFunction(response) {
-            submitBtn.html('Send Message');
-            message.fadeIn().removeClass('alert-danger').addClass('alert-success');
+            submitBtn.html("Send Message");
+            message
+                .fadeIn()
+                .removeClass("alert-danger")
+                .addClass("alert-success");
             message.text(response);
             setTimeout(function () {
                 message.fadeOut();
             }, 3000);
-            form.find('input:not([type="submit"]), textarea').val('');
+            form.find('input:not([type="submit"]), textarea').val("");
         }
 
         // fail function
         function failFunction(data) {
-            submitBtn.html('Send Message');
-            message.fadeIn().removeClass('alert-success').addClass('alert-danger');
+            submitBtn.html("Send Message");
+            message
+                .fadeIn()
+                .removeClass("alert-success")
+                .addClass("alert-danger");
             message.text(data.responseText);
             setTimeout(function () {
                 message.fadeOut();
@@ -700,23 +790,20 @@ Author Email:   contact@tecydevs.com
         form.submit(function (e) {
             e.preventDefault();
             formData = $(this).serialize();
-            submitBtn.html('Sending...');
+            submitBtn.html("Sending...");
             setTimeout(function () {
                 $.ajax({
-                    type: 'POST',
-                    url: form.attr('action'),
-                    data: formData
+                    type: "POST",
+                    url: form.attr("action"),
+                    data: formData,
                 })
                     .done(doneFunction)
                     .fail(failFunction);
-            }, 2000)
+            }, 2000);
         });
 
         /*========= get year ========*/
         let currentYear = new Date().getFullYear();
-        $('#get-year').text(currentYear);
-
+        $("#get-year").text(currentYear);
     });
-
 })(jQuery);
-

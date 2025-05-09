@@ -4,13 +4,13 @@
 <x-admin.dashboard-panel class="">
   
     <!-- Contenu principal -->
-    <div x-data="{ activeTab: 'hotels' }" class="">
+    <div x-data="{ activeTab: 'agences' }" class="">
       <!-- Section d'en-tête -->
       <div class="p-4 mb-6 bg-white rounded-lg shadow-sm">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
                   <h1 class="text-2xl font-bold text-gray-800">Tableau de bord de réservation</h1>
-                  <p class="mt-1 text-gray-600">Surveillez et gérez toutes vos réservations d'hôtels et de salles de fêtes en un seul endroit</p>
+                  <p class="mt-1 text-gray-600">Surveillez et gérez toutes vos réservations d'agences et de salles de fêtes en un seul endroit</p>
               </div>
               <div class="flex items-center mt-4 space-x-2 md:mt-0">
                   <button type="button" class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center">
@@ -38,22 +38,22 @@
                   <li class="mr-2" role="presentation">
                       <button 
                           class="inline-block p-4 border-b-2 rounded-t-lg" 
-                          :class="activeTab === 'hotels' ? 'text-primary-600 border-primary-600' : 'border-transparent hover:text-gray-600 hover:border-gray-300'"
-                          @click="activeTab = 'hotels'" 
+                          :class="activeTab === 'agences' ? 'text-primary-600 border-primary-600' : 'border-transparent hover:text-gray-600 hover:border-gray-300'"
+                          @click="activeTab = 'agences'" 
                           type="button" 
                           role="tab"
                       >
                           <div class="flex items-center">
-                              <i data-lucide="hotel" class="w-4 h-4 mr-2"></i>
-                              Hôtels
+                              <i data-lucide="agence" class="w-4 h-4 mr-2"></i>
+                              Agences
                           </div>
                       </button>
                   </li>
                   <li class="mr-2" role="presentation">
                       <button 
                           class="inline-block p-4 border-b-2 rounded-t-lg" 
-                          :class="activeTab === 'partyRooms' ? 'text-primary-600 border-primary-600' : 'border-transparent hover:text-gray-600 hover:border-gray-300'"
-                          @click="activeTab = 'partyRooms'" 
+                          :class="activeTab === 'partyLocations' ? 'text-primary-600 border-primary-600' : 'border-transparent hover:text-gray-600 hover:border-gray-300'"
+                          @click="activeTab = 'partyLocations'" 
                           type="button" 
                           role="tab"
                       >
@@ -80,23 +80,23 @@
               </ul>
           </div>
           
-          <!-- Table des hôtels -->
-          <div x-show="activeTab === 'hotels'" x-transition>
+          <!-- Table des agences -->
+          <div x-show="activeTab === 'agences'" x-transition>
             <x-dashboard.tab-content :active="true" 
-            title="Liste des hôtels" 
-            description="Les cinq derniers hôtels enregistrés">
+            title="Liste des agences" 
+            description="Les cinq derniers agences enregistrés">
             
-            @if($hotels->isEmpty())
+            @if($agences->isEmpty())
                 <x-dashboard.empty-state 
                     icon="building" 
-                    title="Aucun hôtel disponible" 
-                    message="Il n'y a pas encore d'hôtels enregistrés dans le système. Commencez par en ajouter un !" 
+                    title="Aucun agence disponible" 
+                    message="Il n'y a pas encore d'agences enregistrés dans le système. Commencez par en ajouter un !" 
                 />
             @else
                 <table class="w-full text-sm text-left text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
-                            <th scope="col" class="px-6 py-3">Hôtel</th>
+                            <th scope="col" class="px-6 py-3">Agence</th>
                             <th scope="col" class="px-6 py-3">Localisation</th>
                             <th scope="col" class="px-6 py-3">Manager</th>
                             <th scope="col" class="px-6 py-3">Téléphone</th>
@@ -104,26 +104,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($hotels as $hotel)
+                        @foreach($agences as $agence)
                             <tr class="bg-white border-b hover:bg-gray-50">
                                 <td class="flex items-center px-6 py-4">
-                                    @if($hotel->logo)
-                                        <img src="{{ asset('storage/' . $hotel->logo) }}" alt="{{ $hotel->nom_hotel }}" class="object-cover w-10 h-10 mr-3 rounded-full">
+                                    @if($agence->logo)
+                                        <img src="{{ asset('storage/' . $agence->logo) }}" alt="{{ $agence->nom_agence }}" class="object-cover w-10 h-10 mr-3 rounded-full">
                                     @else
                                         <div class="flex items-center justify-center w-10 h-10 mr-3 rounded-full bg-primary-100">
-                                            <span class="font-bold text-primary-600">{{ substr($hotel->nom_hotel, 0, 2) }}</span>
+                                            <span class="font-bold text-primary-600">{{ substr($agence->nom_agence, 0, 2) }}</span>
                                         </div>
                                     @endif
-                                    <span class="font-bold text-gray-900">{{ $hotel->nom_hotel }}</span>
+                                    <span class="font-bold text-gray-900">{{ $agence->nom_agence }}</span>
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center">
                                         <i data-lucide="map-pin" class="w-4 h-4 mr-1 text-gray-400"></i>
-                                        {{$hotel->ville . ', ' . $hotel->localisation }}
+                                        {{$agence->ville . ', ' . $agence->localisation }}
                                     </div>
                                 </td>
-                                <td class="px-6 py-4">{{ $hotel->user ? $hotel->user->email : 'Non assigné' }}</td>
-                                <td class="px-6 py-4">{{ $hotel->telephone ?? 'Non disponible' }}</td>
+                                <td class="px-6 py-4">{{ $agence->user ? $agence->user->email : 'Non assigné' }}</td>
+                                <td class="px-6 py-4">{{ $agence->telephone ?? 'Non disponible' }}</td>
                                 <td class="px-6 py-4">
                                     <div class="relative" x-data="{ open: false }">
                                         <button @click="open = !open" class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50" type="button">
@@ -132,14 +132,14 @@
                                         <div x-show="open" @click.away="open = false" class="absolute right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                                             <ul class="py-2 text-sm text-gray-700">
                                                 <li>
-                                                    <a href="{{ route('admin.hotels.show', $hotel->id) }}" class="block px-4 py-2 hover:bg-gray-100">Voir les détails</a>
+                                                    <a href="{{ route('admin.agences.show', $agence->id) }}" class="block px-4 py-2 hover:bg-gray-100">Voir les détails</a>
                                                 </li>
                                                 <li>
                                                     <form action="">
-                                                    {{-- <form action="{{ route('admin.hotels.destroy', $hotel->id) }}" method="POST" class="block"> --}}
+                                                    {{-- <form action="{{ route('admin.agences.destroy', $agence->id) }}" method="POST" class="block"> --}}
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet hôtel ?')">Supprimer</button>
+                                                        <button type="submit" class="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet agence ?')">Supprimer</button>
                                                     </form>
                                                 </li>
                                             </ul>
@@ -154,7 +154,7 @@
         </x-dashboard.tab-content>
         
           </div>
-          <div x-show="activeTab === 'partyRooms'" x-transition>
+          <div x-show="activeTab === 'partyLocations'" x-transition>
             <!-- Table des salles de fêtes -->
           <x-dashboard.tab-content :active="false" 
           title="Liste des salles de fêtes" 

@@ -13,7 +13,7 @@ class HomeController extends Controller
      * @return View
      */
     public function dasboard() {
-        // session_destroy(session('current_hotel_id'));
+        // session_destroy(session('current_agence_id'));
         return view('dashboard');
     }
 

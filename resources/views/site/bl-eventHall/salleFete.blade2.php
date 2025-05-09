@@ -63,7 +63,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="text-center col-lg-8">
-                <h2 class="mb-3 promotion-title">Vous êtes manager et vous souhaitez créer votre espace afin de promouvoir vos salles de fêtes et chambres d'hôtel?</h2>
+                <h2 class="mb-3 promotion-title">Vous êtes manager et vous souhaitez créer votre espace afin de promouvoir vos salles de fêtes et locations d'agence?</h2>
                 <p class="mb-4 promotion-desc">Rejoignez des milliers de clients satisfaits et trouvez l'espace parfait dès aujourd'hui.</p>
                 <a href="{{ route('register') }}" class="btn btn-primary btn-lg create-space-btn">Créer votre espace</a>
             </div>

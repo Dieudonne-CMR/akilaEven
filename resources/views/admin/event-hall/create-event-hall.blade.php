@@ -11,10 +11,10 @@
 
 <x-admin.dashboard-panel>
    <!-- Entête de la page -->
-   <x-admin.event-hall-header :hotel="$hotel" />
+   <x-admin.event-hall-header :agence="$agence" />
   
    <!-- Formulaire -->
-   <form action="{{ route('admin.event-hall.store', $hotel->id) }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+   <form action="{{ route('admin.event-hall.store', $agence->id) }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 gap-8 lg:grid-cols-3">
        @csrf
       <!-- Sidebar - Images Upload -->
       <div class="lg:col-span-1">
@@ -23,7 +23,7 @@
       
       <!-- Form Fields -->
       <div class="lg:col-span-2">
-          <x-admin.event-hall-form :hotel="$hotel" :villes="$villes" />
+          <x-admin.event-hall-form :agence="$agence" :villes="$villes" />
       </div>
    </form>
 </x-admin.dashboard-panel>

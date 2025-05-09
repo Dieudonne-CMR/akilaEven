@@ -48,7 +48,7 @@ class siteController extends Controller
             : [];
         
         // $eventHalls = EventHall::all();
-        $eventHalls = EventHall::with(['ville','hotel'])->paginate(4)->withQueryString();       
+        $eventHalls = EventHall::with(['ville','agence'])->paginate(4)->withQueryString();       
         return view('site.bl-eventHall.salleFete', compact('eventHalls'));
     }
   
@@ -61,8 +61,8 @@ class siteController extends Controller
     public function detailSallesFetes(EventHall $eventHall) 
     {
         
-        $eventHall = $eventHall->load('hotel','ville','user');
-        $event_Halls =  EventHall::with(['ville','hotel'])->where('id', '!=', $eventHall->id)->paginate(2);   
+        $eventHall = $eventHall->load('agence','ville','user');
+        $event_Halls =  EventHall::with(['ville','agence'])->where('id', '!=', $eventHall->id)->paginate(2);   
 
         return view('site.detailssalleFete', compact('eventHall', 'event_Halls'));
     }
@@ -147,7 +147,7 @@ class siteController extends Controller
             $booking = Bookings::create($data);
 
             // Charger les relations pour les notifications
-            $booking->load('eventHall.user', 'eventHall.hotel');
+            $booking->load('eventHall.user', 'eventHall.agence');
 
             // Notifier l'administrateur de la salle
             $creator = $booking->eventHall->user;
@@ -156,9 +156,8 @@ class siteController extends Controller
             }
 
             // Envoyer un email au client
-          /*   \Illuminate\Support\Facades\Notification::route('mail', [
-                $booking->email => $booking->full_name,
-            ])->notify(new EventHallReservationCreate($booking)); */
+          /*   \Illuminate\Support\Facades\Mail::to($booking->email)
+                ->send(new \App\Mail\EventHallBookingCreateEmail($booking)); */
 
             DB::commit();
 
@@ -189,7 +188,7 @@ class siteController extends Controller
             DB::beginTransaction();
 
             // 1. Vérifier que le token est valide
-            $booking = Bookings::with('eventHall.user', 'eventHall.hotel')
+            $booking = Bookings::with('eventHall.user', 'eventHall.agence')
                 ->where('confirmation_token', $token)
                 ->firstOrFail();
 

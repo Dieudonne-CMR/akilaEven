@@ -22,7 +22,7 @@ class BookingController extends Controller
     public function index()
     {
         // Récupérer toutes les réservations avec les relations
-        $bookings = Bookings::with('eventHall.hotel')
+        $bookings = Bookings::with('eventHall.agence')
             ->get()
             ->map(function ($booking) {
                 // Reformater les données pour JSON
@@ -41,7 +41,7 @@ class BookingController extends Controller
                     'event_hall' => $booking->eventHall ? [
                         'id' => $booking->eventHall->id,
                         'name' => $booking->eventHall->nom_salle,
-                        'hotel' => $booking->eventHall->hotel ? $booking->eventHall->hotel->nom_hotel : null
+                        'agence' => $booking->eventHall->agence ? $booking->eventHall->agence->nom_agence : null
                     ] : null
                 ];
             });
@@ -60,7 +60,7 @@ class BookingController extends Controller
      */
     public function show(Bookings $booking)
     {
-        $booking->load('eventHall.hotel');
+        $booking->load('eventHall.agence');
         return view("admin.booking.show-booking", compact('booking'));
     }
 
@@ -177,7 +177,7 @@ class BookingController extends Controller
                     ->send(new \App\Mail\Client\EventHallBookingStatusChanged($booking, $data['status']));
 
                 // Envoyer une notification à l'administrateur
-                $admin = $booking->eventHall->hotel->user;
+                $admin = $booking->eventHall->agence->user;
                 $admin->notify(new \App\Notifications\Admin\EventHallBookingStatusChanged($booking, $data['status']));
             }
 

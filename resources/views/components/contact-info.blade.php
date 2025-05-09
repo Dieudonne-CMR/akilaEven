@@ -1,7 +1,7 @@
 @props([
-    'adresse' => '123 Avenue des Hôtels, Paris, France',
+    'adresse' => '123 Avenue des Agences, Paris, France',
     'telephone' => '+33 123 456 789',
-    'email' => 'contact@hotel-booking.com',
+    'email' => 'contact@agence-booking.com',
     'horaires' => [
         'Lundi - Vendredi: 9h00 - 18h00',
         'Samedi: 10h00 - 17h00',

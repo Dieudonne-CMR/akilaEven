@@ -7,7 +7,7 @@
     $popularEventHalls = EventHall::withCount(['bookings' => function($query) {
         $query->whereIn('status', ['completed', 'booked', 'pending']);
     }])
-    ->with(['hotel', 'ville'])
+    ->with(['agence', 'ville'])
     ->orderBy('bookings_count', 'desc')
     ->take(3)
     ->get();

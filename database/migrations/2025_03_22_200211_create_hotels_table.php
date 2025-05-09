@@ -40,8 +40,18 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
+    //php artisan migrate:rollback --path=/database/migrations/2025_03_22_200211_create_hotels_table.php
     public function down(): void
     {
-        Schema::dropIfExists('hotels');
+        /* Schema::dropIfExists('hotels'); */
+        // 1. Renommer la table hotel en agence
+        Schema::rename('hotels', 'agences');
+
+        // 2. Renommer les colonnes dans la nouvelle table agence
+        // Nécessite l'extension doctrine/dbal pour ->renameColumn()
+        Schema::table('agences', function (Blueprint $table) {
+            $table->renameColumn('nom_hotel', 'nom_agence');
+            $table->renameColumn('description_hotel', 'description_agence');
+        });
     }
 };

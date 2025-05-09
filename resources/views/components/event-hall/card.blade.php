@@ -15,8 +15,8 @@
         
         <div class="flex flex-wrap justify-between gap-3 mb-4">
             <div class="flex items-center text-sm text-muted-foreground">
-                <i data-lucide="hotel" class="mr-1 !text-primary size-4"></i>
-                <span>{{ $eventHall->hotel->nom_hotel}}</span>
+                <i data-lucide="agence" class="mr-1 !text-primary size-4"></i>
+                <span>{{ $eventHall->agence->nom_agence}}</span>
             </div>
             <div class="flex items-center text-sm text-muted-foreground">
                 <i class="mr-1 !text-primary size-4" data-lucide="map-pinned"></i>

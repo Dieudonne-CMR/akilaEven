@@ -1,4 +1,4 @@
-@props(['hotel', 'villes' => []])
+@props(['agence', 'villes' => []])
 
 <div class="p-6 bg-white rounded-lg shadow-sm">
     <h2 class="flex items-center mb-6 text-xl font-semibold text-gray-900">

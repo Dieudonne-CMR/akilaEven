@@ -20,7 +20,7 @@ class EventHall extends Model
         'photo4',
         'ville_id',
         'user_id',
-        'hotel_id',
+        'agence_id',
         "area",
         "event_type",
         "equipments",
@@ -28,9 +28,9 @@ class EventHall extends Model
         "status",
     ];
 
-    public function hotel()
+    public function agence()
     {
-        return $this->belongsTo(Hotel::class);
+        return $this->belongsTo(Agence::class);
     }
 
     public function ville(){
@@ -48,7 +48,7 @@ class EventHall extends Model
         'area'     => 'decimal:2',
         'prix'     => 'decimal:2',
         'equipments' => 'array',
-        'rules' => 'array',     
+        'rules' => 'string',
     ];
     
 }

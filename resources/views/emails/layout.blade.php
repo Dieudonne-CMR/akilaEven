@@ -131,7 +131,7 @@
                     @if(isset($logo))
                         <img src="{{ $logo }}" alt="Logo" class="logo">
                     @else
-                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
+                        <img src="{{ asset('images/logo.png') }}" alt="Akila Immo" class="logo">
                     @endif
                 </div>
                 
@@ -141,7 +141,7 @@
             </div>
             
             <div class="footer">
-                <p>© {{ date('Y') }} Système de réservation de salles. Tous droits réservés.</p>
+                <p>© {{ date('Y') }} Akila Immo. Tous droits réservés.</p>
                 <p>Si vous n'êtes pas à l'origine de cette demande, veuillez ignorer cet email.</p>
             </div>
         </div>

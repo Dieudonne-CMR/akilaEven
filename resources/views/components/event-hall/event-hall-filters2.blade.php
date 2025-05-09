@@ -1,14 +1,14 @@
 @props(['showFilters' => false, 'isDesktop' => true])
 @php
   use App\Models\EventHall;
-  use App\Models\Hotel;
+  use App\Models\Agence;
   use App\Helpers\EventTypeHelper;
   use App\Models\Ville;
   use Illuminate\Support\Facades\DB;
 
   
-  // Récupérer les hotels qui ont des salles de fêtes
-  $hotels = Hotel::whereHas('eventHalls')->pluck('nom_hotel', 'id');
+  // Récupérer les agences qui ont des salles de fêtes
+  $agences = Agence::whereHas('eventHalls')->pluck('nom_agence', 'id');
   
   // Récupérer toutes les villes liées aux salles de fête(localisations)
   $villesList = Ville::whereHas('eventHalls')->pluck('nom')->toArray();

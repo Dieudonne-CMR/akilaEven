@@ -73,8 +73,8 @@
         <div>
             <h3 class="text-lg font-bold text-black">{{ $eventHall->nom_salle }}</h3>
             <div class="flex items-center text-sm text-muted-foreground">
-                <i data-lucide="hotel" class="mr-1 text-blue-500 size-4"></i>
-                <span>{{ $eventHall->hotel->nom_hotel }}</span>
+                <i data-lucide="agence" class="mr-1 text-blue-500 size-4"></i>
+                <span>{{ $eventHall->agence->nom_agence }}</span>
             </div>
             
         </div>

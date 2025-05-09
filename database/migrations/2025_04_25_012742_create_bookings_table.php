@@ -56,6 +56,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookings');
+        /* Schema::dropIfExists('bookings');
+         */
+        Schema::table('bookings', function (Blueprint $table) {
+            $table->dateTime('arrival_time')->nullable()->change();
+            $table->dateTime('departure_time')->nullable()->change();
+        });
     }
 };

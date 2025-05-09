@@ -8,8 +8,8 @@
             <h4 class="pb-2 font-size-16">Bienvenue chez AkilaEven</h4>
             <h2 class="sec__title">Une expérience unique pour vos événements</h2>
             <p class="pt-4 pb-2 sec__desc">
-              AkilaEven est votre plateforme de référence pour la réservation de salles de fêtes et chambres 
-              d'hôtel au Cameroun. Nous sélectionnons avec soin les meilleurs établissements pour garantir 
+              AkilaEven est votre plateforme de référence pour la réservation de salles de fêtes et locations 
+              d'agence au Cameroun. Nous sélectionnons avec soin les meilleurs établissements pour garantir 
               la réussite de tous vos événements et séjours.
             </p>
             <p class="sec__desc">

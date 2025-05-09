@@ -65,9 +65,9 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-# Structure du Projet - Plateforme de Réservation d'Hôtel
+# Structure du Projet - Plateforme de Réservation d'Agence
 
-Ce document décrit l'architecture et l'organisation des dossiers du projet de plateforme de réservation d'hôtels, de salles de fêtes et de chambres.
+Ce document décrit l'architecture et l'organisation des dossiers du projet de plateforme de réservation d'agences, de salles de fêtes et de locations.
 
 ## Structure des Dossiers
 
@@ -75,7 +75,7 @@ Ce document décrit l'architecture et l'organisation des dossiers du projet de p
 
     -   **Objectif :** Contient la logique métier principale de l'application, suivant le modèle MVC.
     -   **Contenu :**
-        -   Modèles (ex. Hotel.php, Room.php, User.php)
+        -   Modèles (ex. Agence.php, Location.php, User.php)
         -   Contrôleurs (dans Http/Controllers)
         -   Middleware (dans Http/Middleware)
         -   Services et utilitaires
@@ -93,8 +93,8 @@ Ce document décrit l'architecture et l'organisation des dossiers du projet de p
     -   **Objectif :** Contient les modèles Eloquent qui représentent les tables de la base de données.
     -   **Contenu :**
         -   EventHall.php (Salles de fêtes)
-        -   Hotel.php
-        -   Room.php (Chambres)
+        -   Agence.php
+        -   Location.php (Locations)
         -   User.php
         -   Ville.php
     -   **Techno :** Eloquent ORM, PHP
@@ -109,7 +109,7 @@ Ce document décrit l'architecture et l'organisation des dossiers du projet de p
 
     -   **Objectif :** Contient les contrôleurs qui gèrent les requêtes HTTP
     -   **Contenu :**
-        -   Contrôleurs pour chaque entité (HotelController, RoomController, etc.)
+        -   Contrôleurs pour chaque entité (AgenceController, LocationController, etc.)
         -   Contrôleurs d'authentification
     -   **Techno :** Laravel, PHP
     -   **Bonnes pratiques :**

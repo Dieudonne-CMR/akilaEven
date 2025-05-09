@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Bookings;
 use App\Models\EventHall;
-use App\Models\Hotel;
-use App\Models\Room;
+use App\Models\Agence;
+use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -17,11 +17,11 @@ class AdminDashboardController extends Controller
         // Récupérer les statistiques pour le carrousel
         $stats = $this->getStatistics();
         
-        // Récupérer les hôtels
-        $hotels = Hotel::with('user')->get();
+        // Récupérer les agences
+        $agences = Agence::with('user')->get();
         
         // Récupérer les salles de fêtes
-        $eventHalls = EventHall::with(['hotel', 'ville'])->get();
+        $eventHalls = EventHall::with(['agence', 'ville'])->get();
         
         // Récupérer les réservations
         $bookings = Bookings::with('eventHall')->get();
@@ -33,7 +33,7 @@ class AdminDashboardController extends Controller
         
         return view('admin.dashboard', compact(
             'stats', 
-            'hotels', 
+            'agences', 
             'eventHalls', 
             'bookings', 
             'completedBookings'
@@ -71,23 +71,23 @@ class AdminDashboardController extends Controller
         $newEventHalls = EventHall::where('created_at', '>=', $startOfWeek)->count();
         $eventHallsGrowthText = '+' . $newEventHalls;
         
-        // Chambres d'hôtel disponibles
-        $totalRooms = Room::count() ?? 0;
+        // Locations disponibles
+        $totalLocations = Location::count() ?? 0;
         
-        // Calcul du taux d'occupation des chambres (si vous avez une table de réservations de chambres)
-        // Supposons que vous avez une manière de savoir quelles chambres sont actuellement occupées
+        // Calcul du taux d'occupation des locations (si vous avez une table de réservations de locations)
+        // Supposons que vous avez une manière de savoir quelles locations sont actuellement occupées
         // Par exemple, en comparant avec les réservations actives
-        $occupiedRooms = 0; // À adapter selon votre structure de données
-        $roomsOccupancy = $totalRooms > 0 
-            ? round(($occupiedRooms / $totalRooms) * 100)
+        $occupiedLocations = 0; // À adapter selon votre structure de données
+        $locationsOccupancy = $totalLocations > 0 
+            ? round(($occupiedLocations / $totalLocations) * 100)
             : 0;
-        $roomsOccupancyText = $roomsOccupancy . '%';
+        $locationsOccupancyText = $locationsOccupancy . '%';
         
-        // Nombre d'hôtels partenaires
-        $partnerHotels = Hotel::count();
+        // Nombre d'agences partenaires
+        $partnerAgences = Agence::count();
         
-        // Nouveaux hôtels partenaires cette semaine
-        $newPartners = Hotel::where('created_at', '>=', $startOfWeek)->count();
+        // Nouveaux agences partenaires cette semaine
+        $newPartners = Agence::where('created_at', '>=', $startOfWeek)->count();
         $newPartnersText = '+' . $newPartners;
         
         // Réservations réussies (complétées)
@@ -99,17 +99,17 @@ class AdminDashboardController extends Controller
             : 0;
         $completionRateText = $completionRate . '%';
         
-        // Réservations de chambres
-        $roomBookings = 0; // À adapter selon votre structure de données
+        // Réservations de locations
+        $locationBookings = 0; // À adapter selon votre structure de données
         
-        // Réservations de chambres du mois précédent
-        $lastMonthRoomBookings = 0; // À adapter selon votre structure de données
+        // Réservations de locations du mois précédent
+        $lastMonthLocationBookings = 0; // À adapter selon votre structure de données
         
-        // Calcul de la croissance des réservations de chambres
-        $roomGrowth = $lastMonthRoomBookings > 0 
-            ? round(($roomBookings - $lastMonthRoomBookings) / $lastMonthRoomBookings * 100, 1)
+        // Calcul de la croissance des réservations de locations
+        $locationGrowth = $lastMonthLocationBookings > 0 
+            ? round(($locationBookings - $lastMonthLocationBookings) / $lastMonthLocationBookings * 100, 1)
             : 0;
-        $roomGrowthText = ($roomGrowth >= 0 ? '+' : '') . $roomGrowth . '%';
+        $locationGrowthText = ($locationGrowth >= 0 ? '+' : '') . $locationGrowth . '%';
         
         // Réservations de salles de fêtes
         $eventHallBookings = Bookings::whereNotNull('event_hall_id')->count();
@@ -145,17 +145,17 @@ class AdminDashboardController extends Controller
                 'gradientTo' => 'purple'
             ],
             [
-                'title' => 'Chambres d\'hôtel disponibles',
-                'value' => $totalRooms,
-                'icon' => 'hotel',
-                'badge' => $roomsOccupancyText,
+                'title' => 'Locations d\'agence disponibles',
+                'value' => $totalLocations,
+                'icon' => 'agence',
+                'badge' => $locationsOccupancyText,
                 'badgeText' => 'taux d\'occupation',
                 'gradientFrom' => 'emerald',
                 'gradientTo' => 'emerald'
             ],
             [
-                'title' => 'Hôtels partenaires',
-                'value' => $partnerHotels,
+                'title' => 'Agences partenaires',
+                'value' => $partnerAgences,
                 'icon' => 'building',
                 'badge' => $newPartnersText,
                 'badgeText' => 'nouveaux partenaires',
@@ -172,10 +172,10 @@ class AdminDashboardController extends Controller
                 'gradientTo' => 'blue'
             ],
             [
-                'title' => 'Réservations de chambres',
-                'value' => $roomBookings,
+                'title' => 'Réservations de locations',
+                'value' => $locationBookings,
                 'icon' => 'bed',
-                'badge' => $roomGrowthText,
+                'badge' => $locationGrowthText,
                 'badgeText' => 'par rapport au mois dernier',
                 'gradientFrom' => 'indigo',
                 'gradientTo' => 'indigo'

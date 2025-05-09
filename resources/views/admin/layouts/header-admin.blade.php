@@ -10,7 +10,7 @@
          </button>
         <a href="{{ route("admin.dashboard") }}" class="flex ms-2 md:me-24">
           
-          <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Akila Even</span>
+          <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Akila Immo</span>
         </a>
       </div>
       @include("admin.partials.UserDropdown")

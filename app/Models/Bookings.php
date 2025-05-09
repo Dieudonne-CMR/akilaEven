@@ -21,6 +21,7 @@ class Bookings extends Model
         'message',
         'expires_at',
         'total_price',
+        'type_booking',
         'event_hall_id',
         'confirmation_token',
         'confirmed_at'
@@ -38,10 +39,16 @@ class Bookings extends Model
         'pending',
         'cancelled',
         'booked',
-        'accepted',
-        /* 'declined', */
+        'accepted',        
         'completed',
         'refunded'
+    ];
+    /**
+     * Les types de réservations
+    */
+    public const TYPE_BOOKING = [
+        'location',
+        'event_hall'
     ];
 
     /**
@@ -50,6 +57,13 @@ class Bookings extends Model
     public function eventHall()
     {
         return $this->belongsTo(EventHall::class);
+    }
+    /**
+     * La location réservée
+    */
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
     }
 
     /**

@@ -7,8 +7,8 @@
         <input type="text" placeholder="Rechercher une salle..." class="w-full h-full py-2 pl-10 pr-4 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
       </div>
       <div class="relative flex-1">
-        <i data-lucide="hotel" class="absolute text-gray-400 transform -translate-y-1/2 size-4 left-3 top-1/2"></i>
-        <input type="text" placeholder="Rechercher un hôtel..." class="w-full h-full py-2 pl-10 pr-4 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+        <i data-lucide="agence" class="absolute text-gray-400 transform -translate-y-1/2 size-4 left-3 top-1/2"></i>
+        <input type="text" placeholder="Rechercher un agence..." class="w-full h-full py-2 pl-10 pr-4 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
       </div>
     
       

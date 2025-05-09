@@ -18,7 +18,7 @@
                     </div>
                     <div class="mt-2 hall-meta">
                         <span class="hall-capacity me-3"><i class="la la-users"></i> {{ number_format($eventHall->capacite) }} places</span>
-                        <span class="hall-hotel"><i class="la la-building"></i> {{ $eventHall->hotel->nom_hotel ?? 'Hôtel non spécifié' }}</span>
+                        <span class="hall-agence"><i class="la la-building"></i> {{ $eventHall->agence->nom_agence ?? 'Agence non spécifié' }}</span>
                     </div>
                 </div>
             </div>
@@ -125,7 +125,7 @@
                             <div class="col-md-6">
                                 <ul class="feature-list">
                                     <li><i class="la la-users"></i> <strong>Capacité:</strong> {{ number_format($eventHall->capacite) }} personnes</li>
-                                    <li><i class="la la-building"></i> <strong>Hôtel:</strong> {{ $eventHall->hotel->nom_hotel ?? 'Non spécifié' }}</li>
+                                    <li><i class="la la-building"></i> <strong>Agence:</strong> {{ $eventHall->agence->nom_agence ?? 'Non spécifié' }}</li>
                                 </ul>
                             </div>
                             <div class="col-md-6">
@@ -166,11 +166,11 @@
                             </li>
                             <li>
                                 <i class="la la-envelope"></i> 
-                                <span>{{ $eventHall->hotel->email ?? 'contact@akilaeven.com' }}</span>
+                                <span>{{ $eventHall->agence->email ?? 'contact@akilaeven.com' }}</span>
                             </li>
                             <li>
                                 <i class="la la-phone"></i> 
-                                <span>{{ $eventHall->hotel->telephone ?? 'Non disponible' }}</span>
+                                <span>{{ $eventHall->agence->telephone ?? 'Non disponible' }}</span>
                             </li>
                         </ul>
                     </div>

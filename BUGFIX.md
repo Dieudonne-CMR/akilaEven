@@ -1,6 +1,6 @@
 # Correction des bugs de l'application de réservation
 
-Ce document détaille les problèmes identifiés et les solutions mises en place pour les résoudre dans l'application de réservation d'hôtels.
+Ce document détaille les problèmes identifiés et les solutions mises en place pour les résoudre dans l'application de réservation d'agences.
 
 ## Problèmes identifiés
 

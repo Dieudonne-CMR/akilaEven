@@ -21,11 +21,6 @@ return new class extends Migration
         Schema::table('event_halls', function (Blueprint $table) {
             $table->json('event_type')->nullable()->change();
         });
-
-        // 2. Modifier la colonne en JSON
-        Schema::table('event_halls', function (Blueprint $table) {
-            $table->json('event_type')->nullable()->change();
-        });
     }
 
     /**

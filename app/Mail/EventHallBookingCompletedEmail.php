@@ -20,7 +20,7 @@ class EventHallBookingCompletedEmail extends Mailable
 
     public function build()
     {
-        return $this->subject('Paiement reçu - Réservation confirmée - Akila Even')
+        return $this->subject('Paiement reçu - Réservation confirmée - Akila Immo')
                     ->view('emails.EventHallBookingCompleted')
                     ->with([
                         'booking' => $this->booking

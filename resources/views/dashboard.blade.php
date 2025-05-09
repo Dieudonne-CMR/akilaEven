@@ -48,7 +48,7 @@
                   <span class="w-44-px h-44-px radius-8 bg-white d-flex justify-content-center align-items-center">
                     <img src="../assets/images/home-twelve/icons/booking-card-icon2.png" alt="Icon">
                   </span>
-                  <span class="d-block mt-12 text-neutral-800">Schedule Room</span>
+                  <span class="d-block mt-12 text-neutral-800">Schedule Location</span>
                   <h6 class="mt-1 mb-0">285</h6>
                 </div>
               </div>
@@ -91,7 +91,7 @@
                 </span>
               </div>
               <h3 class="mt-40 mb-0">35</h3>
-              <span class="text-neutral-800 mt-4">Available Room Today</span>
+              <span class="text-neutral-800 mt-4">Available Location Today</span>
             </div>
           </div>
         </div>
@@ -595,7 +595,7 @@
                       <img src="../assets/images/home-twelve/icons/spen-icon2.png" alt="Icon">
                     </span>
                     <div class="">
-                      <h6 class="text-sm mb-2">Hotels</h6>
+                      <h6 class="text-sm mb-2">Agences</h6>
                       <span class="text-xs text-secondary-light">$85,570</span>
                     </div>
                   </div>

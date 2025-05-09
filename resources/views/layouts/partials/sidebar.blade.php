@@ -12,8 +12,8 @@
     <div class="sidebar-menu-area">
         <ul class="sidebar-menu" id="sidebar-menu">
             <li class="dropdown">
-              @if (session('selected_hotel'))
-                <a href="{{route('hotels.manage', session('selected_hotel'))}}">
+              @if (session('selected_agence'))
+                <a href="{{route('agences.manage', session('selected_agence'))}}">
                     <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon>
                     <span>Dashboard</span>
                 </a>
@@ -54,21 +54,21 @@
             <li class="dropdown dropdown-open">
                 <a href="javascript:void(0)">
                     <iconify-icon icon="hugeicons:invoice-03" class="menu-icon"></iconify-icon>
-                    <span>Hotels</span>
+                    <span>Agences</span>
                 </a>
                 <ul class="sidebar-submenu" style="display: block;">
                     <li>
-                        <a href="{{Route('hotels.create')}}"><i
-                                class="ri-circle-fill circle-icon text-primary-600 w-auto"></i>Create hotel</a>
+                        <a href="{{Route('agences.create')}}"><i
+                                class="ri-circle-fill circle-icon text-primary-600 w-auto"></i>Create agence</a>
                     </li>
                     <li>
-                        <a href="{{route('select-hotel')}}"><i
-                                class="ri-circle-fill circle-icon text-warning-main w-auto"></i>Liste Hotels</a>
+                        <a href="{{route('select-agence')}}"><i
+                                class="ri-circle-fill circle-icon text-warning-main w-auto"></i>Liste Agences</a>
                     </li>
                 </ul>
             </li>
 
-            @if (session('selected_hotel'))
+            @if (session('selected_agence'))
                 
                 <li class="dropdown dropdown-open">
                     <a href="javascript:void(0)">
@@ -78,28 +78,28 @@
                     <ul class="sidebar-submenu" style="display: block;">
                        
                         <li>
-                            <a href="{{ route('event_halls.create',session('selected_hotel')) }}"><i
+                            <a href="{{ route('event_halls.create',session('selected_agence')) }}"><i
                                     class="ri-circle-fill circle-icon text-warning-main w-auto"></i>Add Salle</a>
                         </li>
 
                         <li> 
-                          <a href="{{ route('event-halls.index', session('selected_hotel')) }}"><i
+                          <a href="{{ route('event-halls.index', session('selected_agence')) }}"><i
                                   class="ri-circle-fill circle-icon text-warning-main w-auto"></i>Liste des Salles</a>
                       </li>
                     </ul>
                 </li>
 
-                {{-- chambre --}}
+                {{-- location --}}
                 
                 {{-- <li class="dropdown dropdown-open">
                   <a href="javascript:void(0)">
                       <iconify-icon icon="hugeicons:invoice-03" class="menu-icon"></iconify-icon>
-                      <span>Chambre</span>
+                      <span>Location</span>
                   </a>
                   <ul class="sidebar-submenu" style="display: block;">
                       <li>
-                          <a href="{{route('rooms.create', $hotel->id)}}"><i
-                                  class="ri-circle-fill circle-icon text-primary-600 w-auto"></i>Add chambre</a>
+                          <a href="{{route('locations.create', $agence->id)}}"><i
+                                  class="ri-circle-fill circle-icon text-primary-600 w-auto"></i>Add location</a>
                       </li>
                    
                   </ul>

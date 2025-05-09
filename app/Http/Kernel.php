@@ -24,7 +24,10 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
         'admin' => [
+
             'auth',
+            \Illuminate\Auth\Middleware\Authenticate::class,
+            \Illuminate\Auth\Middleware\RedirectIfAuthenticated::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
@@ -41,10 +44,10 @@ class Kernel extends HttpKernel
     ];
 
     protected $routeMiddleware = [
-        // 'auth' => \App\Http\Middleware\Authenticate::class,
-        // 'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+      /*    'auth' => \App\Http\Middleware\Authenticate::class,
+         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class, */
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        // Alias pour le middleare CheckHotelSelected
-       'check.hotel.selected' => \App\Http\Middleware\CheckHotelSelected::class,
+        // Alias pour le middleare CheckAgenceSelected
+       'check.hotel.owner' => \App\Http\Middleware\CheckHotlSelect::class,
     ];
 }

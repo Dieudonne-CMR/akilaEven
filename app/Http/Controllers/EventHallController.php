@@ -3,39 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\EventHall;
-use App\Models\Hotel;
+use App\Models\Agence;
 use App\Models\Ville;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\ViewName;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+
 
 class EventHallController extends Controller
 
 {
     /**
-     * Affiche le formulaire de création d'une salle de fête pour un hôtel donné.
+     * Affiche le formulaire de création d'une salle de fête pour un agence donné.
      *
-     * @param  Hotel  $hotel
+     * @param  Agence  $agence
      * @return View
      */
-    public function createEventHall(Hotel $hotel){
+    public function createEventHall(Agence $agence){
 
         $villes = Ville::all();
-        return view('hotels.eventhall-create', compact('hotel','villes'));
+        return view('agences.eventhall-create', compact('agence','villes'));
     }
 
     /**
      * Traite la soumission du formulaire pour enregistrer une nouvelle salle de fête.
      *
      * @param  Request  $request
-     * @param  int  $hotel_id
+     * @param  int  $agence_id
      * @return RedirectResponse
      */
-    public function storeEventhall(Request $request, $hotel_id)
+    public function storeEventhall(Request $request, $agence_id)
     {
         
         // dd($request->all());
@@ -63,25 +61,25 @@ class EventHallController extends Controller
         }
             
         $validated['user_id'] = Auth::id();
-        $validated['hotel_id'] = $hotel_id;
+        $validated['agence_id'] = $agence_id;
     
         EventHall::create($validated);
     
-        return redirect()->route('event-halls.index',$hotel_id)->with('success', 'Salle créée !');
+        return redirect()->route('event-halls.index',$agence_id)->with('success', 'Salle créée !');
     }
     
     /**
-     * Affiche la liste des salles de fête d'un hôtel donné avec pagination.
+     * Affiche la liste des salles de fête d'un agence donné avec pagination.
      *
-     * @param  Hotel  $hotel
+     * @param  Agence  $agence
      * @return View
      */
-    public function index(Hotel $hotel)
+    public function index(Agence $agence)
         {
-            $eventHalls = $hotel->eventHalls()
+            $eventHalls = $agence->eventHalls()
                             ->with('ville') // Chargement relation ville (optionnel)
                             ->paginate(6); // Pagination
-            return view('hotels.voir-eventhall',['hotel' => $hotel,'eventHalls' => $eventHalls ]);
+            return view('agences.voir-eventhall',['agence' => $agence,'eventHalls' => $eventHalls ]);
 
         }
     
@@ -93,8 +91,8 @@ class EventHallController extends Controller
      */
     public function show(EventHall $event_hall){
 
-        $eventhall=$event_hall->load('hotel','ville','user');
-        return view('hotels.eventhallshow',['eventHall'=>$eventhall]);
+        $eventhall=$event_hall->load('agence','ville','user');
+        return view('agences.eventhallshow',['eventHall'=>$eventhall]);
     }
     
     /**
@@ -107,8 +105,8 @@ class EventHallController extends Controller
 
        
         $villes = Ville::all();
-        $eventhall=$event_hall->load('hotel','ville');
-        return view('hotels.eventhall-edit',['eventHall'=>$eventhall,'villes'=>$villes]);
+        $eventhall=$event_hall->load('agence','ville');
+        return view('agences.eventhall-edit',['eventHall'=>$eventhall,'villes'=>$villes]);
     }
     
     /**
@@ -127,7 +125,7 @@ class EventHallController extends Controller
             'capacite' => 'required|integer',
             'prix' => 'required|decimal:0,2',
             'ville_id' => 'required|exists:villes,id',
-            'hotel_id' => 'required|exists:hotels,id',
+            'agence_id' => 'required|exists:agences,id',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'photo1' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'photo2' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
@@ -171,256 +169,15 @@ class EventHallController extends Controller
     /**
      * Affiche le formulaire de création d'une salle de fête.
      *
-     * @param  \App\Models\Hotel  $hotel
+     * @param  \App\Models\Agence  $agence
      * @return \Illuminate\Http\Response
      */
-    public function create(Hotel $hotel)
+    public function create(Agence $agence)
     {
-        return view('admin.event-hall.create', compact('hotel'));
+        return view('agences.eventHall-create', compact('agence'));
     }
 
-    /**
-     * Stocke une nouvelle salle de fête.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Hotel  $hotel
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, Hotel $hotel)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'capacity' => 'required|integer|min:1',
-            'event_type' => 'required|array',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+    
 
-        try {
-            DB::beginTransaction();
-
-            $eventHall = new EventHall();
-            $eventHall->name = $request->name;
-            $eventHall->description = $request->description;
-            $eventHall->price = $request->price;
-            $eventHall->capacity = $request->capacity;
-            $eventHall->hotel_id = $hotel->id;
-            $eventHall->ville = $hotel->ville;
-            $eventHall->localisation = $hotel->localisation;
-            $eventHall->event_type = json_encode($request->event_type);
-            $eventHall->status = 'available';
-
-            if ($request->hasFile('photo')) {
-                $eventHall->photo = $request->file('photo')->store('event-halls', 'public');
-            }
-
-            $eventHall->save();
-
-            DB::commit();
-
-            return redirect()->route('admin.hotels.show', $hotel)
-                ->with('toast', [
-                    'type' => 'success',
-                    'message' => 'Salle de fête créée avec succès!'
-                ]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            
-            Log::error('Erreur lors de la création de la salle de fête: ' . $e->getMessage());
-            
-            return redirect()->back()
-                ->withInput()
-                ->with('toast', [
-                    'type' => 'error',
-                    'message' => 'Une erreur est survenue lors de la création de la salle de fête: ' . $e->getMessage()
-                ]);
-        }
-    }
-
-    /**
-     * Affiche les détails d'une salle de fête spécifique.
-     *
-     * @param  \App\Models\EventHall  $eventHall
-     * @return \Illuminate\Http\Response
-     */
-    public function show(EventHall $eventHall)
-    {
-        $eventHall->load('hotel');
-        
-        return view('admin.event-hall.show', compact('eventHall'));
-    }
-
-    /**
-     * Affiche le formulaire de modification d'une salle de fête.
-     *
-     * @param  \App\Models\EventHall  $eventHall
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(EventHall $eventHall)
-    {
-        $eventHall->load('hotel');
-        
-        return view('admin.event-hall.edit', compact('eventHall'));
-    }
-
-    /**
-     * Met à jour la salle de fête spécifiée.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\EventHall  $eventHall
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, EventHall $eventHall)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'capacity' => 'required|integer|min:1',
-            'event_type' => 'required|array',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
-
-        try {
-            DB::beginTransaction();
-
-            $eventHall->name = $request->name;
-            $eventHall->description = $request->description;
-            $eventHall->price = $request->price;
-            $eventHall->capacity = $request->capacity;
-            $eventHall->event_type = json_encode($request->event_type);
-
-            if ($request->hasFile('photo')) {
-                if ($eventHall->photo) {
-                    Storage::disk('public')->delete($eventHall->photo);
-                }
-                $eventHall->photo = $request->file('photo')->store('event-halls', 'public');
-            }
-
-            $eventHall->save();
-
-            DB::commit();
-
-            return redirect()->route('admin.hotels.show', $eventHall->hotel_id)
-                ->with('toast', [
-                    'type' => 'success',
-                    'message' => 'Salle de fête mise à jour avec succès!'
-                ]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            
-            Log::error('Erreur lors de la mise à jour de la salle de fête: ' . $e->getMessage());
-            
-            return redirect()->back()
-                ->withInput()
-                ->with('toast', [
-                    'type' => 'error',
-                    'message' => 'Une erreur est survenue lors de la mise à jour de la salle de fête: ' . $e->getMessage()
-                ]);
-        }
-    }
-
-    /**
-     * Supprime la salle de fête spécifiée.
-     *
-     * @param  \App\Models\EventHall  $eventHall
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(EventHall $eventHall)
-    {
-        try {
-            DB::beginTransaction();
-            
-            // Récupérer l'ID de l'hôtel avant de supprimer la salle
-            $hotelId = $eventHall->hotel_id;
-            
-            // Supprimer la photo si elle existe
-            if ($eventHall->photo) {
-                Storage::disk('public')->delete($eventHall->photo);
-            }
-            
-            // Supprimer la salle
-            $eventHall->delete();
-            
-            DB::commit();
-            
-            return redirect()->route('admin.hotels.show', $hotelId)
-                ->with('toast', [
-                    'type' => 'success',
-                    'message' => 'Salle de fête supprimée avec succès!'
-                ]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            
-            Log::error('Erreur lors de la suppression de la salle de fête: ' . $e->getMessage());
-            
-            return redirect()->back()
-                ->with('toast', [
-                    'type' => 'error',
-                    'message' => 'Une erreur est survenue lors de la suppression de la salle de fête: ' . $e->getMessage()
-                ]);
-        }
-    }
-
-    /**
-     * Supprime plusieurs salles de fête à la fois.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function bulkDestroy(Request $request)
-    {
-        $request->validate([
-            'ids' => 'required|array',
-            'ids.*' => 'exists:event_halls,id'
-        ]);
-        
-        try {
-            DB::beginTransaction();
-            
-            // Récupérer la première salle pour avoir l'hotel_id pour la redirection
-            $firstHall = EventHall::find($request->ids[0]);
-            $hotelId = $firstHall ? $firstHall->hotel_id : null;
-            
-            // Récupérer toutes les salles à supprimer
-            $halls = EventHall::whereIn('id', $request->ids)->get();
-            
-            foreach ($halls as $hall) {
-                // Supprimer la photo si elle existe
-                if ($hall->photo) {
-                    Storage::disk('public')->delete($hall->photo);
-                }
-                
-                // Supprimer la salle
-                $hall->delete();
-            }
-            
-            DB::commit();
-            
-            if ($hotelId) {
-                return redirect()->route('admin.hotels.show', $hotelId)
-                    ->with('toast', [
-                        'type' => 'success',
-                        'message' => count($request->ids) . ' salles de fête ont été supprimées avec succès.'
-                    ]);
-            } else {
-                return redirect()->route('admin.hotels')
-                    ->with('toast', [
-                        'type' => 'success',
-                        'message' => count($request->ids) . ' salles de fête ont été supprimées avec succès.'
-                    ]);
-            }
-        } catch (\Exception $e) {
-            DB::rollBack();
-            
-            Log::error('Erreur lors de la suppression en masse des salles de fête: ' . $e->getMessage());
-            
-            return redirect()->back()
-                ->with('toast', [
-                    'type' => 'error',
-                    'message' => 'Une erreur est survenue lors de la suppression des salles de fête: ' . $e->getMessage()
-                ]);
-        }
-    }
+   
 }

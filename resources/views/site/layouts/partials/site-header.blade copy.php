@@ -77,7 +77,7 @@
         </a>
         <a href="#"
            class="block text-lg font-medium text-gray-700 transition-colors duration-200 hover:text-blue-600">
-          Chambres d'hôtel
+          Locations
         </a>
         <a href="{{ route('site.sallesfetes') }}"
            class="block text-lg font-medium {{ request()->routeIs('site.sallesfetes') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600' }} transition-colors duration-200">

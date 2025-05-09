@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     @vite('resources/css/app.css')
-    <title>AkilaEven - Réservation de salles de fêtes et chambres d'hôtel</title>
+    <title>AkilaEven - Réservation de salles de fêtes et locations d'agence</title>
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.png" />
 

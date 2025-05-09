@@ -14,11 +14,11 @@ You are an AI embed in a project that use:
 
 # Name of project
 
-Hotel, function room, and room booking platform
+Agence, function location, and location booking platform
 
 ## Overview
 
-The application will allow visitors (customers) to check the availability of reception halls and rooms at dedicated hotels. Guests will be able to book directly online. It will also offer administrators and managers a dedicated space to manage hotels, halls, and rooms, and to validate and track reservations.
+The application will allow visitors (customers) to check the availability of reception halls and locations at dedicated agences. Guests will be able to book directly online. It will also offer administrators and managers a dedicated space to manage agences, halls, and locations, and to validate and track reservations.
 
 ## key features
 
@@ -35,19 +35,19 @@ L'utilisateur remplit un formulaire avec ses informations(son nom, prenom,adress
 -   **Declined**: la réservation est refusée par l'administrateur.
 -   **Completed**: la réservation a été payée par l'utilisateur.
     Lorsque l'administrateur valide la reservation le status passe à **Accepted**, le client a alors 24H pour valider sa réservation, si elle n'est pas validée, la réservation passe à l'état **Cancelled**. l'utilisateur est notifié par email pour confirmer sa reservation. Une fois que l'utilisateur confirme sa reservation à travers son email, le statut passe à **Booked**. Une fois la salle payée, le statut passe à **Completed**.
-    Pour les chambres, le prix de la réservation est calculer en fonction du nombre de nuits passées(e.g:20 nuits = 20x10 euros = 200€ avec 5€ de taxe de séjour par nuitée = 200 + 5\*20 = 410€). L'utilisateur peut louer plusieurs chambres à la fois.
+    Pour les locations, le prix de la réservation est calculer en fonction du nombre de nuits passées(e.g:20 nuits = 20x10 euros = 200€ avec 5€ de taxe de séjour par nuitée = 200 + 5\*20 = 410€). L'utilisateur peut louer plusieurs locations à la fois.
     S'il y'a déjà 05 reservations liées à une salle avec un statut soit pending, accepted, booked, la salle ne peut plus être réservée (elle devient inddisponible). Les réservations avec le statut Accepted doivent être non expirées dans ce contexte. Le bouton pour afficher les disponibilités et le bouton de reservation sont dès lors désactivées. Lorsqu'une salle est à **Completed**, il est possible de la réserver à nouveau. On affichera juste un texte disant salle disponible à partir du (date à partir de laquelle la date de fin de la dernière réservation éffectuée arrive à son terme).
 
-### Gestion des chambres
+### Gestion des locations
 
-Une chambre est caractérisée par: son nom, sa description, son localisation, sa capacité, son prix, et ses photos, la date de création et de modification, ainsi que son hôtel.
-recherche et filtrage par les caractéristiques des chambres, le nombre de personnes, l'hôtel.
-L'utilisateur peut rechercher et filtrer des chambres à travers sa localisation,
+Une location est caractérisée par: son nom, sa description, son localisation, sa capacité, son prix, et ses photos, la date de création et de modification, ainsi que son agence.
+recherche et filtrage par les caractéristiques des locations, le nombre de personnes, l'agence.
+L'utilisateur peut rechercher et filtrer des locations à travers sa localisation,
 capacité (le nombre de places),type d'évènement,prix
 
 ### Gestion des salles de fêtes
 
-Une salle de fête est caractérisée par : son nom, sa description, son localisation, capacité(e.g:200 places), son prix(pour une nuit), une taxe de séjour par nuitée et ses photos, la date de création et de modification, sa ville ainsi que son hôtel, le type d'évènement qui peut être plusieurs (Mariage, Anniversaire, etc...).
+Une salle de fête est caractérisée par : son nom, sa description, son localisation, capacité(e.g:200 places), son prix(pour une nuit), une taxe de séjour par nuitée et ses photos, la date de création et de modification, sa ville ainsi que son agence, le type d'évènement qui peut être plusieurs (Mariage, Anniversaire, etc...).
 L'utilisateur peut rechercher et filtrer des salle de fêtes à travers sa ville, capacité, type d'évènement, prix
 
 ### Gestion des utilisateurs
@@ -59,11 +59,11 @@ Un utilisateur est caractérisé par son nom, prénom, email, password, date de 
 Lors de l'inscription, il remplit toutes ces informations puis il valide. c'est à l'admin de valider l'utilisateur.
 Lorsque l'admin le valide il reçoit un mail, avec ses identifiants (mot de passe).
 A la connexion, il entre son email et son mot de passe.
-Le manager peut ajouter, modifier, supprimer des hotels, des salles de fête, des chambres.
+Le manager peut ajouter, modifier, supprimer des agences, des salles de fête, des locations.
 
-### Gestion des hôtels
+### Gestion des agences
 
-Un hôtel est caractérisé par son logo, nom, description, ville, téléphone, localisation, email,ses banières, matricule hôtel, date de création, date de modification,manager.
+Un agence est caractérisé par son logo, nom, description, ville, téléphone, localisation, email,ses banières, matricule agence, date de création, date de modification,manager.
 
 ## Use case
 
@@ -90,7 +90,7 @@ Processus de réservation « idéal » (du visiteur au manager)
 
         Manager consulte les détails, accepte ou refuse.
 
-        Si acceptation → statut de la chambre passe à unavailable et la réservation à « accepted ».
+        Si acceptation → statut de la location passe à unavailable et la réservation à « accepted ».
 
 
 
@@ -113,7 +113,7 @@ Processus de réservation « idéal » (du visiteur au manager)
 
 -   **Objectif :** Contient la logique métier principale de l'application, suivant le modèle MVC.
 -   **Contenu :**
-    -   Modèles (ex. Hotel.php, Room.php, User.php)
+    -   Modèles (ex. Agence.php, Location.php, User.php)
     -   Contrôleurs (dans Http/Controllers)
     -   Middleware (dans Http/Middleware)
     -   Services et utilitaires
@@ -132,8 +132,8 @@ Processus de réservation « idéal » (du visiteur au manager)
     -   **Objectif :** Contient les modèles Eloquent qui représentent les tables de la base de données.
     -   **Contenu :**
         -   EventHall.php (Salles de fêtes)
-        -   Hotel.php
-        -   Room.php (Chambres)
+        -   Agence.php
+        -   Location.php (Locations)
         -   User.php
         -   Ville.php
     -   **Techno :** Eloquent ORM, PHP
@@ -148,7 +148,7 @@ Processus de réservation « idéal » (du visiteur au manager)
 
     -   **Objectif :** Contient les contrôleurs qui gèrent les requêtes HTTP
     -   **Contenu :**
-        -   Contrôleurs pour chaque entité (HotelController, RoomController, etc.)
+        -   Contrôleurs pour chaque entité (AgenceController, LocationController, etc.)
         -   Contrôleurs d'authentification
     -   **Techno :** Laravel, PHP
     -   **Bonnes pratiques :**
