@@ -32,7 +32,7 @@
         </p>
 
         <div style="margin-bottom: 20px; text-align: center;">
-            <a href="{{ route('site.event-hall-confirm-booking', $booking->confirmation_token)}}" 
+            <a href="{{ route('site.event-hall-booking.book', $booking->confirmation_token)}}" 
                style="display: inline-block; padding: 12px 24px; font-weight: 600; color: #ffffff; text-decoration: none; background-color: #16a34a; border-radius: 6px;">
                 Confirmer ma réservation
             </a>
@@ -42,12 +42,12 @@
             <p style="margin-bottom: 15px; color: #374151;">
                 Si vous souhaitez annuler cette réservation pour quelque raison que ce soit, vous pouvez le faire en cliquant sur le bouton ci-dessous :
             </p>
-            <div style="text-align: center;">
+         {{--    <div style="text-align: center;">
                 <a href="{{ route('site.event-hall-cancel-booking', $booking->confirmation_token) }}" 
                    style="display: inline-block; padding: 12px 24px; font-weight: 600; color: #ffffff; text-decoration: none; background-color: #dc2626; border-radius: 6px;">
                     Annuler votre réservation
                 </a>
-            </div>
+            </div> --}}
         </div>
     </div>
 

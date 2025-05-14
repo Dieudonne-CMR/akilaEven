@@ -88,4 +88,27 @@ class BookingStatusHelper
         ];
         return $message[$status] ?? $message['pending'];
     }
+
+    /**
+     * Vérifie si un changement de statut est autorisé
+     * 
+     * @param string $from Le statut de départ
+     * @param string $to Le statut d'arrivée
+     * @return bool True si le changement est autorisé, false sinon
+     */
+    public static function authorizeStatusChange($from, $to){
+        $allowedTransitions = [
+            'pending' => ['accepted', 'cancelled'],
+            'accepted' => ['cancelled'],
+            'booked' => ['completed', 'cancelled'],
+            'completed' => ['refunded'],
+            'cancelled' => [],
+            'refunded' => []
+        ];
+        if (!isset($allowedTransitions[$from])) {
+            return false;
+        }
+        
+        return in_array($to, $allowedTransitions[$from]);
+    }
 } 

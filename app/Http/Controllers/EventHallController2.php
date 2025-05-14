@@ -25,7 +25,7 @@ class EventHallController2 extends Controller
     public function create(Agence $agence)
     {
         $villes = Ville::all();
-        return view('admin.event-hall.create-event-hall', compact('agence', 'villes'));
+        return view('admin.pages.event-hall.create-event-hall', compact('agence', 'villes'));
     }
 
     /**
@@ -42,27 +42,18 @@ class EventHallController2 extends Controller
             // Récupérer les données validées
             $validated = $request->validated();
 
-            // Création de la salle de fête
-            $eventHall = new EventHall();
-            $eventHall->nom_salle = $validated['name'];
-            $eventHall->description_salle = $validated['description'];
-            $eventHall->localisation = $validated['location'];
-            $eventHall->ville_id = $validated['ville_id'];
-            $eventHall->capacite = $validated['capacity'];
-            $eventHall->area = $validated['area'];
-            $eventHall->prix = $validated['price'];
-            $eventHall->agence_id = $agence->id;
-            $eventHall->user_id = Auth::id();
-            $eventHall->equipments = isset($validated['amenities']) ? $validated['amenities'] : [];
-            $eventHall->rules = $validated['rules'] ?? null;
-            $eventHall->status = 'available';
+            // Création de la salle de fête            
+            $data['agence_id'] = $agence->id; 
+            // Gestion des équipements
+            $data["equipments"] = isset($validated['amenities']) ? $validated['amenities'] : [];           
+            $data['status'] = 'available';
 
             // Gestion de l'upload de l'image principale
             if ($request->hasFile('main_image')) {
                 $mainImage = $request->file('main_image');
                 $mainImageName = 'main_' . time() . '_' . Str::random(10) . '.' . $mainImage->getClientOriginalExtension();
                 $mainImagePath = $mainImage->storeAs('event_halls', $mainImageName, 'public');
-                $eventHall->photo = $mainImagePath;
+                $data['photo'] = $mainImagePath;
             }
 
             // Gestion des images additionnelles
@@ -75,35 +66,38 @@ class EventHallController2 extends Controller
                     if ($image && $index < count($additionalFields)) {
                         $additionalImageName = 'additional_' . time() . '_' . Str::random(10) . '_' . $index . '.' . $image->getClientOriginalExtension();
                         $additionalImagePath = $image->storeAs('event_halls', $additionalImageName, 'public');
-                        $eventHall->{$additionalFields[$index]} = $additionalImagePath;
+                        $data[$additionalFields[$index]] = $additionalImagePath;
                     }
                 }
             }
-
-            $eventHall->save();
+            $eventHall = EventHall::create($data);
+            /* $eventHall->save(); */
 
             return redirect()->route('admin.event-hall.create', $agence->id)
                             ->with('success', 'La salle de fête a été créée avec succès.');
         } catch (\Exception $e) {
             // En cas d'erreur, supprimer les fichiers uploadés
-            if (isset($eventHall->photo)) {
-                Storage::disk('public')->delete($eventHall->photo);
+            if (isset($data['photo'])) {
+                Storage::disk('public')->delete($data['photo']);
             }
-            if (isset($eventHall->photo1)) {
-                Storage::disk('public')->delete($eventHall->photo1);
+            if (isset($data['photo1'])) {
+                Storage::disk('public')->delete($data['photo1']);
             }
-            if (isset($eventHall->photo2)) {
-                Storage::disk('public')->delete($eventHall->photo2);
+            if (isset($data['photo2'])) {
+                Storage::disk('public')->delete($data['photo2']);
             }
-            if (isset($eventHall->photo3)) {
-                Storage::disk('public')->delete($eventHall->photo3);
+            if (isset($data['photo3'])) {
+                Storage::disk('public')->delete($data['photo3']);
             }
-            if (isset($eventHall->photo4)) {
-                Storage::disk('public')->delete($eventHall->photo4);
+            if (isset($data['photo4'])) {
+                Storage::disk('public')->delete($data['photo4']);
             }
+            
             return redirect()->back()
                             ->withInput()
-                            ->with('error', 'Une erreur est survenue lors de la création de la salle: ' . $e->getMessage());
+                            ->with('error', 'Une erreur est survenue lors de la création de la salle: '
+                          /*    . $e->getMessage() */
+                            );
         }
     }
     
@@ -123,7 +117,7 @@ class EventHallController2 extends Controller
             'villes' => Ville::all()
         ];
         
-        return view('admin.event-hall.eventHalls', compact('eventHalls', 'filters'));
+        return view('admin.pages.event-hall.eventHalls', compact('eventHalls', 'filters'));
     }
   
     
@@ -136,7 +130,7 @@ class EventHallController2 extends Controller
     public function show(EventHall $event_hall)
     {
         $eventhall = $event_hall->load('agence', 'ville', 'user');
-        return view('admin.event-hall.show-event-hall', ['eventHall' => $eventhall]);
+        return view('admin.pages.event-hall.show-event-hall', ['eventHall' => $eventhall]);
     }
     
     /**
@@ -149,7 +143,7 @@ class EventHallController2 extends Controller
     {
         $villes = Ville::all();
         $eventhall = $event_hall->load('agence', 'ville');
-        return view('admin.event-hall.edit-event-hall', ['eventHall' => $eventhall, 'villes' => $villes]);
+        return view('admin.pages.event-hall.edit-event-hall', ['eventHall' => $eventhall, 'villes' => $villes]);
     }
     
     /**
@@ -213,8 +207,8 @@ class EventHallController2 extends Controller
      */
     public function destroy(EventHall $eventHall)
     {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             
             // Récupérer l'ID de l'agence avant de supprimer la salle
             $agenceId = $eventHall->agence_id;
@@ -227,24 +221,23 @@ class EventHallController2 extends Controller
             // Supprimer la salle
             $eventHall->delete();
             
-            DB::commit();
             
-            return redirect()->route('admin.agences.show', $agenceId)
-                ->with('toast', [
-                    'type' => 'success',
-                    'message' => 'Salle de fête supprimée avec succès!'
-                ]);
         } catch (\Exception $e) {
             DB::rollBack();
             
-            Log::error('Erreur lors de la suppression de la salle de fête: ' . $e->getMessage());
+            Log::error('Erreur lors de la suppression de la salle de fête: '
+             . $e->getMessage()
+            );
             
             return redirect()->back()
-                ->with('toast', [
-                    'type' => 'error',
-                    'message' => 'Une erreur est survenue lors de la suppression de la salle de fête: ' . $e->getMessage()
-                ]);
+                ->with('error','Une erreur est survenue lors de la suppression de la salle de fête' 
+                  /*   . $e->getMessage() */
+                );
         }
+        DB::commit();            
+            return redirect()->route('admin.agences.show', $agenceId)
+                ->with('success','Salle de fête supprimée avec succès!'
+                );
     }
 
      /**
@@ -260,8 +253,8 @@ class EventHallController2 extends Controller
             'ids.*' => 'exists:event_halls,id'
         ]);
         
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             
             // Récupérer la première salle pour avoir l'agence_id pour la redirection
             $firstHall = EventHall::find($request->ids[0]);
@@ -280,21 +273,6 @@ class EventHallController2 extends Controller
                 $hall->delete();
             }
             
-            DB::commit();
-            
-            if ($agenceId) {
-                return redirect()->route('admin.agences.show', $agenceId)
-                    ->with('toast', [
-                        'type' => 'success',
-                        'message' => count($request->ids) . ' salles de fête ont été supprimées avec succès.'
-                    ]);
-            } else {
-                return redirect()->route('admin.agences')
-                    ->with('toast', [
-                        'type' => 'success',
-                        'message' => count($request->ids) . ' salles de fête ont été supprimées avec succès.'
-                    ]);
-            }
         } catch (\Exception $e) {
             DB::rollBack();
             
@@ -305,6 +283,15 @@ class EventHallController2 extends Controller
                     'type' => 'error',
                     'message' => 'Une erreur est survenue lors de la suppression des salles de fête: ' . $e->getMessage()
                 ]);
+        }
+        
+        DB::commit();            
+        if ($agenceId) {
+            return redirect()->route('admin.agences.show', $agenceId)
+                ->with('success',' salles de fête ont été supprimées avec succès.');
+        } else {
+            return redirect()->route('admin.agences')
+                ->with('success','salles de fête ont été supprimées avec succès.');
         }
     }
 }

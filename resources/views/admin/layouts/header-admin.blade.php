@@ -13,7 +13,7 @@
           <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Akila Immo</span>
         </a>
       </div>
-      @include("admin.partials.UserDropdown")
+      @include("admin.layouts.auth.UserDropdown")
     </div>
   </div>
 </nav>

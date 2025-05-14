@@ -13,7 +13,7 @@ use App\Models\Bookings;
  
 class EventHallBookingCreateEmailToAdmin extends Mailable 
 {
-    use Queueable, SerializesModels;
+    /* use Queueable, SerializesModels; */
     public Bookings $booking;
     /**
      * Create a new message instance.

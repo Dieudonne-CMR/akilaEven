@@ -17,8 +17,17 @@ return new class extends Migration
 
             // Référence à la salle d'événement
             $table->foreignId('event_hall_id')
-                  ->constrained()
+                  ->nullable()
+                  ->references('id')
+                  ->on('event_halls')
                   ->onDelete('cascade');
+            // Référence à la location
+            $table->foreignId('location_id')
+                  ->nullable()
+                  ->references('id')
+                  ->on('locations')
+                  ->onDelete('cascade');
+                 
 
             // Infos du client
             $table->string('full_name');            
@@ -28,15 +37,18 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('region')->nullable();
             $table->string('country')->nullable();
-            $table->string("message");
+            $table->string("message")->nullable();
 
             // Horaires de l'événement
-            $table->dateTime('arrival_time');
-            $table->dateTime('departure_time');
+            $table->dateTime('arrival_time')->nullable();
+            $table->dateTime('departure_time')->nullable();
 
             // Statut de la réservation
             $table->enum('status', Bookings::STATUS)
                   ->default('pending');
+            // Type de réservation
+            $table->enum('type_booking', ['location', 'hall']);
+                 
 
             // Expiration 24 h après acceptation
             $table->dateTime('expires_at')->nullable();

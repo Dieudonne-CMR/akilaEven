@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use App\Models\Location;
 return new class extends Migration
 {
     /**
@@ -14,7 +14,7 @@ return new class extends Migration
         if(!Schema::hasTable('event_halls')){
             Schema::create('event_halls', function (Blueprint $table) {
                 $table->id();
-                $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
+                $table->foreignId('agence_id')->constrained()->onDelete('cascade');
                 $table->string('nom_salle');
                 $table->text('description_salle');
                 $table->text('localisation');
@@ -26,6 +26,19 @@ return new class extends Migration
                 $table->string('photo3')->nullable();
                 $table->string('photo4')->nullable();
                 $table->timestamps();
+                // Aire
+                $table->decimal('area', 8, 2)->nullable();
+                // Pour le type d'évènement
+                $table->json('event_type')->nullable();
+                // Liste des équipements de la salle de fête
+                $table->json('equipments')->nullable();
+                // Règlement d'utilisation de la salle (optionnel)
+                $table->text('rules')->nullable();
+                // Statut de disponibilité
+                $table->enum('status', Location::STATUS)
+                        ->default('available');
+                        
+
             
             });
         }

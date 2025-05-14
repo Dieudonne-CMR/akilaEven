@@ -1,6 +1,7 @@
 @extends('emails.layout')
 
 @section('content')
+
 <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
     <div style="margin-bottom: 30px; text-align: center;">
         <h1 style="margin-bottom: 15px; font-size: 24px; font-weight: bold; color: #2563eb;">Demande de réservation reçue</h1>

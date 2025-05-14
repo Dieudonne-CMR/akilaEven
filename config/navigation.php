@@ -9,9 +9,9 @@ return [
             'active' => ['home'] // Routes qui activent ce lien
         ],
         [
-            'route' => 'site.bl-locations.locations',
+            'route' => 'site.locations',
             'text' => 'Locations',
-            'active' => ['site.bl-locations.locations']
+            'active' => ['site.locations']
         ],
         [
             'route' => 'site.sallesfetes',
@@ -20,14 +20,14 @@ return [
         ],
         [
           
-            'route' => 'site.bl-about.about',
+            'route' => 'site.about',
             'text' => 'À propos',
-            'active' => ['site.bl-about.about'] // Support des wildcards
+            'active' => ['site.about'] // Support des wildcards
         ],
         [
-            'route' => 'site.bl-contact.contact',
+            'route' => 'site.contact',
             'text' => 'Contact',
-            'active' => ['site.bl-contact.contact']
+            'active' => ['site.contact']
         ]
     ],
     

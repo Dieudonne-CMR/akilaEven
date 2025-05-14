@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Log;
 use \Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use App\Notifications\EventHallBookingCancelled;
+use App\Mail\EventHallBookingCreateEmail;
+use App\Mail\EventHallBookingCancelledEmail;
 
 class siteController extends Controller
 {
@@ -30,7 +32,7 @@ class siteController extends Controller
      */
     public function index()
     {
-        return view('site.bl-home.home');
+        return view('site.pages.home');
     }
 
     /**
@@ -49,7 +51,7 @@ class siteController extends Controller
         
         // $eventHalls = EventHall::all();
         $eventHalls = EventHall::with(['ville','agence'])->paginate(4)->withQueryString();       
-        return view('site.bl-eventHall.salleFete', compact('eventHalls'));
+        return view('site.pages.salleFete', compact('eventHalls'));
     }
   
     /**
@@ -64,7 +66,7 @@ class siteController extends Controller
         $eventHall = $eventHall->load('agence','ville','user');
         $event_Halls =  EventHall::with(['ville','agence'])->where('id', '!=', $eventHall->id)->paginate(2);   
 
-        return view('site.detailssalleFete', compact('eventHall', 'event_Halls'));
+        return view('site.pages.detailssalleFete', compact('eventHall', 'event_Halls'));
     }
 
     /**
@@ -74,7 +76,7 @@ class siteController extends Controller
      */
     public function about()
     {
-        return view('site.bl-about.about');
+        return view('site.pages.about');
     }
 
     /**
@@ -84,7 +86,7 @@ class siteController extends Controller
      */
     public function contact()
     {
-        return view('site.bl-contact.contact');
+        return view('site.pages.contact');
     }
 
     /**
@@ -94,7 +96,7 @@ class siteController extends Controller
      */
     public function services()
     {
-        return view('services');
+        return view('site.pages.services');
     }
 
     /**
@@ -103,76 +105,61 @@ class siteController extends Controller
      * @param StorebookingsRequest $request
      * @return RedirectResponse
      */
-    public function booking(StorebookingsRequest $request)
+    public function storeEventHallBooking(StorebookingsRequest $request)
     {
-        try {
-            DB::beginTransaction();
+        // Récupération des données validées
+        $data = $request->validated();
+
+        // Récupérer la salle
+        $hall = EventHall::findOrFail($data['event_hall_id']);
+
+        // Vérifier si la salle est déjà réservée aux dates demandées
+        $arrival = Carbon::parse($data['arrival_time']);
+        $departure = Carbon::parse($data['departure_time']);
+        
+        // Calcul de la durée en jours
+        $duration = $arrival->diffInDays($departure) + 1;
+
+        // Calcul du prix total
+        $data['total_price'] = $duration * $hall->prix;
+
+        // Définir l'expiration
+        $data['expires_at'] = Carbon::now()->addHours(24);
+
+        // Générer un token de confirmation
+        $data['confirmation_token'] = Str::random(64);
+
+        // Définir le statut initial
+        $data['status'] = 'pending';
+        // Ajouter le type de boooking
+        $data['type_booking'] = 'hall';
+
+        DB::beginTransaction();
+        try {            
             
-            // Récupération des données validées
-            $data = $request->validated();
-
-            // Récupérer la salle
-            $hall = EventHall::findOrFail($data['event_hall_id']);
-
-            // Vérifier si la salle est déjà réservée aux dates demandées
-            $arrival = Carbon::parse($data['arrival_time']);
-            $departure = Carbon::parse($data['departure_time']);
-            
-
-            // Vérifier que la date de départ est après celle d'arrivée
-            if ($departure->lt($arrival)) {
-                return back()
-                    ->withInput()
-                    ->with('error', 'La date de départ doit être postérieure à la date d\'arrivée.');
-            }
-
-  
-
-            // Calcul de la durée en jours
-            $duration = $arrival->diffInDays($departure) + 1;
-
-            // Calcul du prix total
-            $data['total_price'] = $duration * $hall->prix;
-
-            // Définir l'expiration
-            $data['expires_at'] = Carbon::now()->addHours(24);
-
-            // Générer un token de confirmation
-            $data['confirmation_token'] = Str::random(64);
-
-            // Définir le statut initial
-            $data['status'] = 'pending';
-
             // Création de la réservation
             $booking = Bookings::create($data);
 
             // Charger les relations pour les notifications
             $booking->load('eventHall.user', 'eventHall.agence');
 
-            // Notifier l'administrateur de la salle
-            $creator = $booking->eventHall->user;
-            if ($creator) {
-                $creator->notify(new EventHallReservationCreateToAdmin($booking));
-            }
-
             // Envoyer un email au client
-          /*   \Illuminate\Support\Facades\Mail::to($booking->email)
-                ->send(new \App\Mail\EventHallBookingCreateEmail($booking)); */
+            Mail::to($booking->email)
+                ->send(new EventHallBookingCreateEmail($booking));
 
-            DB::commit();
-
+            // Notifier le propriétaire de l'agence dont la salle appartient            
+            
+            Notification::sendNow($booking->eventHall->agence->user, new EventHallReservationCreateToAdmin($booking));
+            
+        } catch (\Throwable $e) {
+            DB::rollBack();             
             return redirect()
-                ->route('site.detailSallesfetes', $hall->id)
-                ->with('success', 'Votre demande de réservation a bien été reçue et est en attente de validation par l\'administrateur.');
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Erreur lors de la création de la réservation : ' . $e->getMessage());
-            return redirect()
-                ->back()
-                ->withInput()
-                ->with('error', 'Une erreur est survenue lors de la création de votre réservation. Veuillez réessayer.');
-        }
+                ->back()                
+                ->with('error', 'Une erreur est survenue!  veuiller réessayer');
+    }
+    DB::commit();        
+    return back()
+        ->with('success', "Votre demande de réservation a bien été reçue");
     }
 
     /**
@@ -182,10 +169,10 @@ class siteController extends Controller
      * @param string $token
      * @return RedirectResponse
      */
-    public function eventHallConfirmBooking(Request $request, $token)
+    public function bookEventHallBooking(Request $request, $token)
     {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
 
             // 1. Vérifier que le token est valide
             $booking = Bookings::with('eventHall.user', 'eventHall.agence')
@@ -194,9 +181,8 @@ class siteController extends Controller
 
             // 2. Vérifier que le statut est toujours 'Accepted'
             if ($booking->status !== 'accepted') {
-                return view('site.bl-booking.event-hall-confirmation-booking', compact('booking','booking'))
-                    ->with('error', 'Cette réservation ne peut pas être confirmée. Son statut actuel est ' . $booking->status);
-                   /*  ->with('booking', $booking); */
+                return view('site.bl-booking.event-hall-confirmation-booking', compact('booking'))
+                    ->with('error', 'Cette réservation ne peut pas être confirmée.');                  
             }
 
             // 3. Vérifier que la réservation n'a pas expiré
@@ -204,15 +190,15 @@ class siteController extends Controller
                 $booking->update(['status' => 'cancelled']);
                 
                 // Notifier le client de l'annulation
-                \Illuminate\Support\Facades\Mail::to($booking->email)
-                ->send(new \App\Mail\EventHallBookingCancelledEmail($booking));
+                /* Mail::to($booking->email)
+                ->send(new EventHallBookingCancelledEmail($booking)); */
                 
-                return view('site.bl-booking.event-hall-confirmation-booking', compact('booking','booking'))
+                return view('site.pages.book-event-hall-booking', compact('booking','booking'))
                     ->with('error', 'Cette réservation a expirée. Veuillez effectuer une nouvelle demande.');
                  /*    ->with('booking', $booking); */
             }
             if (!is_null($booking->confirmed_at)) {
-                return view('site.bl-booking.event-hall-confirmation-booking', compact('booking','booking'))
+                return view('site.pages.book-event-hall-booking', compact('booking','booking'))
                     ->with('error', 'Cette réservation a déjà été confirmée.');
             }
 
@@ -224,22 +210,23 @@ class siteController extends Controller
             ]);
 
             // 5. Notifier l'administrateur de la salle
-            $creator = $booking->eventHall->user;
+            $creator = $booking->eventHall->agence->user;
             if ($creator) {
                 $creator->notify(new EventHallBookingConfirmation($booking));
             }
-
-            DB::commit();
-
-            return view('site.bl-booking.event-hall-confirmation-booking', compact('booking','booking'))
-                ->with('success', 'Votre réservation est confirmée ! Nous vous remercions pour votre confiance.');
-               
+            
+            
 
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Erreur lors de la confirmation de la réservation : ' . $e->getMessage());
-            return view('site.bl-booking.event-hall-confirmation-booking')
+            return view('site.pages.book-event-hall-booking')
                 ->with('error', 'Une erreur est survenue lors de la confirmation de votre réservation. Veuillez réessayer.');
         }
+        DB::commit();
+
+            return view('site.pages.book-event-hall-booking', compact('booking','booking'))
+                ->with('success', 'Votre réservation est confirmée ! Nous vous remercions pour votre confiance.');
+               
     }
 }

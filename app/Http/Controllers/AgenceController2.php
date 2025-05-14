@@ -42,7 +42,7 @@ class AgenceController2 extends Controller
             return $agence;
         });
         
-        return view('admin.agence.agences', compact('agences'));
+        return view('admin.pages.agence.agences', compact('agences'));
     }
 
     /**
@@ -54,7 +54,7 @@ class AgenceController2 extends Controller
         // Récupérer toutes les villes pour le formulaire
         $villes = Ville::orderBy('nom')->get();
         
-        return view('admin.agence.create-agence', compact('villes'));
+        return view('admin.pages.agence.create-agence', compact('villes'));
     }
 
     /**
@@ -77,6 +77,7 @@ class AgenceController2 extends Controller
             
             if ($request->hasFile('bannier1')) {
                 $data['bannier1'] = $request->file('bannier1')->store('banners', 'public');
+                
             }
             
             if ($request->hasFile('bannier2')) {
@@ -117,10 +118,7 @@ class AgenceController2 extends Controller
              return redirect()->back()
                 ->withInput()
                 ->withErrors(['general' => 'Une erreur est survenue lors de la création de l\'agence: ' . $e->getMessage()])
-                ->with('toast', [
-                    'type' => 'error',
-                    'message' => 'Une erreur est survenue lors de la création de l\'agence: ' . $e->getMessage()
-                ]);
+                ->with('error','Une erreur est survenue lors de la création de l\'agence:');
         }
     }
 
@@ -129,7 +127,7 @@ class AgenceController2 extends Controller
         // Charger les relations avec le nombre d'éléments
         $agence->load(['locations', 'eventHalls']);
         
-        return view('admin.agence.show-agence', compact('agence'));
+        return view('admin.pages.agence.show-agence', compact('agence'));
     }
 
     /**

@@ -26,7 +26,7 @@ class EventHallBookingStatusChanged extends Mailable
     {
         $this->booking = $booking;
         $this->status = $status;
-         // Lien signé qui expire dans 60 minutes
+         // Lien signé qui expire dans 24 heures
          $this->confirmationUrl = URL::temporarySignedRoute(
           'site.event-hall-confirm-booking',
           now()->addHours(24),
@@ -53,14 +53,6 @@ class EventHallBookingStatusChanged extends Mailable
         );
     }
 
-    /**
-     * Build the message.
-     */
-    /* public function build()
-    {
-        return $this->subject("Mise à jour de votre réservation - {$this->booking->eventHall->nom_salle}")
-                    ->view($this->template);
-    } */
     /**
      * Get the message content definition.
      */

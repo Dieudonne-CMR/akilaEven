@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\DB;
 use App\Helpers\BookingStatusHelper;
 use Exception;
 use Illuminate\Validation\Rule;
+use App\Mail\Client\EventHallBookingStatusChanged;
+use App\Notifications\Admin\EventHallBookingStatusChanged as AdminEventHallBookingStatusChanged;
+use Illuminate\Support\Facades\Mail;
+
+
 class BookingController extends Controller
 {
     /**
@@ -49,7 +54,7 @@ class BookingController extends Controller
         // Récupérer les filtres pour les statuts
         $filters = BookingFilterHelper::getFiltersList();
         
-        return view('admin.booking.bookings', compact('bookings', 'filters'));
+        return view('admin.pages.booking.bookings', compact('bookings', 'filters'));
     }
 
     /**
@@ -61,7 +66,7 @@ class BookingController extends Controller
     public function show(Bookings $booking)
     {
         $booking->load('eventHall.agence');
-        return view("admin.booking.show-booking", compact('booking'));
+        return view("admin.pages.booking.show-booking", compact('booking'));
     }
 
     /**
@@ -134,14 +139,14 @@ class BookingController extends Controller
         $oldStatus = $booking->status;
         
         // Vérifier les transitions d'état autorisées
-        $allowed = $this->isStatusTransitionAllowed($oldStatus, $data['status']);
+        $allowed = BookingStatusHelper::authorizeStatusChange($oldStatus, $data['status']);
          
         if (!$allowed) {
-            return redirect()->back()->with('error', "Le changement de statut de {$oldStatus} à {$data['status']} n'est pas autorisée.");
+            return redirect()->back()->with('error', "Ce changement de statut n'est pas autorisée");
         }
         
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             
             // 2) Appliquer et sauvegarder
             $booking->status = $data['status'];
@@ -154,7 +159,7 @@ class BookingController extends Controller
             // Mise à jour du statut de la salle en fonction du statut de la réservation
             if ($booking->eventHall) {
                 $eventHall = $booking->eventHall;
-                
+
                 // Si le statut passe à "completed", on marque la salle comme indisponible
                 if ($data['status'] === 'completed') {
                     $eventHall->status = 'unavailable';
@@ -173,19 +178,15 @@ class BookingController extends Controller
             // 3) Envoyer les notifications appropriées
             if (in_array($data['status'], ['accepted', 'completed', 'cancelled'])) {
                 // Envoyer un email au client
-                \Illuminate\Support\Facades\Mail::to($booking->email)
-                    ->send(new \App\Mail\Client\EventHallBookingStatusChanged($booking, $data['status']));
+                Mail::to($booking->email)
+                    ->send(new EventHallBookingStatusChanged($booking, $data['status']));
 
-                // Envoyer une notification à l'administrateur
-                $admin = $booking->eventHall->agence->user;
-                $admin->notify(new \App\Notifications\Admin\EventHallBookingStatusChanged($booking, $data['status']));
+                // Envoyer une notification au manager de l'hôtel
+                $manager = $booking->eventHall->agence->user;
+                $manager->notify(new AdminEventHallBookingStatusChanged($booking, $data['status']));
             }
 
-            DB::commit();
             
-            return redirect()
-                ->back()
-                ->with('success', 'Statut mis à jour avec succès.');
        
         } catch (\Exception $e) {
             DB::rollBack();
@@ -193,30 +194,10 @@ class BookingController extends Controller
                 ->back()
                 ->with('error', 'Erreur inattendue lors de la mise à jour.' . $e->getMessage());
         }
+        DB::commit();            
+        return redirect()
+            ->back()
+            ->with('success', 'Statut mis à jour avec succès.');
     }
     
-    /**
-     * Vérifier si une transition de statut est autorisée
-     * 
-     * @param string $from Statut actuel
-     * @param string $to Nouveau statut
-     * @return bool Transition autorisée ou non
-     */
-    private function isStatusTransitionAllowed($from, $to)
-    {
-        $allowedTransitions = [
-            'pending' => ['accepted', 'cancelled'],
-            'accepted' => ['cancelled'],
-            'booked' => ['completed', 'cancelled'],
-            'completed' => ['refunded'],
-            'cancelled' => [],
-            'refunded' => []
-        ];
-        
-        if (!isset($allowedTransitions[$from])) {
-            return false;
-        }
-        
-        return in_array($to, $allowedTransitions[$from]);
-    }
 }

@@ -15,17 +15,28 @@ Route::get('/mailable', function () {
     return new App\Mail\EventHallBookingCreateEmailToAdmin($booking);
 
 });
+// Creer une réservation de salle
+Route::post("/site-detail-sallesfetes-{eventHall}/create-event-hall-booking", [siteController::class, 'storeEventHallBooking'])->name('event-hall-booking.store');
+// Confirmer la réservation d'une salle par mail
+Route::get("/book-event-hall-booking/{token}", [siteController::class, 'bookEventHallBooking'])->name('site.event-hall-booking.book')->middleware('signed');
+// Annuler la réservation d'une salle par mail
+Route::get("/cancel-event-hall-booking/{token}", [siteController::class, 'cancelEventHallBooking'])->name('site.event-hall-booking.cancel')->middleware('signed');
+// Confirmer la réservation d'une location par mail
+Route::get("/book-location-booking/{token}", [siteController::class, 'bookLocationBooking'])->name('site.location-booking.book')->middleware('signed');
+// Annuler la réservation d'une location par mail
+Route::get("/cancel-location-hall-booking/{token}", [siteController::class, 'cancelLocationBooking'])->name('site.location-booking.cancel')->middleware('signed');
 
-Route::post("/create-booking", [siteController::class, 'booking'])->name('booking.create');
-Route::get("/event-hall-confirm-booking/{token}", [siteController::class, 'eventHallConfirmBooking'])->name('site.event-hall-confirm-booking');
-/* Route::get("/event-hall-confirm-booking-page", [siteController::class, 'eventHallConfirmBooking'])->name('site.confirm-booking-event-hall-page'); */
-/* ->middleware('signed'); */
-Route::get("/locations", [LocationController::class, 'index'])->name('site.bl-locations.locations');
+Route::get("/locations", [LocationController::class, 'index'])->name('site.locations');
+// Page d'accueil
 Route::get('', [siteController::class, 'index'])->name('home');
+// Page des salles de fêtes
 route::get('/site-sallesfetes', [siteController::class, 'salleFete'])->name('site.sallesfetes');
+// Page des détails d'une salle de fête
 route::get('/site-detail-sallesfetes-{eventHall}', [siteController::class, 'detailSallesFetes'])->name('site.detailSallesfetes');
-route::get('/about', [siteController::class, 'about'])->name('site.bl-about.about');
-route::get("/contact", [siteController::class, 'contact'])->name('site.bl-contact.contact');
+// Page about
+route::get('/about', [siteController::class, 'about'])->name('site.about');
+// Page contact
+route::get("/contact", [siteController::class, 'contact'])->name('site.contact');
     
     // Route::get('/dashboard', function () {
         //     return view('dashboard');
@@ -47,7 +58,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function(){
- /*    Route:get("/admin/dashboard", AdminDashboardController::class,) */
+
     Route::controller(AgenceController::class)->group(function () {
         Route::get('/agences/create', 'create')->name('agences.create');
         // enregistrer un agence

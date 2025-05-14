@@ -54,7 +54,7 @@ class LocationController extends BaseController
             ]
         ];
         
-        return view('admin.location.locations', compact('locations', 'filters'));
+        return view('admin.pages.location.locations', compact('locations', 'filters'));
     }
 
     /**
@@ -119,7 +119,7 @@ class LocationController extends BaseController
     {
         $villes = Ville::all();
        
-        return view('admin.location.create-location', compact('agence', 'villes'));
+        return view('admin.pages.location.create-location', compact('agence', 'villes'));
     }
 
     /**
@@ -134,8 +134,7 @@ class LocationController extends BaseController
         try {
             // Préparer les données validées
             $data = $request->validated();
-            $data['agence_id'] = $agence->id;
-            $data['user_id'] = Auth::id();
+            $data['agence_id'] = $agence->id;           
             $data['status'] = 'available';
 
             // Gestion de l'upload de l'image principale
@@ -183,7 +182,9 @@ class LocationController extends BaseController
 
             return redirect()->back()
                 ->withInput()
-                ->with('error', 'Une erreur est survenue lors de la création de la location: ' . $e->getMessage());
+                ->with('error', 'Une erreur est survenue lors de la création de la location' 
+                /* . $e->getMessage() */
+            );
         }
     }
 
@@ -195,7 +196,7 @@ class LocationController extends BaseController
      */
     public function show(Location $location)
     {
-        return view('admin.location.show-location', compact('location'));
+        return view('admin.pages.location.show-location', compact('location'));
     }
 
     /**
@@ -206,7 +207,7 @@ class LocationController extends BaseController
      */
     public function edit(Location $location)
     {
-        return view('admin.location.edit-location', compact('location'));
+        return view('admin.pages.location.edit-location', compact('location'));
     }
 
     /**
@@ -267,7 +268,7 @@ class LocationController extends BaseController
         $location->update($data);
 
         return redirect()->route('admin.agences.show', $location->agence_id)
-            ->with('toast', ToastHelper::success('Location mise à jour avec succès!'));
+            ->with('success', 'Location mise à jour avec succès');
     }
 
     /**
@@ -300,7 +301,7 @@ class LocationController extends BaseController
         // Supprimer la location
         $location->delete();
         
-        return redirect()->route('admin.agences.show', $agenceId)
-            ->with('toast', ToastHelper::success('Location supprimée avec succès!'));
+        return redirect()->route('admin.pages.agences.show', $agenceId)
+            ->with('error', 'Location supprimée avec succès');
     }
 }

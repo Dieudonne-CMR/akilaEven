@@ -1,6 +1,6 @@
 @extends('emails.layout', ['title' => 'Nouvelle demande de réservation'])
 
-@section('content')
+@section('content-admin')
 <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
     <div style="margin-bottom: 30px; text-align: center;">
         <h1 style="margin-bottom: 15px; font-size: 24px; font-weight: bold; color: #2563eb;">Nouvelle demande de réservation</h1>
@@ -58,13 +58,13 @@
         </div>
     </div>
     
-    <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;">
-        <a href="{{ route('admin.bookings.show', $booking->id) }}" 
+            <div style="display: flex !important; justify-content: center !important; gap: 15px !important; margin-bottom: 30px !important;">
+        <a href="{{ route('admin.booking.show', $booking->id) }}" 
            style="display: inline-block; padding: 10px 20px; font-weight: 600; font-size: 13px; text-transform: uppercase; color: #ffffff; text-decoration: none; background-color: #2563eb; border-radius: 4px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
             Voir les détails
         </a>
         
-        <a href="{{ route('admin.bookings.decline', $booking->id) }}" 
+        <a href="{{ route('admin.booking.destroy', $booking->id) }}" 
            style="display: inline-block; padding: 10px 20px; font-weight: 600; font-size: 13px; text-transform: uppercase; color: #ffffff; text-decoration: none; background-color: #dc2626; border-radius: 4px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
             Annuler la réservation
         </a>
@@ -72,11 +72,6 @@
     
     <div style="padding: 15px; background-color: #fefce8; border-radius: 8px; color: #854d0e; margin-top: 25px;">
         <p>Veuillez traiter cette demande de réservation dans les plus brefs délais pour assurer une bonne expérience client.</p>
-    </div>
-    
-    <div style="margin-top: 30px; font-size: 14px; color: #6b7280; text-align: center;">
-        <p>Cet email a été envoyé automatiquement par le système de réservation de Akila Immo.</p>
-        <p>© {{ date('Y') }} Akila Immo. Tous droits réservés.</p>
-    </div>
+    </div>  
 </div>
 @endsection

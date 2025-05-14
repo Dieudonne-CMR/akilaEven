@@ -10,7 +10,7 @@ class EventTypeHelper
     public static function getEventTypes()
     {
         return [
-            'Mariage' => 'Mariage',
+            ' Mariage' => 'Mariage',
             'Anniversaire' => 'Anniversaire',
             'Conférence' => 'Conférence',
             'Séminaire' => 'Séminaire',

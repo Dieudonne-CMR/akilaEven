@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+    
     <title>AkilaImmo - Dashboard</title>
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.png" />
@@ -55,10 +56,10 @@
       .img-icone {width: 1.5rem; margin: 3px;}
     </style>
   </head>
-  <body class=" bg-background">
-    <x-admin.toast-container />
+  <body class="min-h-screen bg-background">
+    <x-ui.toast-container />
     @include("admin.layouts.header-admin")
-    @include("admin.layouts.sidebar")
+    @include("admin.layouts.sidebar-admin")
     @yield('content-admin')
 
   <!-- Template JS Files -->
@@ -87,8 +88,11 @@
       lucide.createIcons();
   });
 </script>
+<script src="../node_modules/flyonui/flyonui.js"></script>
+<script src="../path-to/flyonui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 <!-- Scripts supplémentaires -->
+
   @stack('scripts')
 </body>
 

@@ -36,7 +36,7 @@
     </div>
 
     <div style="margin-bottom: 30px; text-align: center;">
-        <a href="{{ route('site.sallesfetes') }}" 
+        <a href="{{ route('site.sallesfetes')}}" 
            style="display: inline-block; padding: 12px 24px; font-weight: 600; color: #ffffff; text-decoration: none; background-color: #2563eb; border-radius: 6px;">
             Voir nos autres salles disponibles
         </a>

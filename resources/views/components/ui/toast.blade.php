@@ -1,56 +1,75 @@
-@props(['type' => 'success', 'message', 'dismissible' => true, 'position' => 'top-right'])
+@props(['message' => null, 'type' => 'success', 'position' => 'top-right'])
 
 @php
-    $typeClasses = [
-        'success' => 'text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-200',
-        'error' => 'text-red-500 bg-red-100 dark:bg-red-800 dark:text-red-200',
-        'warning' => 'text-yellow-500 bg-yellow-100 dark:bg-yellow-800 dark:text-yellow-200',
-        'info' => 'text-blue-500 bg-blue-100 dark:bg-blue-800 dark:text-blue-200',
-    ];
-    
-    $iconPath = [
-        'success' => '<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>',
-        'error' => '<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>',
-        'warning' => '<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"/>',
-        'info' => '<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>',
-    ];
-    
-    $positionClasses = [
-        'top-right' => 'top-4 right-4',
-        'top-left' => 'top-4 left-4',
-        'bottom-right' => 'bottom-4 right-8',
-        'bottom-left' => 'bottom-4 left-4',
-        'top-center' => 'top-4 left-1/2 transform -translate-x-1/2',
-        'bottom-center' => 'bottom-4 left-1/2 transform -translate-x-1/2',
-    ];
+$typeClasses = [
+    'success' => 'text-green-500 bg-green-100',
+    'error' => 'text-red-500 bg-red-100',
+    'warning' => 'text-yellow-500 bg-yellow-100',
+    'info' => 'text-blue-500 bg-blue-100',
+];
+
+$positionClasses = [
+    'top-right' => 'top-5 right-5',
+    'top-left' => 'top-5 left-5',
+    'bottom-right' => 'bottom-5 right-5',
+    'bottom-left' => 'bottom-5 left-5',
+    'top-center' => 'top-5 left-1/2 transform -translate-x-1/2',
+    'bottom-center' => 'bottom-5 left-1/2 transform -translate-x-1/2',
+];
 @endphp
 
-<div 
-    id="toast-{{ $type }}" 
-    class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-sm dark:text-gray-400 dark:bg-gray-800 {{ $position ? 'fixed ' . $positionClasses[$position] : '' }} z-50" 
-    role="alert"
-    x-data="{ show: true }"
+<div
+    x-data="{
+        show: false,
+        message: @js($message),
+        type: @js($type),
+        typeClasses: @js($typeClasses),
+        timeout: null,
+        showToast(message, type = 'success') {
+            this.message = message;
+            this.type = type;
+            this.show = true;
+            
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+            }
+            
+            this.timeout = setTimeout(() => {
+                this.show = false;
+            }, 3000);
+        }
+    }"
     x-show="show"
-    x-init="setTimeout(() => show = false, 5000)"
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0 transform scale-90"
+    x-transition:enter-end="opacity-100 transform scale-100"
+    x-transition:leave="transition ease-in duration-300"
+    x-transition:leave-start="opacity-100 transform scale-100"
+    x-transition:leave-end="opacity-0 transform scale-90"
+    @toast.window="showToast($event.detail.message, $event.detail.type)"
+    class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-sm {{ $position ? 'fixed ' . $positionClasses[$position] : '' }} z-50"
+    role="alert"
+    style="display: none;"
 >
-    <div class="inline-flex items-center justify-center w-8 h-8 {{ $typeClasses[$type] }} rounded-lg shrink-0">
-        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            {!! $iconPath[$type] !!}
-        </svg>
-        <span class="sr-only">{{ ucfirst($type) }} icon</span>
+    <div :class="typeClasses[type]" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg">
+        <template x-if="type === 'success'">
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/></svg>
+        </template>
+        <template x-if="type === 'error'">
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.5 11.5a1 1 0 0 1-2 0v-4a1 1 0 0 1 2 0v4Zm-3.5 3a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z"/></svg>
+        </template>
+        <template x-if="type === 'warning'">
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"/></svg>
+        </template>
+        <template x-if="type === 'info'">
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"/></svg>
+        </template>
     </div>
-    <div class="text-sm font-normal ms-3">{{ $message }}</div>
-    @if($dismissible)
-    <button 
-        type="button" 
-        class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" 
-        aria-label="Close"
-        @click="show = false"
-    >
-        <span class="sr-only">Close</span>
+    <div x-text="message" class="ml-3 text-sm font-normal"></div>
+    <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8" @click="show = false">
+        <span class="sr-only">Fermer</span>
         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
         </svg>
     </button>
-    @endif
 </div>

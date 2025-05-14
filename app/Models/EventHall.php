@@ -18,8 +18,7 @@ class EventHall extends Model
         'photo2', 
         'photo3', 
         'photo4',
-        'ville_id',
-        'user_id',
+        'ville_id',        
         'agence_id',
         "area",
         "event_type",
@@ -35,10 +34,7 @@ class EventHall extends Model
 
     public function ville(){
         return $this->belongsTo(Ville::class);
-    }
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
+    }    
     public function bookings(){
         return $this->hasMany(Bookings::class);
     }

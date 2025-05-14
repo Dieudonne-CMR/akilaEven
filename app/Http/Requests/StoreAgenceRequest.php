@@ -26,7 +26,7 @@ class StoreAgenceRequest extends FormRequest
         return [
             'nom_agence' => 'required|string|max:255',
             'description_agence' => 'required|string',
-            'ville' => 'required|exists:villes,id',
+            'ville' => 'required|exists:villes,nom',
             'localisation' => 'required|string|max:255',
             'telephone' => 'required|string|regex:/^6[0-9]{8}$/',
             'email' => 'required|email|max:255',

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
     <title>AkilaEven - Réservation de salles de fêtes et locations d'agence</title>
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.png" />
@@ -64,11 +65,11 @@
     </div> -->
     <!-- end cssload-loader -->
 
-    @include('site.layouts.partials.site-header')
+    @include('site.layouts.site-header')
 
     @yield('content-site')
 
-    @include('site.layouts.partials.site-footer')
+    @include('site.layouts.site-footer')
 
   <!-- Template JS Files -->
   <script src="{{asset('assets_site/js/jquery-3.7.1.min.js')}}"></script>
@@ -191,6 +192,7 @@
        
 </script>
   <!-- Scripts supplémentaires -->
+ 
   @stack('scripts')
 </body>
 
