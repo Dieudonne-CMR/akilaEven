@@ -63,10 +63,10 @@ class siteController extends Controller
     public function detailSallesFetes(EventHall $eventHall) 
     {
         
-        $eventHall = $eventHall->load('agence','ville','user');
-        $event_Halls =  EventHall::with(['ville','agence'])->where('id', '!=', $eventHall->id)->paginate(2);   
+        $eventHall = $eventHall->load('agence','ville');
+       /*  $event_Halls =  EventHall::with(['ville','agence'])->where('id', '!=', $eventHall->id)->paginate(2);   */ 
 
-        return view('site.pages.detailssalleFete', compact('eventHall', 'event_Halls'));
+        return view('site.pages.detailssalleFete', compact('eventHall'));
     }
 
     /**

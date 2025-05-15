@@ -1,5 +1,7 @@
 @extends('site.layouts.layout-site')
-
+ <!-- Flatpickr pour le calendrier -->
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+ <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <style>
     [x-cloak] { display: none !important; }
     
@@ -30,7 +32,9 @@
     <x-ui.toast type="error" message="{{ session('error') }}" position="bottom-right" />
 @endif
 
-
+@if($errors->any())
+    <x-ui.toast type="error" message="{{ $errors->first() }}" position="bottom-right" />
+@endif
 
 <!-- ================================
    START HALL DETAIL AREA
