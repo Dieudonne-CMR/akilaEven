@@ -1,40 +1,34 @@
 @php
-    use App\Models\EventHall;
+    use App\Models\Location;
     
-    // Calculer le nombre total de salles
-    $totalEventHalls = $eventHalls->total();
+    // Calculer le nombre total de locations
+    $totalLocations = $locations->total();
 @endphp
 
-       
-      <!-- Liste des salles de fêtes -->
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-        @if($eventHalls->count() > 0)
-            
-                @foreach($eventHalls as $eventHall)
-                  
-                        <x-site.events.listing.card2
-                        :index="$loop->iteration"
-                        x-init="initCarousel('venue{{ $loop->iteration }}')"
-                        class="overflow-hidden transition-all duration-300 bg-white shadow-md rounded-xl hover:shadow-lg" :eventHall="$eventHall" />
-                    {{-- </div> --}}
-                @endforeach
-                     
-    
-        @else
+<!-- Liste des locations -->
+<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+    @if($locations->count() > 0)
+        @foreach($locations as $location)
+            <x-site.locations.listing.card
+                :index="$loop->iteration"
+                class="overflow-hidden transition-all duration-300 bg-white shadow-md rounded-xl hover:shadow-lg" 
+                :location="$location" 
+            />
+        @endforeach
+    @else
         <x-ui.empty-state 
-        class="px-6 py-5 !bg-white shadow-md no-results col-span-full rounded-xl "
-        icon="file-question"
-        classIcon="!text-primary"
-        title="Aucune salle de fête trouvée"
-        message="Veuillez modifier vos critères de recherche et réessayer."
-    >
-        <a href="{{ route('site.sallesfetes') }}" class="mt-3 btn btn-primary bg-primary">
-            <i class="la la-redo"></i> Réinitialiser les filtres
-        </a>
-    </x-ui.empty-state>
-        @endif
-        
-    </div>
+            class="px-6 py-5 !bg-white shadow-md no-results col-span-full rounded-xl"
+            icon="file-question"
+            classIcon="!text-primary"
+            title="Aucune location trouvée"
+            message="Veuillez modifier vos critères de recherche et réessayer."
+        >
+            <a href="{{ route('site.locations') }}" class="mt-3 btn btn-primary bg-primary/80 border-primary flex justify-center items-center rounded-lg px-3 py-2 hover:bg-primary text-white gap-2">
+                <i class="size-4" data-lucide="rotate-ccw"></i> Réinitialiser les filtres
+            </a>
+        </x-ui.empty-state>
+    @endif
+</div>
 
 <!-- Inclusion du CSS et du JS de Swiper -->
 @push('styles')
@@ -71,7 +65,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Initialiser les carrousels Swiper
-        document.querySelectorAll('.swiper').forEach(function(element, index) {
+        document.querySelectorAll('.location-swiper-1, .location-swiper-2, .location-swiper-3, .location-swiper-4').forEach(function(element) {
             const swiper = new Swiper(element, {
                 loop: true,
                 pagination: {

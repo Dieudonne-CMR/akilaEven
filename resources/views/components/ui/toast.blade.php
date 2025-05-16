@@ -20,7 +20,7 @@ $positionClasses = [
 
 <div
     x-data="{
-        show: false,
+        show: true,
         message: @js($message),
         type: @js($type),
         typeClasses: @js($typeClasses),
@@ -46,10 +46,16 @@ $positionClasses = [
     x-transition:leave="transition ease-in duration-300"
     x-transition:leave-start="opacity-100 transform scale-100"
     x-transition:leave-end="opacity-0 transform scale-90"
-    @toast.window="showToast($event.detail.message, $event.detail.type)"
+    @@toast.window="showToast(message, type)"
+    {{-- x-on:toast.window="showToast('dd', 'success')" --}}
     class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-sm {{ $position ? 'fixed ' . $positionClasses[$position] : '' }} z-50"
     role="alert"
-    style="display: none;"
+    style="display: none;
+    "
+      x-init="
+      {{-- si un message de session existe, on le montre immédiatement --}}
+      message && showToast(message, type)
+    "
 >
     <div :class="typeClasses[type]" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg">
         <template x-if="type === 'success'">

@@ -1,20 +1,19 @@
 @props(['showFilters' => false, 'isDesktop' => true])
 @php
-  use App\Models\EventHall;
+  use App\Models\Location;
   use App\Models\Agence;
-  use App\Helpers\EventTypeHelper;
   use App\Models\Ville;
   use Illuminate\Support\Facades\DB;
 
-  // Récupérer les agences qui ont des salles de fêtes
-  $agences = Agence::whereHas('eventHalls')->pluck('nom_agence', 'id');
+  // Récupérer les agences qui ont des locations
+  $agences = Agence::whereHas('locations')->pluck('nom_agence', 'id');
   
-  // Récupérer toutes les villes liées aux salles de fête(localisations)
-  $villesList = Ville::whereHas('eventHalls')->pluck('nom')->toArray();
+  // Récupérer toutes les villes liées aux locations
+  $villesList = Ville::whereHas('locations')->pluck('nom')->toArray();
 
-  // Villes populaires : top 5 par nombre de salles
-  $popularCities = DB::table('event_halls')
-      ->join('villes', 'event_halls.ville_id', '=', 'villes.id')
+  // Villes populaires : top 5 par nombre de locations
+  $popularCities = DB::table('locations')
+      ->join('villes', 'locations.ville_id', '=', 'villes.id')
       ->select('villes.nom', DB::raw('COUNT(*) as total'))
       ->groupBy('villes.id', 'villes.nom')
       ->orderByDesc('total')
@@ -22,49 +21,38 @@
       ->take(5)
       ->toArray();
       
-  // Récupérer min et max capacité
-  $minCapacite = EventHall::min('capacite');
-  $maxCapacite = EventHall::max('capacite');
-  
   // Récupérer min et max prix
-  $minPrix = EventHall::min('prix');
-  $maxPrix = EventHall::max('prix');
+  $minPrix = Location::min('prix');
+  $maxPrix = Location::max('prix');
   
-  // Récupérer les types d'événements depuis le helper
-  $allEventTypes = EventTypeHelper::getEventTypes();
+  // Récupérer les types de locations depuis le modèle
+  $allLocationTypes = Location::TYPE_LOCATION;
+  $logementTypes = Location::TYPE_LOGEMENT;
   
-  // Récupérer les types d'événements les plus courants dans la BD
-  $popularEventTypes = EventHall::query()
-    ->whereNotNull('event_type')
-    ->get('event_type')
-    ->flatMap->event_type   // grâce au cast, c'est déjà un array
+  // Récupérer les types de locations les plus courants dans la BD
+  $popularLocationTypes = Location::query()
+    ->whereNotNull('type_location')
+    ->pluck('type_location')
     ->countBy()
     ->sortDesc()
     ->take(5)
     ->keys()
     ->toArray();
 
-  $eventTypes = array_values($allEventTypes);
-  
   // Récupérer les filtres actuels(de l'url)
   $filters = request()->all();
   
   // Valeurs par défaut ou valeurs des filtres actuels
   $currentMinPrice = $filters['min_prix'] ?? $minPrix;
   $currentMaxPrice = $filters['max_prix'] ?? $maxPrix;
-  $currentMinCapacity = $filters['min_capacite'] ?? $minCapacite;
-  $currentMaxCapacity = $filters['max_capacite'] ?? $maxCapacite;
   $currentLocations = isset($filters['locations']) ? explode(',', $filters['locations']) : [];
-  $currentEventTypes = isset($filters['event_types']) ? explode(',', $filters['event_types']) : [];
+  $currentTypeLocation = $filters['type_location'] ?? null;
+  $currentTypeLogement = $filters['type_logement'] ?? null;
   
   // Calculs pour les sliders
   $priceRange = $currentMaxPrice - $currentMinPrice;
   $priceFactor = $priceRange / 100;
   $priceMinGap = max(intval($priceRange / 20), 5000);
-  
-  $capacityRange = $currentMaxCapacity - $currentMinCapacity;
-  $capacityFactor = $capacityRange / 100;
-  $capacityMinGap = max(intval($capacityRange / 20), 10);
 @endphp
 
 <!-- Overlay sombre si on est sur mobile et que les filtres sont affichés -->
@@ -87,19 +75,17 @@
   x-data="{
     // Initialisation des variables Alpine
     priceRange: [{{ $currentMinPrice }}, {{ $currentMaxPrice }}],
-    capacity: [{{ $currentMinCapacity }}, {{ $currentMaxCapacity }}],
     selectedLocations: {{ json_encode($currentLocations) }},
-    selectedEventTypes: {{ json_encode($currentEventTypes) }},
+    selectedTypeLocation: '{{ $currentTypeLocation }}',
+    selectedTypeLogement: '{{ $currentTypeLogement }}',
     searchTerm: '',
-    eventTypeSearchTerm: '',
     showResults: false,
-    showEventTypeResults: false,
     activeIndex: -1,
-    eventTypeActiveIndex: -1,
     cities: {{ json_encode($villesList) }},
-    eventTypes: {{ json_encode($eventTypes) }},
+    locationTypes: {{ json_encode($allLocationTypes) }},
+    logementTypes: {{ json_encode($logementTypes) }},
     popularCities: {{ json_encode($popularCities) }},
-    popularEventTypes: {{ json_encode($popularEventTypes) }},
+    popularLocationTypes: {{ json_encode($popularLocationTypes) }},
     
     // Filtrer les villes selon le terme de recherche
     filteredCities() {
@@ -107,15 +93,6 @@
       return this.cities.filter(city => 
         city.toLowerCase().includes(this.searchTerm.toLowerCase()) && 
         !this.selectedLocations.includes(city)
-      ).slice(0, 5);
-    },
-    
-    // Filtrer les types d'événements selon le terme de recherche
-    filteredEventTypes() {
-      if (!this.eventTypeSearchTerm) return [];
-      return this.eventTypes.filter(type => 
-        type.toLowerCase().includes(this.eventTypeSearchTerm.toLowerCase()) && 
-        !this.selectedEventTypes.includes(type)
       ).slice(0, 5);
     },
     
@@ -131,20 +108,6 @@
     // Supprimer une localisation
     removeLocation(city) {
       this.selectedLocations = this.selectedLocations.filter(loc => loc !== city);
-    },
-    
-    // Ajouter un type d'événement
-    addEventType(type) {
-      if (this.selectedEventTypes.length < 3 && !this.selectedEventTypes.includes(type)) {
-        this.selectedEventTypes.push(type);
-        this.eventTypeSearchTerm = '';
-        this.showEventTypeResults = false;
-      }
-    },
-    
-    // Supprimer un type d'événement
-    removeEventType(type) {
-      this.selectedEventTypes = this.selectedEventTypes.filter(t => t !== type);
     },
     
     // Gestion des touches clavier pour la recherche de villes
@@ -164,23 +127,6 @@
       }
     },
     
-    // Gestion des touches clavier pour la recherche de types d'événements
-    handleEventTypeKeydown(event) {
-      const results = this.filteredEventTypes();
-      if (event.key === 'ArrowDown') {
-        event.preventDefault();
-        this.eventTypeActiveIndex = Math.min(this.eventTypeActiveIndex + 1, results.length - 1);
-      } else if (event.key === 'ArrowUp') {
-        event.preventDefault();
-        this.eventTypeActiveIndex = Math.max(this.eventTypeActiveIndex - 1, 0);
-      } else if (event.key === 'Enter' && this.eventTypeActiveIndex >= 0) {
-        event.preventDefault();
-        this.addEventType(results[this.eventTypeActiveIndex]);
-      } else if (event.key === 'Escape') {
-        this.showEventTypeResults = false;
-      }
-    },
-    
     // Appliquer les filtres en mettant à jour l'URL
     applyFilters() {
       const params = new URLSearchParams(window.location.search);
@@ -189,10 +135,6 @@
       params.set('min_prix', this.priceRange[0]);
       params.set('max_prix', this.priceRange[1]);
       
-      // Mise à jour des paramètres de capacité
-      params.set('min_capacite', this.capacity[0]);
-      params.set('max_capacite', this.capacity[1]);
-      
       // Mise à jour des localisations
       if (this.selectedLocations.length > 0) {
         params.set('locations', this.selectedLocations.join(','));
@@ -200,26 +142,34 @@
         params.delete('locations');
       }
       
-      // Mise à jour des types d'événements
-      if (this.selectedEventTypes.length > 0) {
-        params.set('event_types', this.selectedEventTypes.join(','));
+      // Mise à jour du type de location
+      if (this.selectedTypeLocation) {
+        params.set('type_location', this.selectedTypeLocation);
       } else {
-        params.delete('event_types');
+        params.delete('type_location');
+      }
+      
+      // Mise à jour du type de logement
+      if (this.selectedTypeLogement) {
+        params.set('type_logement', this.selectedTypeLogement);
+      } else {
+        params.delete('type_logement');
       }
       
       // Navigation vers la nouvelle URL avec les paramètres
-      window.location.href = window.location.pathname + '?' + params.toString();
+      const url = window.location.pathname + '?' + params.toString() + '#listing';
+      window.location.href = url;
     },
     
     // Réinitialiser tous les filtres
     resetFilters() {
       this.priceRange = [{{ $minPrix }}, {{ $maxPrix }}];
-      this.capacity = [{{ $minCapacite }}, {{ $maxCapacite }}];
       this.selectedLocations = [];
-      this.selectedEventTypes = [];
+      this.selectedTypeLocation = '';
+      this.selectedTypeLogement = '';
       
       // Redirection vers l'URL sans paramètres
-      window.location.href = window.location.pathname;
+      window.location.href = window.location.pathname + '#listing';
     }
   }"
   x-show="{{ $showFilters }} && {{ !$isDesktop}}"
@@ -253,10 +203,10 @@
   <!-- Contenu des filtres avec défilement -->
   <div class="h-[calc(100vh-2rem)] flex-1 overflow-y-auto overflow-x-hidden scrollbar-hide">
     
-    <!-- Section Prix par jour -->
+    <!-- Section Prix -->
     <div x-data="{ open: true }" class="pb-4 mb-4 border-b border-gray-200">
       <button @click="open = !open" class="flex justify-between w-full">
-        <h3 class="font-semibold">Prix par jour</h3>
+        <h3 class="font-semibold">Prix</h3>
         <i :class="open ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'" class="text-xl"></i>
       </button>
       <div x-show="open" 
@@ -306,51 +256,61 @@
       </div>
     </div>
 
-    <!-- Section Capacité -->
+    <!-- Section Type de Location -->
     <div x-data="{ open: true }" class="pb-4 mb-4 border-b border-gray-200">
       <button @click="open = !open" class="flex justify-between w-full">
-        <h3 class="font-semibold">Capacité</h3>
+        <h3 class="font-semibold">Type de location</h3>
         <i :class="open ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'" class="text-xl"></i>
       </button>
       <div x-show="open" 
            x-transition:enter="transition ease-out duration-200"
            x-transition:enter-start="opacity-0 transform -translate-y-4"
            x-transition:enter-end="opacity-100 transform translate-y-0"
-           class="mt-3">
-        <div class="flex justify-between mb-2">
-          <span x-text="`${capacity[0]} personnes`" class="text-sm text-muted-foreground"></span>
-          <span x-text="`${capacity[1]} personnes`" class="text-sm text-muted-foreground"></span>
-        </div>
-        <div class="relative h-2 mb-6">
-          <div class="range-track"></div>
-          <div class="range-track-highlight"
-        
-              :style="`left: ${(capacity[0] - {{ $currentMinCapacity }}) / {{ $capacityFactor }}}%; right: ${100 - (capacity[1] - {{ $currentMinCapacity }}) / {{ $capacityFactor }}}%`"></div>
-          <div class="range-min-handle"
-              :style="`left: ${(capacity[0] - {{ $currentMinCapacity }}) / {{ $capacityFactor }}}%`"></div>
-          <div class="range-max-handle"
-              :style="`left: ${(capacity[1] - {{ $currentMinCapacity }}) / {{ $capacityFactor }}}%`"></div>
-          <input type="range" min="{{ $currentMinCapacity }}" max="{{ $currentMaxCapacity }}" step="{{ max(intval($capacityRange / 100), 5) }}"
-                x-model.number="capacity[0]"
-                @input="capacity[0] = Math.min(capacity[0], capacity[1] - {{ $capacityMinGap }})"
-                class="absolute w-full h-2 opacity-0 cursor-pointer">
-          <input type="range" min="{{ $currentMinCapacity }}" max="{{ $currentMaxCapacity }}" step="{{ max(intval($capacityRange / 100), 5) }}"
-                x-model.number="capacity[1]"
-                @input="capacity[1] = Math.max(capacity[1], capacity[0] + {{ $capacityMinGap }})"
-                class="absolute w-full h-2 opacity-0 cursor-pointer">
-        </div>
-        <div class="flex justify-between gap-2 mt-4">
-          <input type="number" min="{{ $currentMinCapacity }}" max="{{ $currentMaxCapacity - $capacityMinGap }}" 
-                step="5"
-                x-model.number="capacity[0]"
-                @input="capacity[0] = Math.min(capacity[0], capacity[1] - {{ $capacityMinGap }})"
-                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
-          <input type="number" min="{{ $currentMinCapacity + $capacityMinGap }}" max="{{ $currentMaxCapacity }}" 
-                step="5"
-                x-model.number="capacity[1]"
-                @input="capacity[1] = Math.max(capacity[1], capacity[0] + {{ $capacityMinGap }})"
-                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
-        </div>
+           class="grid grid-cols-2 gap-2 mt-3">
+        @foreach($allLocationTypes as $type)
+          <div class="flex items-center">
+            <input 
+              type="radio" 
+              name="type_location" 
+              id="type_location_{{ $loop->index }}" 
+              value="{{ $type }}" 
+              x-model="selectedTypeLocation"
+              class="w-4 h-4 text-primary-600 border-gray-300 focus:ring-primary-500"
+            >
+            <label for="type_location_{{ $loop->index }}" class="ml-2 mb-0 text-sm text-gray-700">
+              {{ ucfirst($type) }}
+            </label>
+          </div>
+        @endforeach
+      </div>
+    </div>
+
+    <!-- Section Type de Logement -->
+    <div x-data="{ open: true }" class="pb-4 mb-4 border-b border-gray-200">
+      <button @click="open = !open" class="flex justify-between w-full">
+        <h3 class="font-semibold">Type de logement</h3>
+        <i :class="open ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'" class="text-xl"></i>
+      </button>
+      <div x-show="open" 
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 transform -translate-y-4"
+           x-transition:enter-end="opacity-100 transform translate-y-0"
+           class="grid grid-cols-2 gap-2 mt-3">
+        @foreach($logementTypes as $type)
+          <div class="flex items-center">
+            <input 
+              type="radio" 
+              name="type_logement" 
+              id="type_logement_{{ $loop->index }}" 
+              value="{{ $type }}" 
+              x-model="selectedTypeLogement"
+              class="w-4 h-4 text-primary-600 border-gray-300 focus:ring-primary-500"
+            >
+            <label for="type_logement_{{ $loop->index }}" class="ml-2 mb-0 text-sm text-gray-700">
+              {{ ucfirst($type) }}
+            </label>
+          </div>
+        @endforeach
       </div>
     </div>
 
@@ -420,73 +380,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Section Type d'événement -->
-    <div x-data="{ open: true }" class="pb-4 mb-4 border-b border-gray-200">
-      <button @click="open = !open" class="flex justify-between w-full">
-        <h3 class="font-semibold">Type d'événement</h3>
-        <i :class="open ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'" class="text-xl"></i>
-      </button>
-      <div x-show="open" 
-           x-transition:enter="transition ease-out duration-200"
-           x-transition:enter-start="opacity-0 transform -translate-y-4"
-           x-transition:enter-end="opacity-100 transform translate-y-0"
-           class="mt-3">
-        <!-- Affichage des types d'événements sélectionnés -->
-        <div x-show="selectedEventTypes.length > 0" class="flex flex-wrap mb-3">
-          <template x-for="type in selectedEventTypes" :key="type">
-            <div class="flex items-center px-2 py-1 mb-2 mr-2 bg-gray-100 rounded-full tag">
-              <span x-text="type" class="mr-1"></span>
-              <button @click="removeEventType(type)">
-                <i class="ri-close-line"></i>
-              </button>
-            </div>
-          </template>
-        </div>
-        <!-- Champ de recherche pour les types d'événements -->
-        <div class="relative mb-3">
-          <i data-lucide="search" class="absolute text-gray-400 -translate-y-1/2 left-3 top-1/2 size-4"></i>
-          <input type="text"
-                placeholder="Rechercher un type d'événement..."
-                x-model="eventTypeSearchTerm"
-                @focus="showEventTypeResults = true"
-                @blur="setTimeout(() => showEventTypeResults = false, 200)"
-                @keydown="handleEventTypeKeydown($event)"
-                class="w-full py-2 pl-10 pr-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
-          <div x-show="showEventTypeResults && filteredEventTypes().length" class="absolute w-full mt-1 overflow-auto bg-white border rounded-md max-h-40">
-            <template x-for="(type, idx) in filteredEventTypes()" :key="type">
-              <div
-                @mouseenter="eventTypeActiveIndex = idx"
-                @click="addEventType(type)"
-                :class="{'bg-primary/10': eventTypeActiveIndex === idx}"
-                class="px-4 py-2 cursor-pointer"
-                x-text="type"
-              ></div>
-            </template>
-          </div>
-        </div>
-        <!-- Message de limite atteinte -->
-        <p x-show="selectedEventTypes.length >= 3" class="text-xs text-muted-foreground">
-          Vous avez atteint le nombre maximum de types d'événements (3).
-        </p>
-        <!-- Types d'événements populaires -->
-        <div x-show="selectedEventTypes.length < 3" class="mt-4">
-          <p class="mb-2 text-sm font-medium">Types d'événements courants:</p>
-          <div class="flex flex-wrap gap-2">
-            <template x-for="type in popularEventTypes" :key="type">
-              <button
-                @click="addEventType(type)"
-                :disabled="selectedEventTypes.includes(type)"
-                :class="selectedEventTypes.includes(type) ? 'opacity-50 cursor-not-allowed' : ''"
-                class="px-3 py-1 text-sm bg-gray-100 rounded-full hover:bg-gray-200"
-              >
-                <span x-text="type"></span>
-              </button>
-            </template>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- Actions des filtres -->
@@ -498,4 +391,24 @@
       Appliquer
     </button>
   </div>
-</aside>
+
+  <!-- Style CSS pour les sliders -->
+  <style>
+   /*  .range-track {
+      @apply absolute top-0 left-0 right-0 h-2 rounded-full bg-gray-200;
+    }
+    .range-track-highlight {
+      @apply absolute top-0 h-2 rounded-full bg-primary;
+    }
+    .range-min-handle, .range-max-handle {
+      @apply absolute top-1/2 w-4 h-4 -mt-2 -ml-2 rounded-full bg-white border-2 border-primary cursor-pointer;
+    } */
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</aside> 

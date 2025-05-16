@@ -1,6 +1,22 @@
 @php
   use App\Models\EventHall;
+  use App\Helpers\EventTypeHelper;
+  
   $totalEventHalls = EventHall::count();
+  
+  // Récupérer tous les types d'événements
+  $allEventTypes = EventTypeHelper::getEventTypes();
+  
+  // Filtrer pour exclure 'Autre'
+  $filteredEventTypes = array_filter($allEventTypes, function($type) {
+    return $type !== 'Autre';
+  });
+  
+  // Limiter à 5 événements
+  $displayEventTypes = array_slice($filteredEventTypes, 0, 5);
+  
+  // Calculer le nombre d'événements restants
+  $remainingCount = count($filteredEventTypes) - count($displayEventTypes);
 @endphp
 <div class="max-w-full px-4 py-8 sm:px-6 lg:px-8">
   <!-- Bannière principale -->
@@ -24,21 +40,17 @@
 
       <!-- Badges de catégories -->
       <div class="flex flex-wrap gap-2 mt-8">
-        <span class="px-4 py-2 text-sm font-medium text-white transition rounded-full cursor-pointer bg-white/20 backdrop-blur-sm hover:bg-white/30">
-          Mariages
-        </span>
-        <span class="px-4 py-2 text-sm font-medium text-white transition rounded-full cursor-pointer bg-white/20 backdrop-blur-sm hover:bg-white/30">
-          Anniversaires
-        </span>
-        <span class="px-4 py-2 text-sm font-medium text-white transition rounded-full cursor-pointer bg-white/20 backdrop-blur-sm hover:bg-white/30">
-          Séminaires
-        </span>
-        <span class="px-4 py-2 text-sm font-medium text-white transition rounded-full cursor-pointer bg-white/20 backdrop-blur-sm hover:bg-white/30">
-          Conférences
-        </span>
-        <span class="px-4 py-2 text-sm font-medium text-white transition rounded-full cursor-pointer bg-white/20 backdrop-blur-sm hover:bg-white/30">
-          Soirées privées
-        </span>
+        @foreach($displayEventTypes as $key => $type)
+          <span class="px-4 py-2 text-sm font-medium text-white transition rounded-full cursor-pointer bg-white/20 backdrop-blur-sm hover:bg-white/30">
+            {{ $type }}
+          </span>
+        @endforeach
+        
+        @if($remainingCount > 0)
+          <span class="px-4 py-2 text-sm font-medium text-white transition rounded-full cursor-pointer bg-white/20 backdrop-blur-sm hover:bg-white/30">
+            + {{ $remainingCount }} autres
+          </span>
+        @endif
       </div>
     </div>
   </div>

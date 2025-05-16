@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\eventHallFilterRequest;
 use App\Models\EventHall;
+use App\Models\Location;
 use Illuminate\Http\Request;
 use PHPUnit\Event\TestSuite\Loaded;
 use App\Http\Requests\StorebookingsRequest;
@@ -44,14 +45,131 @@ class siteController extends Controller
     public function salleFete(EventHall $eventHall, eventHallFilterRequest $request)
     {
         $validated = $request->validated();
-        // Traitement des locations (transformation en tableau si nécessaire)
-        $locations = isset($validated['locations']) 
-            ? array_map('trim', explode(',', $validated['locations'])) 
-            : [];
         
-        // $eventHalls = EventHall::all();
-        $eventHalls = EventHall::with(['ville','agence'])->paginate(4)->withQueryString();       
+        // Initialiser la requête
+        $query = EventHall::with(['ville', 'agence']);
+        
+        // Recherche par nom de salle
+        if (!empty($request->search)) {
+            $search = $request->search;
+            $query->where('nom_salle', 'LIKE', "%{$search}%");
+        }
+        
+        // Filtre par localisation (villes)
+        if (!empty($validated['locations'])) {
+            $locations = array_map('trim', explode(',', $validated['locations']));
+            $query->whereHas('ville', function($q) use ($locations) {
+                $q->whereIn('nom', $locations);
+            });
+        }
+        
+        // Filtre par types d'événements
+        if (!empty($validated['event_types'])) {
+            $eventTypes = array_map('trim', explode(',', $validated['event_types']));
+            $query->where(function($q) use ($eventTypes) {
+                foreach ($eventTypes as $type) {
+                    $q->orWhere('event_type', 'LIKE', "%{$type}%");
+                    
+                }
+            });
+        }
+        
+        // Filtre par prix
+        if (!empty($validated['min_prix'])) {
+            $query->where('prix', '>=', $validated['min_prix']);
+        }
+        
+        if (!empty($validated['max_prix'])) {
+            $query->where('prix', '<=', $validated['max_prix']);
+        }
+        
+        // Filtre par capacité
+        if (!empty($validated['min_capacite'])) {
+            $query->where('capacite', '>=', $validated['min_capacite']);
+        }
+        
+        if (!empty($validated['max_capacite'])) {
+            $query->where('capacite', '<=', $validated['max_capacite']);
+        }
+        
+        // Tri
+        switch($request->sort_by) {
+            case 'price_asc':
+                $query->orderBy('prix', 'asc');
+                break;
+            case 'price_desc':
+                $query->orderBy('prix', 'desc');
+                break;
+            case 'capacity_asc':
+                $query->orderBy('capacite', 'asc');
+                break;
+            case 'capacity_desc':
+                $query->orderBy('capacite', 'desc');
+                break;
+            default:
+                $query->orderBy('created_at', 'desc');
+        }
+        
+        $eventHalls = $query->paginate(4)->withQueryString();
+        
         return view('site.pages.salleFete', compact('eventHalls'));
+    }
+    public function locations(Request $request){
+        // Créer et valider la requête de filtre
+        $locationFilterRequest = app(\App\Http\Requests\LocationFilterRequest::class);
+        $validated = $locationFilterRequest->validated();
+        
+        // Initialiser la requête
+        $query = Location::with(['ville', 'agence']);
+        
+        // Recherche par nom de location
+        if (!empty($request->search)) {
+            $search = $request->search;
+            $query->where('nom_location', 'LIKE', "%{$search}%");
+        }
+        
+        // Filtre par localisation (villes)
+        if (!empty($validated['locations'])) {
+            $locations = array_map('trim', explode(',', $validated['locations']));
+            $query->whereHas('ville', function($q) use ($locations) {
+                $q->whereIn('nom', $locations);
+            });
+        }
+        
+        // Filtre par type de location
+        if (!empty($validated['type_location'])) {
+            $query->where('type_location', $validated['type_location']);
+        }
+        
+        // Filtre par type de logement
+        if (!empty($validated['type_logement'])) {
+            $query->where('type_logement', $validated['type_logement']);
+        }
+        
+        // Filtre par prix
+        if (!empty($validated['min_prix'])) {
+            $query->where('prix', '>=', $validated['min_prix']);
+        }
+        
+        if (!empty($validated['max_prix'])) {
+            $query->where('prix', '<=', $validated['max_prix']);
+        }
+        
+        // Tri
+        switch($request->sort_by) {
+            case 'price_asc':
+                $query->orderBy('prix', 'asc');
+                break;
+            case 'price_desc':
+                $query->orderBy('prix', 'desc');
+                break;
+            default:
+                $query->orderBy('created_at', 'desc');
+        }
+        
+        $locations = $query->paginate(4)->withQueryString();
+        
+        return view('site.pages.locations', compact('locations'));
     }
   
     /**
@@ -124,7 +242,7 @@ class siteController extends Controller
         $data['total_price'] = $duration * $hall->prix;
 
         // Définir l'expiration
-        $data['expires_at'] = Carbon::now()->addHours(24);
+       /*  $data['expires_at'] = Carbon::now()->addHours(24); */
 
         // Générer un token de confirmation
         $data['confirmation_token'] = Str::random(64);
@@ -141,25 +259,26 @@ class siteController extends Controller
             $booking = Bookings::create($data);
 
             // Charger les relations pour les notifications
-            $booking->load('eventHall.user', 'eventHall.agence');
+            $booking->load('eventHall.agence');
 
             // Envoyer un email au client
-            Mail::to($booking->email)
-                ->send(new EventHallBookingCreateEmail($booking));
+           /*  Mail::to($booking->email)
+                ->send(new EventHallBookingCreateEmail($booking)); */
 
             // Notifier le propriétaire de l'agence dont la salle appartient            
             
-            Notification::sendNow($booking->eventHall->agence->user, new EventHallReservationCreateToAdmin($booking));
+            /* Notification::sendNow($booking->eventHall->agence->user, new EventHallReservationCreateToAdmin($booking)); */
+            DB::commit();        
+            return redirect()->back()
+                ->with('success', "Votre demande de réservation a bien été reçue");
             
         } catch (\Throwable $e) {
             DB::rollBack();             
             return redirect()
                 ->back()                
-                ->with('error', 'Une erreur est survenue!  veuiller réessayer');
+                ->with('error', 'Une erreur est survenueeeeee!  veuiller réessayer');
     }
-    DB::commit();        
-    return back()
-        ->with('success', "Votre demande de réservation a bien été reçue");
+   
     }
 
     /**
@@ -181,7 +300,7 @@ class siteController extends Controller
 
             // 2. Vérifier que le statut est toujours 'Accepted'
             if ($booking->status !== 'accepted') {
-                return view('site.bl-booking.event-hall-confirmation-booking', compact('booking'))
+                return view('site.pages.book-event-hall-booking', compact('booking'))
                     ->with('error', 'Cette réservation ne peut pas être confirmée.');                  
             }
 

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class eventHallFilterRequest extends FormRequest
+class LocationFilterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,12 @@ class eventHallFilterRequest extends FormRequest
     {
         return [
             'search' => 'nullable|string|max:100',
-            'sort_by' => 'nullable|string|in:price_asc,price_desc,capacity_asc,capacity_desc',
+            'sort_by' => 'nullable|string|in:price_asc,price_desc',
             'min_prix' => 'nullable|numeric|min:0',
             'max_prix' => 'nullable|numeric|gte:min_prix',
-            'min_capacite' => 'nullable|integer|min:0',
-            'max_capacite' => 'nullable|integer|gte:min_capacite',
             'locations' => 'nullable|string|regex:/^[a-zA-ZéèêëàâäôöûüçÉÈÊËÀÂÄÔÖÛÜÇ\s,]+$/',
-            'event_types' => 'nullable|string|regex:/^[a-zA-ZéèêëàâäôöûüçÉÈÊËÀÂÄÔÖÛÜÇ\s\'",]+$/',
+            'type_location' => 'nullable|string',
+            'type_logement' => 'nullable|string',
         ];
     }
-}
+} 

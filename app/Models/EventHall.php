@@ -45,6 +45,7 @@ class EventHall extends Model
         'prix'     => 'decimal:2',
         'equipments' => 'array',
         'rules' => 'string',
+        'event_type' => 'array'
     ];
     
 }

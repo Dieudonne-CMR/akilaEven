@@ -1,23 +1,18 @@
 @props(['eventHall'])
-@php
- 
-@endphp
-<!-- Main modal -->
-<div
 
+<!-- Modal principal -->
+<div
   id="default-modal"
   tabindex="-1"
-  
   aria-hidden="true"
   class="hidden fixed inset-0 z-[2000] items-center justify-center overflow-y-auto overflow-x-hidden w-full h-[calc(100%-1rem)] md:inset-0 bg-black bg-opacity-50"
 >
   <div class="relative w-full max-w-2xl max-h-full p-4">
-    <!-- Modal content -->
+    <!-- Contenu du modal -->
     <div
-    {{--   @click.away="showReservationModal = false" --}}
       class="flex flex-col rounded-lg shadow-xl max-h-[90vh] w-full bg-card text-card-foreground"
     >
-      <!-- Modal header -->
+      <!-- En-tête du modal -->
       <div
         class="sticky top-0 flex items-center justify-between p-4 bg-white border-b border-gray-200 rounded-t-lg"
       >
@@ -26,15 +21,15 @@
         </h3>
         <button type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 transition bg-transparent rounded-lg hover:border-[2px] hover:border-primary hover:text-primary ms-auto" data-modal-hide="default-modal">
             <i data-lucide="x"></i>
-            <span class="sr-only">Close modal</span>
+            <span class="sr-only">Fermer</span>
         </button>
       </div>
 
-      <!-- Modal body (scrollable) -->
+      <!-- Corps du modal (scrollable) -->
       <div class="flex-1 p-4 space-y-6 overflow-y-auto">
         <form
           id="bookingForm"
-          action="{{ route('event-hall-booking.store') }}"
+          action="{{ route('event-hall-booking.store', ['eventHall' => $eventHall->id]) }}"
           method="POST"
           class="space-y-6"
         >
@@ -42,7 +37,6 @@
           <input type="hidden" name="event_hall_id" value="{{ $eventHall->id }}">
           <input type="hidden" name="arrival_time" x-model="startDate">
           <input type="hidden" name="departure_time" x-model="endDate">
-         {{--  <input type="hidden" name="price" value="{{ $eventHall->prix }}"> --}}
 
           <!-- Informations personnelles -->
           <div class="space-y-4">
@@ -50,9 +44,10 @@
             <div>
               <label
                 for="full_name"
-                class="block mb-1 text-sm font-normal"
-                >Nom complet</label
+                class="block mb-1 text-sm font-medium"
               >
+                Nom complet <span class="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 id="full_name"
@@ -62,15 +57,16 @@
               />
             </div>
          
-              <!-- Email + Telephone -->
+            <!-- Email + Telephone -->
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <!-- Email -->
                 <div>
                     <label
                     for="email"
-                    class="block mb-1 text-sm font-normal"
-                    >Email</label
+                    class="block mb-1 text-sm font-medium"
                     >
+                      Email <span class="text-red-500">*</span>
+                    </label>
                     <input
                     type="email"
                     id="email"
@@ -83,9 +79,10 @@
                 <div>
                     <label
                     for="phone"
-                    class="block mb-1 text-sm font-normal"
-                    >Téléphone</label
+                    class="block mb-1 text-sm font-medium"
                     >
+                      Téléphone <span class="text-red-500">*</span>
+                    </label>
                     <input
                     type="tel"
                     id="phone"
@@ -96,16 +93,16 @@
                 </div>
             </div>
         
-            <!-- Ville + Région -->
+            <!-- Adresse + Ville -->
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                
                 <!-- Adresse -->
                 <div>
                     <label
                     for="address"
-                    class="block mb-1 text-sm font-normal"
-                    >Adresse</label
+                    class="block mb-1 text-sm font-medium"
                     >
+                      Adresse
+                    </label>
                     <input
                     type="text"
                     id="address"
@@ -113,12 +110,14 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:ring-2 focus:border-primary focus:ring-offset-2"
                     />
                 </div>
+                <!-- Ville -->
                 <div>
                     <label
                     for="city"
-                    class="block mb-1 text-sm font-normal"
-                    >Ville</label
+                    class="block mb-1 text-sm font-medium"
                     >
+                      Ville
+                    </label>
                     <input
                     type="text"
                     id="city"
@@ -126,26 +125,25 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:ring-2 focus:border-primary focus:ring-offset-2"
                     />
                 </div>
-           
-           
-           
-           
-          </div>
-               <!-- Message -->
-               <div>
-                <label
-                  for="message"
-                  class="block mb-1 text-sm font-normal"
-                  >Message</label
-                >
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="4"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:ring-2 focus:border-primary focus:ring-offset-2"
-                ></textarea>
-              </div>
             </div>
+               
+            <!-- Message -->
+            <div>
+                <label
+                for="message"
+                class="block mb-1 text-sm font-medium"
+                >
+                  Message (facultatif)
+                </label>
+                <textarea
+                id="message"
+                name="message"
+                rows="4"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:ring-2 focus:border-primary focus:ring-offset-2"
+                placeholder="Précisez vos besoins spécifiques ou questions supplémentaires..."
+                ></textarea>
+            </div>
+          </div>
 
           <!-- Récapitulatif de la réservation -->
           <div class="p-4 space-y-2 rounded-lg bg-secondary/40">
@@ -167,22 +165,14 @@
               </span>
             </div>
             <div class="flex justify-between pt-2 mt-2 border-t border-gray-200">
-              <span class="">Sous-total</span>
-              <span class="text-sm font-medium text-muted-foreground" x-text="formatPrice(calculateNights() * {{ $eventHall->prix }})"></span>
+              <span class="font-medium">Total à payer</span>
+              <span class="text-lg font-bold text-primary" x-text="formatPrice(calculateNights() * {{ $eventHall->prix }})"></span>
             </div>
-           {{--  <div class="flex justify-between">
-              <span class="">Frais de service (10%)</span>
-              <span class="text-sm font-medium text-muted-foreground" x-text="formatPrice(calculateNights() * {{ $eventHall->prix }} * 0.1)"></span>
-            </div> --}}
-           {{--  <div class="flex justify-between pt-2 mt-2 font-bold border-t border-gray-200">
-              <span>Total</span>
-              <span class="text-lg font-bold text-primary" x-text="formatPrice(calculateNights() * {{ $eventHall->prix }} * 1.1)"></span>
-            </div> --}}
           </div>
         </form>
       </div>
 
-      <!-- Modal footer -->
+      <!-- Pied du modal -->
       <div
         class="sticky bottom-0 flex flex-col items-center justify-between gap-4 p-4 space-y-3 bg-white border-t border-gray-200 rounded-b-lg md:flex-row md:space-y-0"
       >
@@ -202,8 +192,7 @@
   </div>
 </div>
 
-
-<!-- Modale de confirmation -->
+<!-- Modale de confirmation (après soumission réussie) -->
 <div 
     x-show="showConfirmationModal" 
     x-cloak
@@ -218,8 +207,8 @@
         </p>
         <button 
             @click="showConfirmationModal = false"
-            class="w-full px-4 py-3 font-medium text-white transition-colors bg-indigo-600 rounded-lg hover:bg-indigo-700">
+            class="w-full px-4 py-3 font-medium text-white transition-colors rounded-lg bg-primary hover:bg-primary/80">
             Fermer
         </button>
     </div>
-</div> 
+</div>

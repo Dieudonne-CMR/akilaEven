@@ -301,7 +301,7 @@ class LocationController extends BaseController
         // Supprimer la location
         $location->delete();
         
-        return redirect()->route('admin.pages.agences.show', $agenceId)
+        return redirect()->route('admin.agences.show', $agenceId)
             ->with('error', 'Location supprimée avec succès');
     }
 }

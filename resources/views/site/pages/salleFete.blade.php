@@ -51,7 +51,7 @@
         <!-- 1. MOBILE: overlay + sidebar -->
         <div      
         x-show="showFilters"
-        class="fixed inset-0 z-[3000] lg:hidden"
+        class="sticky inset-0 z-[3000] lg:hidden"
         style="display: none;"
         >
 

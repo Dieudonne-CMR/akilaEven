@@ -12,6 +12,7 @@
                     <span class="text-xl font-semibold text-primary">{{ number_format($eventHall->prix, 0, ',', ' ') }} <span>FCFA</span></span>
                 </div>
                 
+                {{-- Section de dates commentée comme demandé
                 <div class="pt-4 mt-4 border-t border-gray-200">
                     <div class="flex justify-between mb-2">
                         <div>
@@ -28,8 +29,9 @@
                         </button>
                     </div>
                 </div>
+                --}}
                 
-                <!-- Calcul du prix -->
+                {{-- Section de calcul du prix commentée comme demandé
                 <div x-show="startDate && endDate" class="pt-4 mt-4 border-t border-gray-200">
                     <div class="flex justify-between mb-2">
                         <span class="">
@@ -46,6 +48,7 @@
                         <span class="text-xl font-bold text-primary" x-text="formatPrice(calculateNights() * {{ $eventHall->prix }} * 1.1)"></span>
                     </div>
                 </div>
+                --}}
             </div>
             
             <!-- Bouton de réservation -->
@@ -57,16 +60,6 @@
                 class="w-full px-4 py-3 font-medium text-white transition-colors rounded-lg">
                 Réserver maintenant
             </button>
-            <!-- Modal toggle -->
-
-
-<!-- Modal toggle -->
-{{-- <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-    Toggle modal
-  </button> --}}
-  
- 
-  
         </div>
     </div>
 </div> 

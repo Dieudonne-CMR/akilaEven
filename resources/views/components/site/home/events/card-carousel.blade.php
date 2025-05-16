@@ -15,14 +15,6 @@
     // Vérifier s'il y a plusieurs images pour afficher un carrousel
     $hasMultipleImages = $images->count() > 1;
    
-
-    // Types d'événements avec leurs icônes et couleurs
-    $eventTypeIcons = EventTypeHelper::getEventTypeIcons();
-    
-    // Déterminer l'icône et la couleur pour cet événement
-    $eventType = $eventHall->event_type ?? 'Autre';
-    $eventIcon = $eventTypeIcons[$eventType]['icon'] ?? 'la-calendar-day';
-    $eventColor = $eventTypeIcons[$eventType]['color'] ?? 'bg-muted-foreground';
 @endphp
 <style>
 .swiper-button-next,
