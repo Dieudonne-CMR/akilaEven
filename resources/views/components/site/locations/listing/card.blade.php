@@ -49,7 +49,7 @@
         <!-- Titre et prix -->
         <div class="flex items-start justify-between mb-2">
             <h3 class="text-lg font-semibold">
-                <a href="{{ route('site.detailLocation', $location) }}" class="hover:text-primary">
+                <a href="{{ route('site.detail-locations', $location) }}" class="hover:text-primary">
                     {{ $location->nom_location }}
                 </a>
             </h3>
@@ -106,7 +106,7 @@
         
         <!-- Actions -->
         <div class="flex items-center justify-between">
-            <a href="{{ route('site.detailLocation', $location) }}"   class="flex items-center justify-center w-full p-2 text-white transition-colors rounded-lg bg-primary hover:bg-primary/80">
+            <a href="{{ route('site.detail-locations', $location) }}"   class="flex items-center justify-center w-full p-2 text-white transition-colors rounded-lg bg-primary hover:bg-primary/80">
                 Voir les détails
                 
             </a>

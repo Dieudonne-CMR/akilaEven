@@ -23,6 +23,7 @@ class Bookings extends Model
         'total_price',
         'type_booking',
         'event_hall_id',
+        'location_id',
         'confirmation_token',
         'confirmed_at'
     ];
@@ -48,7 +49,7 @@ class Bookings extends Model
     */
     public const TYPE_BOOKING = [
         'location',
-        'event_hall'
+        'hall'
     ];
 
     /**

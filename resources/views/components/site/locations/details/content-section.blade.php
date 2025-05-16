@@ -1,19 +1,14 @@
-@props(['eventHall'])
+@props(['location'])
 
 @php
-    use App\Helpers\EventTypeHelper;
-    
     // Filtrer pour ne garder que les champs d'images remplis
-    $validImages = collect(array_filter([$eventHall->photo,$eventHall->photo1, $eventHall->photo2, $eventHall->photo3, $eventHall->photo4]));
-                    
-    
-    // Récupérer les types d'événements supportés
-    $supportedEvents = $eventHall->event_type ?? [];
-    $displayEvents = array_slice($supportedEvents, 0, 3);
-    $remainingEvents = count($supportedEvents) - count($displayEvents);
+    $validImages = collect(array_filter([$location->photo, $location->photo1, $location->photo2, $location->photo3]));
     
     // Nombre total d'images valides
     $imagesCount = $validImages->count();
+    
+    // Déterminer le libellé de tarification
+    $pricingLabel = $location->type_logement === 'meublé' ? '/jour' : '/mois';
 @endphp
 
 <div class="order-2 w-full">
@@ -21,63 +16,52 @@
     <div class="flex flex-col justify-between gap-6 mb-6 md:flex-row md:items-start">
         <div>
             <div class="text-3xl flex flex-wrap items-center gap-4">
-                <h1 class="font-bold">{{ $eventHall->nom_salle }}</h1>
+                <h1 class="font-bold">{{ $location->nom_location }}</h1>
                 <span class="">/</span>
-                <p class=" font-bold text-primary">
-                    {{ number_format($eventHall->prix, 0, ',', ' ') }}<span> FCFA</span> 
-                    <span class="text-sm font-normal text-muted-foreground">/jour</span>
+                <p class="font-bold text-primary">
+                    {{ number_format($location->prix, 0, ',', ' ') }}<span> FCFA</span> 
+                    <span class="text-sm font-normal text-muted-foreground">{{ $pricingLabel }}</span>
                 </p>
             </div>
             
             <!-- Caractéristiques -->
-            <div class="flex flex-wrap items-center gap-3 mt-3 text-sm event-hall-subtitle">
+            <div class="flex flex-wrap items-center gap-3 mt-3 text-sm location-subtitle">
                 <span class="flex items-center">
                     <i data-lucide="building-2" class="size-4 mr-1 text-blue-500"></i> 
-                    {{ $eventHall->agence->nom_agence ?? 'Agence non spécifiée' }}
+                    {{ $location->agence->nom_agence ?? 'Agence non spécifiée' }}
                 </span>
                 
                 <span class="flex items-center">
                     <i class="size-4 mr-1 text-orange-500 fas fa-map-marker-alt"></i> 
-                    {{ $eventHall->ville->nom ?? 'Ville non spécifiée' }}, {{ $eventHall->localisation ?? 'Localisation non spécifiée' }}
+                    {{ $location->ville->nom ?? 'Ville non spécifiée' }}, {{ $location->localisation ?? 'Localisation non spécifiée' }}
                 </span>
                 
                 <span class="flex items-center">
-                    <i class="size-4 mr-1 text-green-500 fas fa-users"></i>
-                    {{ number_format($eventHall->capacite) }} places
+                    <i class="size-4 mr-1 text-green-500 fas fa-home"></i>
+                    {{ ucfirst($location->type_location) }}
                 </span>
                 
                 <span class="flex items-center">
                     <i class="size-4 mr-1 text-purple-500 fas fa-vector-square"></i>
-                    {{ number_format($eventHall->area ?? 0) }} m²
+                    {{ number_format($location->area ?? 0) }} m²
                 </span>
-            </div>
-            
-            <!-- Types d'événements supportés -->
-            <div class="flex items-center mt-4 text-sm text-muted-foreground">
-              <i class="size-4 text-rose-500 mr-1" data-lucide="martini"></i>
-                <span class="font-medium">
-                  Idéal pour les
-                  @foreach($supportedEvents as $event)
-                  {{ Str::lower(trim($event)) . 's' }}
-                  @endforeach
+                
+                <span class="flex items-center">
+                    <i class="size-4 mr-1 text-pink-500 fas fa-bed"></i>
+                    {{ ucfirst($location->type_logement) }}
                 </span>
-               
-             
             </div>
         </div>
         
-            
-            
-            <button 
-                x-text="showCalendar ? 'Fermer' : 'Réserver'"
-                @click="toggleCalendarView()"
-                class="py-3 px-8 text-white  transition-colors rounded-lg bg-primary hover:bg-primary/80">
-            </button>
-      
+        <button 
+            x-text="showCalendar ? 'Fermer' : 'Réserver'"
+            @click="toggleCalendarView()"
+            class="text-lg py-3 px-8 text-white transition-colors rounded-lg bg-primary hover:bg-primary/80">
+        </button>
     </div>
     
-    <!-- Calendrier inline (affiché/masqué) -->
-    <div x-show="showCalendar" x-cloak class="p-4 mb-6 bg-white rounded-lg shadow-md">
+    <!-- Calendrier inline (affiché/masqué uniquement pour type meublé) -->
+    <div x-show="showCalendar && isRental" x-cloak class="p-4 mb-6 bg-white rounded-lg shadow-md">
         <h3 class="mb-2 text-lg font-semibold">Sélectionnez vos dates</h3>
         <div id="inline-calendar" class="w-full"></div>
         <div class="flex max-lg:flex-col justify-between mt-4">
@@ -87,7 +71,7 @@
                     <span x-text="formatDate(startDate)"></span> - <span x-text="formatDate(endDate)"></span>
                 </p>
                 <p class="font-bold text-primary">
-                    <span x-text="formatPrice(calculateNights() * {{ $eventHall->prix }})"></span>
+                    <span x-text="formatPrice(calculateNights() * {{ $location->prix }})"></span>
                 </p>
             </div>
             <button 
@@ -108,7 +92,7 @@
             <div class="aspect-video">
                 <img
                     src="{{ asset('storage/' . $validImages->first()) }}"
-                    alt="{{ $eventHall->nom_salle }}"
+                    alt="{{ $location->nom_location }}"
                     class="object-cover w-full h-full rounded-lg"
                 >
             </div>
@@ -120,7 +104,7 @@
             <div class="w-full mb-2 aspect-[2/1]">
                 <img
                     src="{{ asset('storage/' . $validImages->first()) }}"
-                    alt="{{ $eventHall->nom_salle }}"
+                    alt="{{ $location->nom_location }}"
                     class="object-cover w-full h-full rounded-lg"
                 >
             </div>
@@ -132,7 +116,7 @@
                         <div class="aspect-square">
                             <img
                                 src="{{ asset('storage/' . $image) }}"
-                                alt="{{ $eventHall->nom_salle }} – Vue {{ $idx + 1 }}"
+                                alt="{{ $location->nom_location }} – Vue {{ $idx + 1 }}"
                                 class="object-cover w-full h-full rounded-lg"
                             >
                         </div>
@@ -148,7 +132,7 @@
             <div class="swiper-wrapper">
                 @foreach($validImages as $image)
                     <div class="swiper-slide">
-                        <img src="{{ asset('storage/' . $image) }}" alt="{{ $eventHall->nom_salle }}" class="object-cover w-full h-64">
+                        <img src="{{ asset('storage/' . $image) }}" alt="{{ $location->nom_location }}" class="object-cover w-full h-64">
                     </div>
                 @endforeach
             </div>
@@ -157,8 +141,8 @@
     </div>
     
     <!-- Onglets interactifs -->
-    <x-site.events.details.tabs :eventHall="$eventHall" />
+    <x-site.locations.details.tabs :location="$location" />
     
     <!-- Carte Google Maps -->
-    <x-site.events.details.map :eventHall="$eventHall" />
-</div>
+    <x-site.locations.details.map :location="$location" />
+</div> 

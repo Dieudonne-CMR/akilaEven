@@ -20,47 +20,18 @@ START HERO-WRAPPER AREA
             <div class="section-heading">
               <span class="mb-3 badge text-bg-primary fw-500">Réservations Faciles & Rapides</span>
               <h2 class="text-white sec__title text-shadow-lg">
-                Trouvez l'espace idéal<br>pour tous vos événements            
+                Trouvez l'espace parfait<br>pour vivre et célébrer
               </h2>
               <p class="mt-3 text-white fw-500 fs-5 text-shadow-sm">
-                Salles de fêtes, locations d'agence et espaces de réception<br>pour vos mariages, séminaires et célébrations.
-          </p>
+                <i data-lucide="party-popper" class="inline-block w-6 h-6 mr-1"></i> Salles de fêtes pour vos mariages et cérémonies<br>
+                <i data-lucide="home" class="inline-block w-6 h-6 mr-1"></i> Villas, appartements et bureaux pour votre confort
+              </p>
             </div>
           </div>
           <!-- end hero-content -->
            <!-- Barre de recherche pour les locations et les salles de fêtes-->
               @include("site.partials.home.search-locations-halls")
-          <!-- Tabs Search Container -->
-        {{--   <div class="p-4 bg-white rounded shadow-lg search-fields-container" x-data="{ activeTab: 'locations' }">
-            <!-- Tabs Navigation -->
-            <ul class="mb-3 nav nav-tabs" id="searchTabs" role="tablist">
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" :class="{'active': activeTab === 'locations'}" id="locations-tab" x-on:click="activeTab = 'locations'" type="button" role="tab" aria-controls="locations-search" aria-selected="true">
-                  <i class="mr-1 la la-bed"></i> Locations
-                </button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" :class="{'active': activeTab === 'events'}" id="events-tab" x-on:click="activeTab = 'events'" type="button" role="tab" aria-controls="events-search" aria-selected="false">
-                  <i class="mr-1 la la-glass-cheers"></i> Salles de Fêtes
-                </button>
-              </li>
-            </ul>
-            
-            <!-- Tabs Content -->
-            <div class="tab-content" id="searchTabsContent">
-              <!-- Locations Tab -->
-              <div class="tab-pane fade" :class="{'show active': activeTab === 'locations'}" id="locations-search" role="tabpanel" aria-labelledby="locations-tab">
-                <!-- Contenu du composant de recherche de locations à intégrer ici -->
-                @include('site.layouts.partials.search-locations')
-              </div>
-              
-              <!-- Salles de Fêtes Tab -->
-              <div class="tab-pane fade" :class="{'show active': activeTab === 'events'}" id="events-search" role="tabpanel" aria-labelledby="events-tab">
-                <!-- Contenu du composant de recherche de salles de fêtes à intégrer ici -->
-                @include('site.layouts.partials.search-events')
-              </div>
-            </div>
-          </div> --}}
+    
         </div>
         <!-- end col-lg-12 -->
       </div>
@@ -70,14 +41,7 @@ START HERO-WRAPPER AREA
    
   </div>
 </section>
-<!-- end hero-wrapper -->
-<!-- ================================
-END HERO-WRAPPER AREA
-================================= -->
 
-<!-- ================================
-START INFO AREA
-================================= -->
 <section
   class="info-area info-bg info-area2 padding-top-80px padding-bottom-45px">
   <div class="container">
@@ -178,12 +142,15 @@ END ABOUT AREA
 
       <!-- Event Spaces Block -->
       @include("site.partials.home.event-space")
+      
+      <!-- Location Spaces Block -->
+      @include("site.partials.home.location-space")
   </div>
 </section>
 
 
 <!-- Listing agences -->
-{{-- @include('site.bl-home.partials.listing-agence') --}}
+{{-- @include('site.partials.home.listing-agence') --}}
 
   <!-- Swiper -->
 {{--   <div class="swiper agence-swiper"   

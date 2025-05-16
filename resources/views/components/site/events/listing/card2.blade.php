@@ -35,8 +35,8 @@
                     @endforeach
                 </div>
                 <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
+              {{--   <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div> --}}
             </div>
         @else
             <div class="h-48">
@@ -49,7 +49,7 @@
     @endif
     
     <!-- Event Hall Card Info -->
-    <div class="p-4 grid grid-cols-1 gap-8">
+    <div class="grid grid-cols-1 gap-8 p-4">
         <!-- Nom et prix -->
         <div class="flex flex-col items-center text-center">
             <h3 class="text-xl font-bold">{{ $eventHall->nom_salle }}</h3>
@@ -60,7 +60,7 @@
         </div>
         
         <!-- Caractéristiques -->
-        <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-y-2">
+        <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 gap-y-2 justify-items-center 2xl:grid-cols-3">
             <div class="flex items-center text-sm text-muted-foreground">
                 <i class="mr-2 text-blue-500 size-4" data-lucide="building2"></i>
                 <span>{{ $eventHall->agence->nom_agence ?? 'Agence non spécifiée' }}</span>

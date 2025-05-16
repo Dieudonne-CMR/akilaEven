@@ -7,8 +7,8 @@
    <div class="">
          <!-- Carousel Section -->
          <div class="relative">
-            <x-admin.agence.carousel :bannieres="[$agence->bannier1, $agence->bannier2, $agence->bannier3]" />
-            <x-admin.agence.profile-overlay :agence="$agence" :updateLogoRoute="route('admin.agences.update-media', $agence)" />
+            <x-admin.agence.show.carousel :bannieres="[$agence->bannier1, $agence->bannier2, $agence->bannier3]" />
+            <x-admin.agence.show.profile-overlay :agence="$agence" :updateLogoRoute="route('admin.agences.update-media', $agence)" />
          </div>
          
          <!-- Dashboard Stats Section -->

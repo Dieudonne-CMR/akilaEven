@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\DB;
 use App\Notifications\EventHallBookingCancelled;
 use App\Mail\EventHallBookingCreateEmail;
 use App\Mail\EventHallBookingCancelledEmail;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreLocationBookingRequest;
 
 class siteController extends Controller
 {
@@ -215,6 +217,94 @@ class siteController extends Controller
     public function services()
     {
         return view('site.pages.services');
+    }
+
+    /**
+     * Affiche les détails d'une location.
+     *
+     * @param  Location  $location
+     * @return View
+     */
+    public function detailLocation(Location $location) 
+    {
+        $location = $location->load('agence', 'ville');
+
+        return view('site.pages.details-locations', compact('location'));
+    }
+
+    /**
+     * Traite une demande de réservation d'une location.
+     * 
+     * @param StoreLocationBookingRequest $request
+     * @return RedirectResponse
+     */
+    public function storeLocationBooking(StoreLocationBookingRequest $request)
+    {
+        // Récupérer les données validées
+        $data = $request->validated();
+
+        // Récupérer la location
+        $location = Location::findOrFail($data['location_id']);
+
+        // Vérifier si la location est disponible (statut)
+        /* if ($location->status !== 'available') {
+            return redirect()->back()
+                ->with('error', 'Cette location n\'est plus disponible.')
+                ->withInput();
+        } */
+
+        // Pour les locations meublées, calculer le prix total en fonction des dates
+        if ($location->type_logement === 'meublé') {
+            $arrival = Carbon::parse($data['arrival_time']);
+            $departure = Carbon::parse($data['departure_time']);
+            
+            // Calcul de la durée en jours
+            $duration = $arrival->diffInDays($departure) + 1;
+            
+            // total price  est le prix de la location * le nombre de jours
+            $data['total_price'] = $duration * $location->prix;
+        } else {
+            // total price pour l'instant est le prix de la location
+            $data['total_price'] = $location->prix; 
+        }
+
+        // Générer un token de confirmation
+        $data['confirmation_token'] = Str::random(64);
+
+        // Définir le statut initial
+        $data['status'] = 'pending';
+        
+        // Définir le type de réservation
+        $data['type_booking'] = 'location';
+
+        DB::beginTransaction();
+        try {            
+            // Création de la réservation
+            $booking = Bookings::create($data);
+
+            // Charger les relations pour les notifications
+            $booking->load(['location.agence','location']);
+            Log::info($booking);
+            Log::info($booking->location);
+            // Envoyer un email au client
+            Mail::to($booking->email)
+                ->send(new \App\Mail\LocationBookingCreateEmail($booking));
+
+            // Notifier le propriétaire de l'agence dont la location appartient            
+            Notification::sendNow($booking->location->agence->user, new \App\Notifications\LocationReservationCreateToAdmin($booking));           
+            
+            
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error('Erreur lors de la création d\'une réservation de location : ' . $e->getMessage());
+                   
+            return redirect()
+                ->back()                
+                ->with('error', 'Une erreur est survenue. Veuillez réessayer.');
+        }
+        DB::commit();            
+        return redirect()->back()
+            ->with('success', "Votre demande de réservation a bien été reçue");
     }
 
     /**

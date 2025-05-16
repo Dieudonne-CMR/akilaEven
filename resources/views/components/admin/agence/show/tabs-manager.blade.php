@@ -71,7 +71,7 @@
         
         <!-- Salles de fête -->
         <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="halls" role="tabpanel" aria-labelledby="halls-tab">
-            <x-agence.event-halls-table :agence="$agence" />
+            <x-admin.agence.show.event-halls-table :agence="$agence" />
         </div>
     </div>
 </div>

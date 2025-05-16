@@ -56,6 +56,11 @@ class Location extends Model
     'meublé',
     'habitation',    
   ];
+  public const TYPE_LOGEMENT_MEUBLE = 'meublé';
+  public const TYPE_LOGEMENT_HABITATION = 'habitation';
+
+
+
 
   protected $casts = [
       

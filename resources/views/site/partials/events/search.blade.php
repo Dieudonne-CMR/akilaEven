@@ -11,13 +11,7 @@
               value="{{ request('search') }}"
           >
       </div>
-      
-      <!-- Recherche d'agence (commentée) -->
-      {{-- <div class="relative flex-1">
-          <i data-lucide="agence" class="absolute text-gray-400 transform -translate-y-1/2 size-4 left-3 top-1/2"></i>
-          <input type="text" placeholder="Rechercher un agence..." class="w-full h-full py-2 pl-10 pr-4 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-      </div> --}}
-      
+   
       <!-- Filtres de tri -->
       <div class="relative flex-1 w-full md:w-48">
           <select 
@@ -34,7 +28,7 @@
       </div>
       
       <!-- Bouton de recherche -->
-      <button type="submit" class="px-4 py-2 text-white rounded-md bg-primary hover:bg-primary/90 hidden md:block">
+      <button type="submit" class="hidden px-4 py-2 text-white rounded-md bg-primary hover:bg-primary/90 md:block">
           Rechercher
       </button>
       

@@ -21,14 +21,12 @@ Route::post("/create-event-hall-booking", [siteController::class, 'storeEventHal
 Route::get("/book-event-hall-booking/{token}", [siteController::class, 'bookEventHallBooking'])->name('site.event-hall-booking.book')->middleware('signed');
 // Annuler la réservation d'une salle par mail
 Route::get("/cancel-event-hall-booking/{token}", [siteController::class, 'cancelEventHallBooking'])->name('site.event-hall-booking.cancel')->middleware('signed');
+
 // Confirmer la réservation d'une location par mail
 Route::get("/book-location-booking/{token}", [siteController::class, 'bookLocationBooking'])->name('site.location-booking.book')->middleware('signed');
 // Annuler la réservation d'une location par mail
 Route::get("/cancel-location-hall-booking/{token}", [siteController::class, 'cancelLocationBooking'])->name('site.location-booking.cancel')->middleware('signed');
 
-Route::get("/site-locations", [siteController::class, 'locations'])->name('site.locations');
-// Détails d'une location
-Route::get("/site-detail-location-{location}", [siteController::class, 'detailLocation'])->name('site.detailLocation');
 // Page d'accueil
 Route::get('', [siteController::class, 'index'])->name('home');
 // Page des salles de fêtes
@@ -89,5 +87,16 @@ Route::middleware(['auth'])->group(function(){
     });
 
 });
+
+// Routes pour les locations
+Route::get('/site-locations', [siteController::class, 'locations'])->name('site.locations');
+Route::get('/site-locations/{location}', [siteController::class, 'detailLocation'])->name('site.detail-locations');
+// Creer une réservation de location
+Route::post('/create-location-booking', 
+[siteController::class, 'storeLocationBooking'])->name('location-booking.store');
+
+
+
+
 
 require __DIR__.'/auth.php';

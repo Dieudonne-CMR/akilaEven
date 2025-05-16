@@ -36,38 +36,9 @@
         
     </div>
 
-<!-- Inclusion du CSS et du JS de Swiper -->
-@push('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-<style>
-    .swiper-pagination-bullet {
-        width: 8px;
-        height: 8px;
-        background: white;
-        opacity: 0.5;
-    }
-    .swiper-pagination-bullet-active {
-        opacity: 1;
-        background: white;
-    }
-    .swiper-button-next,
-    .swiper-button-prev {
-        color: white;
-        background: rgba(0, 0, 0, 0.3);
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        --swiper-navigation-size: 20px;
-    }
-    .swiper-button-next:after,
-    .swiper-button-prev:after {
-        font-size: 16px;
-    }
-</style>
-@endpush
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script> --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Initialiser les carrousels Swiper
