@@ -5,7 +5,7 @@
   id="default-modal"
   tabindex="-1"
   aria-hidden="true"
-  class="hidden fixed inset-0 z-[2000] items-center justify-center overflow-y-auto overflow-x-hidden w-full h-[calc(100%-1rem)] md:inset-0 bg-black bg-opacity-50"
+  class="hidden fixed inset-0 z-2000 items-center justify-center overflow-y-auto overflow-x-hidden w-full h-[calc(100%-1rem)] md:inset-0 bg-black bg-opacity-50"
 >
   <div class="relative w-full max-w-2xl max-h-full p-4">
     <!-- Contenu du modal -->
@@ -19,7 +19,7 @@
         <h3 class="text-2xl font-semibold text-primary">
           Finaliser votre réservation
         </h3>
-        <button type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 transition bg-transparent rounded-lg hover:border-[2px] hover:border-primary hover:text-primary ms-auto" data-modal-hide="default-modal">
+        <button type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 transition bg-transparent rounded-lg hover:border-2 hover:border-primary hover:text-primary ms-auto" data-modal-hide="default-modal">
             <i data-lucide="x"></i>
             <span class="sr-only">Fermer</span>
         </button>
@@ -200,7 +200,7 @@
       <div
         class="sticky bottom-0 flex flex-col items-center justify-between gap-4 p-4 space-y-3 bg-white border-t border-gray-200 rounded-b-lg md:flex-row md:space-y-0"
       >
-        <p class="flex-[2] text-sm">
+        <p class="flex-2 text-sm">
           En cliquant sur <span class='text-primary'>"Confirmer la réservation"</span>, vous acceptez les
           conditions générales et la politique d'annulation.
         </p>

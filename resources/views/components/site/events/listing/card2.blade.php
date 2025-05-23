@@ -80,7 +80,7 @@
             </div>
                 <!-- Types d'événements supportés -->
             <div class="flex items-center text-sm text-muted-foreground">
-                <i class="flex-shrink-0 mr-2 text-yellow-500 size-4" data-lucide="martini"></i>
+                <i class="shrink-0 mr-2 text-yellow-500 size-4" data-lucide="martini"></i>
                 <span class="font-medium">
                     @foreach($displayEvents as $event)
                     {{ Str::lower(trim($event)) . 's' }}@if(!$loop->last), @endif

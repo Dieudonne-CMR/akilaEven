@@ -31,7 +31,7 @@
          </div>
          
          <!-- Filter Dropdowns -->
-         <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center md:space-y-0 md:space-x-3">
+         <div class="flex flex-col shrink-0 space-y-3 md:flex-row md:items-center md:space-y-0 md:space-x-3">
             <!-- Type de Logement Filter -->
             <button 
                id="typeLogementFilterButton" 

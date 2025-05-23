@@ -70,7 +70,7 @@ $typeLocations = App\Models\Location::TYPE_LOCATION;
     </div>
     
     <!-- Bouton de recherche -->
-    <button type="submit" class="flex items-center justify-center flex-shrink-0 w-full px-6 py-3 font-medium text-white transition duration-150 ease-in-out rounded-md !bg-primary/80 sm:w-auto hover:bg-primary">
+    <button type="submit" class="flex items-center justify-center shrink-0 w-full px-6 py-3 font-medium text-white transition duration-150 ease-in-out rounded-md !bg-primary/80 sm:w-auto hover:bg-primary">
       Rechercher
     </button>
   </div>

@@ -45,7 +45,7 @@
         <p class="text-lg text-muted-foreground">Aucune location n'est disponible actuellement.</p>
     </div>
   @elseif($displayCarousel)
-    <div class="!py-4 swiper location-swiper" data-space-between="20" data-autoplay="true">
+    <div class="py-4! swiper location-swiper" data-space-between="20" data-autoplay="true">
         <div class="swiper-wrapper">
             @foreach($popularLocations as $index => $location)
                 <div class="swiper-slide">
@@ -117,7 +117,7 @@
                             
                             <!-- Localisation -->
                             <div class="flex items-center mb-3 text-sm">
-                                <i data-lucide="map-pin" class="flex-shrink-0 mr-1 text-orange-500 size-4"></i>
+                                <i data-lucide="map-pin" class="shrink-0 mr-1 text-orange-500 size-4"></i>
                                 <span>{{ $location->ville->nom ?? 'Ville non spécifiée' }}, {{ $location->localisation ?? 'Localisation non spécifiée' }}</span>
                             </div>
                             
@@ -236,7 +236,7 @@
                     
                     <!-- Localisation -->
                     <div class="flex items-center mb-3 text-sm">
-                        <i data-lucide="map-pin" class="flex-shrink-0 mr-1 text-orange-500 size-4"></i>
+                        <i data-lucide="map-pin" class="shrink-0 mr-1 text-orange-500 size-4"></i>
                         <span>{{ $location->ville->nom ?? 'Ville non spécifiée' }}, {{ $location->localisation ?? 'Localisation non spécifiée' }}</span>
                     </div>
                     

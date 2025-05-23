@@ -1,6 +1,6 @@
 @props(['title', 'value', 'icon', 'badge' => null, 'badgeText' => '', 'gradientFrom', 'gradientTo'])
 
-<div class="p-4 rounded-lg shadow-md bg-gradient-to-br from-{{ $gradientFrom }}-500 to-{{ $gradientTo }}-700">
+<div class="p-4 rounded-lg shadow-md bg-linear-to-br from-{{ $gradientFrom }}-500 to-{{ $gradientTo }}-700">
     <div class="flex items-start justify-between">
         <div>
             <p class="text-sm font-medium text-white">{{ $title }}</p>

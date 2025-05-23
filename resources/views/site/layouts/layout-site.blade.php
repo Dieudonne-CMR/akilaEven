@@ -19,7 +19,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="{{asset('assets_site/css/jquery-ui.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets_site/css/style.css')}}" />
+{{--     <link rel="stylesheet" href="{{asset('assets_site/css/style.css')}}" /> --}}
     <link rel="stylesheet" href="{{asset('assets_site/styles.css')}}" />
 
     <!-- Template CSS Files -->
@@ -50,7 +50,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
     
-    <script src="https://cdn.tailwindcss.com"></script>
+  {{--   <script src="https://cdn.tailwindcss.com"></script> --}}
     <style>
       .img-icone {width: 1.5rem; margin: 3px;}
     </style>

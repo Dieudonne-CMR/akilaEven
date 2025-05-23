@@ -6,14 +6,16 @@
     <meta name="author" content="TechyDevs" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    @vite('resources/css/app.css')
-    @vite('resources/js/app.js')
-    
     <title>AkilaImmo - Dashboard</title>
+    @vite('resources/css/app.css')
+    @vite('resources/js/app.js')    
+    
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.png" />
+{{--     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> --}}
 
     <!-- Google Fonts -->
+ 
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap"
       rel="stylesheet"
@@ -38,7 +40,11 @@
     
       <!-- Flatpickr pour le calendrier -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  {{--   <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.min.css"> --}}
+  <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
@@ -46,11 +52,11 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>   
      
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>    
+  {{--   <script src="https://cdn.tailwindcss.com"></script>     --}}
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Swiper.js -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+   
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <style>
       .img-icone {width: 1.5rem; margin: 3px;}
@@ -63,6 +69,10 @@
     @yield('content-admin')
 
   <!-- Template JS Files -->
+  {{-- <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script> --}}
+
+ {{--  <script src="../path/to/flowbite/dist/flowbite.min.js"></script> --}}
+
 <script src="{{asset('assets_site/js/jquery-3.7.1.min.js')}}"></script>
 
 <!--  <script src="{{asset('assets_site/js/jquery-3.4.1.min.js')}}"></script> -->
@@ -80,17 +90,28 @@
 
 
 <script src="{{asset('assets_site/js/main.js')}}"></script>
+{{-- <script src="../path/to/vendor/jquery/dist/jquery.min.js"></script>
+
+<script src="../path/to/vendor/datatables.net/js/dataTables.min.js"></script> --}}
+{{-- <script src="/js/datatable.js"></script>
+<script src="/js/flyonui.js"></script>
+
+
+<script src="../node_modules/flyonui/flyonui.js"></script>
+<script src="../node_modules/flyonui/dist/datatable.js"></script>  --}}
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 {{--  <script src="https://unpkg.com/lucide@latest"></script> --}}
 <!-- Initialize Lucide Icons -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
       lucide.createIcons();
   });
 </script>
-<script src="../node_modules/flyonui/flyonui.js"></script>
-<script src="../path-to/flyonui.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+<!-- jQuery -->
+
+
+
 <!-- Scripts supplémentaires -->
 
   @stack('scripts')

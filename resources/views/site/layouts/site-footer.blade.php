@@ -63,7 +63,7 @@
       </div> --}}
       <div class="relative">
         <i data-lucide="building-2" class="w-8 h-8 text-primary drop-shadow-[0_0_8px_rgba(147,51,234,0.7)]"></i>
-        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500 to-purple-600 opacity-20 blur-sm"></div>
+        <div class="absolute inset-0 rounded-full bg-linear-to-r from-amber-500 to-purple-600 opacity-20 blur-sm"></div>
     </div>
     <span class="text-xl font-bold text-purple-500ml-2 heading">Akila Immo</span>
 
@@ -95,7 +95,7 @@
 ================================= -->
 
 <!-- start back-to-top -->
-<div class="fixed flex items-center justify-center rounded-full bottom-4 right-4 !hover:bg-primary !size-10 bg-white" id="back-to-top">
+<div class="fixed flex items-center justify-center rounded-full bottom-4 right-4 !hover:bg-primary size-10! bg-white" id="back-to-top">
   <i class="la la-angle-up" title="Retour en haut"></i>
 </div>
 <!-- end back-to-top -->

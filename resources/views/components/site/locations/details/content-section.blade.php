@@ -101,7 +101,7 @@
         {{-- Disposition pour plusieurs images --}}
         <div class="hidden mb-8 md:block">
             {{-- Image principale --}}
-            <div class="w-full mb-2 aspect-[2/1]">
+            <div class="w-full mb-2 aspect-2/1">
                 <img
                     src="{{ asset('storage/' . $validImages->first()) }}"
                     alt="{{ $location->nom_location }}"

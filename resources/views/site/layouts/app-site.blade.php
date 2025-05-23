@@ -17,9 +17,9 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
+   {{--  <script src="https://cdn.tailwindcss.com"></script> --}}
     <!-- Template CSS Files -->
-    <link rel="stylesheet" href="{{asset('assets_site/css/bootstrap.min.css')}}" />
+{{--     <link rel="stylesheet" href="{{asset('assets_site/css/bootstrap.min.css')}}" /> --}}
     <link rel="stylesheet" href="{{asset('assets_site/css/select2.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/line-awesome.css')}}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="{{asset('assets_site/css/animated-headline.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/jquery-ui.css')}}" />
     <link rel="stylesheet" href="{{asset('assets_site/css/flag-icon.min.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets_site/css/style.css')}}" />
+  {{--   <link rel="stylesheet" href="{{asset('assets_site/css/style.css')}}" /> --}}
     <link rel="stylesheet" href="{{asset('assets_site/styles.css')}}" />
     <link rel="stylesheet" href="{{asset('css/social-media.css')}}" />
     <!-- Swiper pour le carrousel-->

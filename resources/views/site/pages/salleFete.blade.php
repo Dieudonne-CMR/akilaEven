@@ -25,7 +25,7 @@
     @include("site.partials.events.banner")
     
     <!-- Main Content -->
-    <div class="relative flex flex-col flex-grow max-w-full gap-8 px-4 py-8 sm:px-6 lg:px-8 lg:flex-row">
+    <div class="relative flex flex-col grow max-w-full gap-8 px-4 py-8 sm:px-6 lg:px-8 lg:flex-row">
       
       <!-- Main Listing Section -->
       <div class="order-2 w-full lg:w-2/3 lg:order-1">      
@@ -50,7 +50,7 @@
         <div 
           x-show="showFilters" 
           x-cloak
-          class="fixed inset-0 z-[9999] lg:hidden"
+          class="fixed inset-0 z-9999 lg:hidden"
           x-transition:enter="transition-opacity duration-300"
           x-transition:enter-start="opacity-0"
           x-transition:enter-end="opacity-100"

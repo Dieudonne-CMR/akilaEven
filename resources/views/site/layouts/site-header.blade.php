@@ -35,9 +35,9 @@
               <a href="#" class="flex items-center">
                   <div class="relative">
                       <i data-lucide="building-2" class="w-8 h-8 text-primary drop-shadow-[0_0_8px_rgba(147,51,234,0.7)]"></i>
-                      <div class="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500 to-purple-600 opacity-20 blur-sm"></div>
+                      <div class="absolute inset-0 rounded-full bg-linear-to-r from-amber-500 to-purple-600 opacity-20 blur-sm"></div>
                   </div>
-                  <span class="ml-2 text-lg font-bold text-transparent heading bg-gradient-to-r from-purple-300 to-purple-600 bg-clip-text drop-shadow-sm">Akila Immo</span>
+                  <span class="ml-2 text-lg font-bold text-transparent heading bg-linear-to-r from-purple-300 to-purple-600 bg-clip-text drop-shadow-sm">Akila Immo</span>
               </a>
           </div>
            <!-- Desktop Navigation -->

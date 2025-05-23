@@ -1,8 +1,11 @@
 @extends('admin.layouts.layout-admin')
 @section('content-admin')
 
-@if(session()->has('errors') && session('errors')->has('general'))
+{{-- @if(session()->has('errors') && session('errors')->has('general'))
     <x-ui.toast type="error" message="{{ $errors->first('general')}}" position="bottom-right"/>
+@endif --}}
+@if(session()->has('success'))
+    <x-ui.toast type="success" message="{{ session('success') }}" position="bottom-right" />
 @endif
 @if(session()->has('error'))
     <x-ui.toast type="error" message="{{ session("error")}}" position="bottom-right"/>

@@ -3,115 +3,134 @@
 <!-- ================================
 START HERO-WRAPPER AREA
 ================================= -->
-<section class="hero-wrapper hero-wrapper2">
-  <div class="pb-0 hero-box">
-    <div id="fullscreen-slide-contain">
-      <ul class="slides-container">
-        <li><img src="{{asset('assets_site/images_site/event_halls/event-halls-1.jpg')}}" alt="Salle de fêtes" /></li>
-        <li><img src="{{asset('assets_site/images_site/event_halls/event-halls-2.jpg')}}" alt="Mariage" /></li>
-        <li><img src="{{asset('assets_site/images_site/locations/locations-1.jpg')}}" alt="Location d'agence" /></li>
-      </ul>
-    </div>
-    <!-- End background slider -->
-    <div class="container py-5">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="pb-4 hero-content">
-            <div class="section-heading">
-              <span class="mb-3 badge text-bg-primary fw-500">Réservations Faciles & Rapides</span>
-              <h2 class="text-white sec__title text-shadow-lg">
-                Trouvez l'espace parfait<br>pour vivre et célébrer
-              </h2>
-              <p class="mt-3 text-white fw-500 fs-5 text-shadow-sm">
-                <i data-lucide="party-popper" class="inline-block w-6 h-6 mr-1"></i> Salles de fêtes pour vos mariages et cérémonies<br>
-                <i data-lucide="home" class="inline-block w-6 h-6 mr-1"></i> Villas, appartements et bureaux pour votre confort
-              </p>
+<section class="relative w-full h-screen">
+    <!-- Swiper Container -->
+    <div class="w-full h-full swiper hero-swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="{{asset('assets_site/images_site/event_halls/event-halls-1.jpg')}}" alt="Salle de fêtes" class="object-cover w-full h-full" />
             </div>
-          </div>
-          <!-- end hero-content -->
-           <!-- Barre de recherche pour les locations et les salles de fêtes-->
-              @include("site.partials.home.search-locations-halls")
-    
+            <div class="swiper-slide">
+                <img src="{{asset('assets_site/images_site/event_halls/event-halls-2.jpg')}}" alt="Mariage" class="object-cover w-full h-full" />
+            </div>
+            <div class="swiper-slide">
+                <img src="{{asset('assets_site/images_site/locations/locations-1.jpg')}}" alt="Location d'agence" class="object-cover w-full h-full" />
+            </div>
         </div>
-        <!-- end col-lg-12 -->
-      </div>
-      <!-- end row -->
     </div>
-    <!-- end container -->
-   
-  </div>
+
+    <!-- Overlay sombre pour améliorer la lisibilité -->
+    <div class="absolute inset-0 z-48 bg-black/60"></div>
+
+    <!-- Contenu Hero -->
+    <div class="absolute inset-0 flex items-center z-49">
+        <div class="container px-4 mx-auto">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="space-y-6">
+                    <span class="inline-block px-4 py-2 text-sm font-medium text-white rounded-full bg-primary">
+                        Réservations Faciles & Rapides
+                    </span>
+                    
+                    <h2 class="text-4xl font-bold leading-tight text-white md:text-5xl">
+                        Trouvez l'espace parfait<br>pour vivre et célébrer
+                    </h2>
+                    
+                    <p class="space-y-2 text-xl text-white">
+                        <div class="flex items-center justify-center space-x-2">
+                            <i data-lucide="party-popper" class="w-6 h-6 text-yellow-600 animate-pulse" style="filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.6));"></i>
+                            <span class="text-white">Salles de fêtes pour vos mariages et cérémonies</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-2">
+                            <i data-lucide="home" class="w-6 h-6 text-purple-600 animate-pulse" style="filter: drop-shadow(0 0 8px rgba(147, 51, 234, 0.6));"></i>
+                            <span class="text-white">Villas, appartements et bureaux pour votre confort</span>
+                        </div>
+                    </p>
+                </div>
+
+                <!-- Barre de recherche -->
+                @include("site.partials.home.search-locations-halls")
+            </div>
+        </div>
+    </div>
 </section>
 
-<section
-  class="info-area info-bg info-area2 padding-top-80px padding-bottom-45px">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-3 responsive-column">
-        <div class="icon-box icon-layout-2 d-flex">
-          <div class="flex-shrink-0 info-icon bg-rgb text-color-2">
-            <i class="las la-agence"></i>
-          </div>
-          <!-- end info-icon-->
-          <div class="info-content">
-            <h4 class="info__title">Hébergement Premium</h4>
-            <p class="info__desc">Locations élégantes et confortables pour tous vos séjours</p>
-          </div>
-          <!-- end info-content -->
+<!-- Section Caractéristiques -->
+<section class="py-20 bg-gray-50">
+    <div class="container px-4 mx-auto">
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <!-- Carte Hébergement -->
+            <div class="p-6 transition-shadow bg-white rounded-lg shadow-sm hover:shadow-md">
+                <div class="flex items-start space-x-4">
+                    <div class="p-3 bg-blue-100 rounded-lg">
+                        <i data-lucide="building" class="w-6 h-6 text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-900">Hébergement Premium</h4>
+                        <p class="mt-2 text-gray-600">Locations élégantes et confortables pour tous vos séjours</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte Réservation -->
+            <div class="p-6 transition-shadow bg-white rounded-lg shadow-sm hover:shadow-md">
+                <div class="flex items-start space-x-4">
+                    <div class="p-3 bg-green-100 rounded-lg">
+                        <i data-lucide="calendar-check" class="w-6 h-6 text-green-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-900">Réservation Facile</h4>
+                        <p class="mt-2 text-gray-600">Processus de réservation simple et efficace en quelques clics</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte Emplacement -->
+            <div class="p-6 transition-shadow bg-white rounded-lg shadow-sm hover:shadow-md">
+                <div class="flex items-start space-x-4">
+                    <div class="p-3 bg-purple-100 rounded-lg">
+                        <i data-lucide="map-pin" class="w-6 h-6 text-purple-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-900">Emplacements Stratégiques</h4>
+                        <p class="mt-2 text-gray-600">Partout au Cameroun, dans les meilleurs quartiers</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte Événements -->
+            <div class="p-6 transition-shadow bg-white rounded-lg shadow-sm hover:shadow-md">
+                <div class="flex items-start space-x-4">
+                    <div class="p-3 bg-red-100 rounded-lg">
+                        <i data-lucide="wine" class="w-6 h-6 text-red-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-900">Événements Réussis</h4>
+                        <p class="mt-2 text-gray-600">Des espaces adaptés à tous types de célébrations</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- end icon-box -->
-      </div>
-      <!-- end col-lg-3 -->
-      <div class="col-lg-3 responsive-column">
-        <div class="icon-box icon-layout-2 d-flex">
-          <div class="flex-shrink-0 info-icon bg-rgb-2 text-color-3">
-            <i class="la la-calendar-check"></i>
-          </div>
-          <!-- end info-icon-->
-          <div class="info-content">
-            <h4 class="info__title">Réservation Facile</h4>
-            <p class="info__desc">Processus de réservation simple et efficace en quelques clics</p>
-          </div>
-          <!-- end info-content -->
-        </div>
-        <!-- end icon-box -->
-      </div>
-      <!-- end col-lg-3 -->
-      <div class="col-lg-3 responsive-column">
-        <div class="icon-box icon-layout-2 d-flex">
-          <div class="flex-shrink-0 info-icon bg-rgb-3 text-color-4">
-            <i class="las la-map-marked-alt"></i>
-          </div>
-          <!-- end info-icon-->
-          <div class="info-content">
-            <h4 class="info__title">Emplacements Stratégiques</h4>
-            <p class="info__desc">Partout au Cameroun, dans les meilleurs quartiers</p>
-          </div>
-          <!-- end info-content -->
-        </div>
-        <!-- end icon-box -->
-      </div>
-      <!-- end col-lg-3 -->
-      <div class="col-lg-3 responsive-column">
-        <div class="icon-box icon-layout-2 d-flex">
-          <div class="flex-shrink-0 info-icon bg-rgb-4 text-color-5">
-            <i class="las la-glass-cheers"></i>
-          </div>
-          <!-- end info-icon-->
-          <div class="info-content">
-            <h4 class="info__title">Événements Réussis</h4>
-            <p class="info__desc">Des espaces adaptés à tous types de célébrations</p>
-          </div>
-          <!-- end info-content -->
-        </div>
-        <!-- end icon-box -->
-      </div>
-      <!-- end col-lg-3 -->
     </div>
-    <!-- end row -->
-  </div>
-  <!-- end container -->
 </section>
-<!-- end info-area -->
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        new Swiper('.hero-swiper', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            }
+        });
+    });
+</script>
+@endpush
+
 <!-- ================================
 END INFO AREA
 ================================= -->

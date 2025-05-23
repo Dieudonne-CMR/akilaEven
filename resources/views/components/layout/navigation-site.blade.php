@@ -11,7 +11,7 @@
       $isActive = request()->routeIs($link['active'] ?? []);
     @endphp
   <a href="{{route($link['route']) }}"
-           class=" !py-5 transition-all group text-base {{ $isActive ? '!text-primary font-semibold' : 'text-muted-foreground hover:text-primary' }}">
+           class=" py-5! transition-all group text-base {{ $isActive ? '!text-primary font-semibold' : 'text-muted-foreground hover:text-primary' }}">
           <span class="relative">
             {{ $link['text'] }}
             @if($isActive)

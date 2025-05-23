@@ -65,189 +65,152 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-# Structure du Projet - Plateforme de Réservation d'Agence
+# Plateforme de Réservation de Salles et Locations
 
-Ce document décrit l'architecture et l'organisation des dossiers du projet de plateforme de réservation d'agences, de salles de fêtes et de locations.
+## Description
 
-## Structure des Dossiers
+Une plateforme web moderne permettant la réservation en ligne de salles de fêtes et de locations, gérée par des agences. Le système offre une interface intuitive pour les clients et un espace d'administration complet pour les gestionnaires.
 
--   **/app**
+## Fonctionnalités Principales
 
-    -   **Objectif :** Contient la logique métier principale de l'application, suivant le modèle MVC.
-    -   **Contenu :**
-        -   Modèles (ex. Agence.php, Location.php, User.php)
-        -   Contrôleurs (dans Http/Controllers)
-        -   Middleware (dans Http/Middleware)
-        -   Services et utilitaires
-    -   **Techno :** PHP, Laravel
-    -   **Bonnes pratiques :**
-        -   Suivre les conventions de nommage PSR-4
-        -   Un modèle par entité
-        -   Utiliser les traits pour la réutilisation de code
-    -   **Améliorations :**
-        -   Ajouter des repositories pour séparer la logique d'accès aux données
-        -   Implémenter des services pour les opérations complexes
+### Pour les Clients
 
--   **/app/Models**
+-   Recherche et filtrage des salles et locations
+-   Système de réservation en ligne
+-   Gestion des réservations personnelles
+-   Notifications par email
+-   Système de paiement intégré
 
-    -   **Objectif :** Contient les modèles Eloquent qui représentent les tables de la base de données.
-    -   **Contenu :**
-        -   EventHall.php (Salles de fêtes)
-        -   Agence.php
-        -   Location.php (Locations)
-        -   User.php
-        -   Ville.php
-    -   **Techno :** Eloquent ORM, PHP
-    -   **Bonnes pratiques :**
-        -   Définir les relations entre modèles clairement
-        -   Utiliser les scopes pour les requêtes fréquentes
-        -   Définir les propriétés $fillable ou $guarded
-    -   **Améliorations :**
-        -   Ajouter des modèles manquants (Reservation, Task, Notification)
+### Pour les Managers
 
--   **/app/Http/Controllers**
+-   Gestion des agences
+-   Administration des salles et locations
+-   Validation des réservations
+-   Tableau de bord analytique
+-   Gestion des utilisateurs
 
-    -   **Objectif :** Contient les contrôleurs qui gèrent les requêtes HTTP
-    -   **Contenu :**
-        -   Contrôleurs pour chaque entité (AgenceController, LocationController, etc.)
-        -   Contrôleurs d'authentification
-    -   **Techno :** Laravel, PHP
-    -   **Bonnes pratiques :**
-        -   Limiter les méthodes à 7 actions RESTful standards
-        -   Valider les entrées avec Request
-        -   Renvoyer des réponses formatées
-    -   **Améliorations :**
-        -   Implémenter une API REST complète
-        -   Utiliser des Resource classes pour la transformation de données
+### Pour les Administrateurs
 
--   **/config**
+-   Supervision complète du système
+-   Gestion des managers
+-   Configuration globale
+-   Rapports et statistiques
 
-    -   **Objectif :** Contient les fichiers de configuration de l'application
-    -   **Contenu :**
-        -   Fichiers de configuration (\*.php)
-        -   Configuration de la BDD, mail, services externes
-    -   **Techno :** PHP
-    -   **Bonnes pratiques :**
-        -   Ne pas stocker de secrets directement dans les fichiers
-        -   Utiliser des variables d'environnement
-    -   **Améliorations :**
-        -   Documentation des options disponibles
+## Technologies Utilisées
 
--   **/database**
+### Backend
 
-    -   **Objectif :** Contient les migrations, seeders et factories pour la base de données
-    -   **Contenu :**
-        -   Migrations (création de tables)
-        -   Seeders (données de test)
-        -   Factories (génération de données)
-    -   **Techno :** PHP, Laravel Migrations
-    -   **Bonnes pratiques :**
-        -   Nommer les migrations de façon descriptive
-        -   Documenter les champs complexes
-        -   Prévoir les rollbacks
-    -   **Améliorations :**
-        -   Ajouter plus de seeders pour faciliter le développement
-        -   Mettre à jour les migrations avec les nouvelles fonctionnalités
+-   Laravel 12
+-   PHP 8.2+
+-   MySQL
+-   Blade/Livewire
 
--   **/public**
+### Frontend
 
-    -   **Objectif :** Point d'entrée de l'application et stockage des fichiers publics
-    -   **Contenu :**
-        -   index.php (point d'entrée)
-        -   CSS, JS compilés
-        -   Images et médias accessibles publiquement
-    -   **Techno :** PHP, Assets web
-    -   **Bonnes pratiques :**
-        -   Ne pas stocker de code applicatif dans ce dossier
-        -   Organiser les assets par type
-    -   **Améliorations :**
-        -   Optimiser les images pour le web
-        -   Mettre en place un CDN pour les assets statiques
+-   Alpine.js
+-   Tailwind CSS
+-   Bootstrap
+-   HTML5/CSS3
 
--   **/resources**
+## Structure du Projet
 
-    -   **Objectif :** Contient les fichiers de ressources non compilés
-    -   **Contenu :**
-        -   Vues Blade (\*.blade.php)
-        -   CSS/SCSS source
-        -   JavaScript non compilé
-        -   Fichiers de langue
-    -   **Techno :** Blade, CSS, JavaScript, Alpine.js
-    -   **Bonnes pratiques :**
-        -   Organiser les vues par section
-        -   Utiliser des composants réutilisables
-        -   Séparer la logique et la présentation
-    -   **Améliorations :**
-        -   Implémenter des composants Blade/Livewire
+```
+├── app/
+│   ├── Models/
+│   ├── Http/Controllers/
+│   ├── Services/
+│   └── Repositories/
+├── config/
+├── database/
+├── public/
+├── resources/
+├── routes/
+├── storage/
+└── tests/
+```
 
--   **/routes**
+## Installation
 
-    -   **Objectif :** Définit les routes de l'application
-    -   **Contenu :**
-        -   web.php (routes web)
-        -   api.php (routes API)
-        -   console.php (commandes personnalisées)
-        -   auth.php (routes d'authentification)
-    -   **Techno :** Laravel Routes
-    -   **Bonnes pratiques :**
-        -   Grouper les routes par préfixe ou middleware
-        -   Nommer les routes
-        -   Utiliser des contrôleurs dédiés
-    -   **Améliorations :**
-        -   Organiser les routes par domaine fonctionnel
-        -   Ajouter une documentation des API
+1. Cloner le repository
 
--   **/storage**
+```bash
+git clone [URL_DU_REPO]
+```
 
-    -   **Objectif :** Stockage des fichiers générés par l'application
-    -   **Contenu :**
-        -   Logs
-        -   Fichiers téléchargés
-        -   Cache
-        -   Sessions
-    -   **Techno :** Laravel Storage
-    -   **Bonnes pratiques :**
-        -   Configurer correctement les permissions
-        -   Utiliser le système de disques de Laravel
-    -   **Améliorations :**
-        -   Mettre en place une stratégie de rotation des logs
-        -   Configurer un stockage cloud pour les uploads
+2. Installer les dépendances
 
--   **/tests**
+```bash
+composer install
+npm install
+```
 
-    -   **Objectif :** Contient les tests automatisés
-    -   **Contenu :**
-        -   Tests unitaires
-        -   Tests fonctionnels
-        -   Tests d'intégration
-    -   **Techno :** PHPUnit, Laravel Testing
-    -   **Bonnes pratiques :**
-        -   Couvrir les fonctionnalités critiques
-        -   Organiser les tests par fonctionnalité
-        -   Utiliser des factories pour générer des données de test
-    -   **Améliorations :**
-        -   Augmenter la couverture de tests
-        -   Ajouter des tests d'interface utilisateur
+3. Configurer l'environnement
 
--   **/vendor**
-    -   **Objectif :** Contient les dépendances installées par Composer
-    -   **Contenu :**
-        -   Packages externes
-        -   Laravel framework
-        -   Bibliothèques PHP
-    -   **Techno :** Composer
-    -   **Bonnes pratiques :**
-        -   Ne jamais modifier directement les fichiers
-        -   Exclure du contrôle de version
-        -   Utiliser composer.lock pour des installations cohérentes
-    -   **Améliorations :**
-        -   Régulièrement mettre à jour les dépendances
-        -   Auditer les dépendances pour des problèmes de sécurité
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Conventions et Pratiques Générales
+4. Configurer la base de données
 
--   Suivre les conventions de nommage Laravel (PascalCase pour les classes, snake_case pour les variables)
--   Utiliser l'injection de dépendances plutôt que les façades quand c'est possible
--   Documenter le code avec des commentaires PHPDoc
--   Respecter les principes SOLID
--   Utiliser la validation des formulaires côté serveur
+```bash
+php artisan migrate
+php artisan db:seed
+```
+
+5. Lancer le serveur de développement
+
+```bash
+php artisan serve
+npm run dev
+```
+
+## Fonctionnalités Détaillées
+
+### Système de Réservation
+
+-   Vérification en temps réel des disponibilités
+-   Processus de réservation en plusieurs étapes
+-   Système de statuts (Pending, Accepted, Booked, Completed)
+-   Notifications automatiques par email
+-   Calcul automatique des prix
+
+### Gestion des Locations
+
+-   Caractéristiques détaillées (nom, description, localisation, capacité)
+-   Système de photos multiples
+-   Filtres de recherche avancés
+-   Calcul des prix basé sur la durée
+
+### Gestion des Salles de Fêtes
+
+-   Gestion des types d'événements
+-   Système de capacité
+-   Taxe de séjour
+-   Gestion des disponibilités
+
+## Sécurité
+
+-   Authentification sécurisée
+-   Protection CSRF
+-   Validation des données
+-   Gestion des permissions
+-   Chiffrement des données sensibles
+
+## Contribution
+
+Les contributions sont les bienvenues ! Veuillez suivre ces étapes :
+
+1. Fork le projet
+2. Créer une branche pour votre fonctionnalité
+3. Commiter vos changements
+4. Pousser vers la branche
+5. Ouvrir une Pull Request
+
+## Licence
+
+[À DÉFINIR]
+
+## Contact
+
+[À DÉFINIR]

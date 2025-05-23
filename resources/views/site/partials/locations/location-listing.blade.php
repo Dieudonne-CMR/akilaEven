@@ -17,7 +17,7 @@
         @endforeach
     @else
         <x-ui.empty-state 
-            class="px-6 py-5 !bg-white shadow-md no-results col-span-full rounded-xl"
+            class="px-6 py-5 bg-white! shadow-md no-results col-span-full rounded-xl"
             icon="file-question"
             classIcon="!text-primary"
             title="Aucune location trouvée"

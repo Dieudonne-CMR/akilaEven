@@ -425,7 +425,7 @@
                 <div class="d-flex align-items-center justify-content-between gap-3 mb-3 pb-2">
                   <div class="d-flex align-items-center w-100">
                     <img src="../assets/images/flags/flag1.png" alt=""
-                      class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
+                      class="w-40-px h-40-px rounded-circle shrink-0 me-12 overflow-hidden">
                     <div class="flex-grow-1">
                       <h6 class="text-sm mb-0">USA</h6>
                       <span class="text-xs text-secondary-light fw-medium">1,240 Users</span>
@@ -445,7 +445,7 @@
                 <div class="d-flex align-items-center justify-content-between gap-3 mb-3 pb-2">
                   <div class="d-flex align-items-center w-100">
                     <img src="../assets/images/flags/flag2.png" alt=""
-                      class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
+                      class="w-40-px h-40-px rounded-circle shrink-0 me-12 overflow-hidden">
                     <div class="flex-grow-1">
                       <h6 class="text-sm mb-0">Japan</h6>
                       <span class="text-xs text-secondary-light fw-medium">1,240 Users</span>
@@ -465,7 +465,7 @@
                 <div class="d-flex align-items-center justify-content-between gap-3 mb-3 pb-2">
                   <div class="d-flex align-items-center w-100">
                     <img src="../assets/images/flags/flag3.png" alt=""
-                      class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
+                      class="w-40-px h-40-px rounded-circle shrink-0 me-12 overflow-hidden">
                     <div class="flex-grow-1">
                       <h6 class="text-sm mb-0">France</h6>
                       <span class="text-xs text-secondary-light fw-medium">1,240 Users</span>
@@ -485,7 +485,7 @@
                 <div class="d-flex align-items-center justify-content-between gap-3">
                   <div class="d-flex align-items-center w-100">
                     <img src="../assets/images/flags/flag4.png" alt=""
-                      class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
+                      class="w-40-px h-40-px rounded-circle shrink-0 me-12 overflow-hidden">
                     <div class="flex-grow-1">
                       <h6 class="text-sm mb-0">Germany</h6>
                       <span class="text-xs text-secondary-light fw-medium">1,240 Users</span>

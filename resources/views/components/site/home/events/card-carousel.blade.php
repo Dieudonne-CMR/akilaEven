@@ -38,7 +38,7 @@
     @endif
     
     <!-- Badge de prix -->
-    <div class="z-[100] absolute px-3 py-1 text-xs font-semibold text-white rounded-full top-3 right-3 !bg-primary">
+    <div class="z-100 absolute px-3 py-1 text-xs font-semibold text-white rounded-full top-3 right-3 !bg-primary">
         {{ number_format($eventHall->prix, 0, ',', ' ') }} FCFA/jour
     </div>
 </div> 

@@ -1,6 +1,6 @@
 @props(['agence', 'updateLogoRoute'])
 
-<div class="absolute bottom-0 left-0 right-0 z-50 p-6 bg-gradient-to-t from-black/80 to-transparent profile-overlay">
+<div class="absolute bottom-0 left-0 right-0 z-50 p-6 bg-linear-to-t from-black/80 to-transparent profile-overlay">
     <div class="container flex flex-col items-end justify-between mx-auto md:flex-row md:items-center">
         <div class="flex items-center mb-4 md:mb-0">
             <div class="w-20 h-20 overflow-hidden bg-white border-4 border-white rounded-full shadow-lg md:w-24 md:h-24">

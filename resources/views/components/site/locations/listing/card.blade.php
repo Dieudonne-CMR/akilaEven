@@ -73,7 +73,7 @@
             
             
                 <span class="flex items-center">
-                    <i data-lucide="map-pin" class="size-4 mr-1 text-orange-500 flex-shrink-0"></i>
+                    <i data-lucide="map-pin" class="size-4 mr-1 text-orange-500 shrink-0"></i>
                     {{ $location->ville->nom }}, {{ $location->localisation }}
                 </span>
            

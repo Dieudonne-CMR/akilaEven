@@ -6,147 +6,138 @@
 >
     <div class="overflow-x-auto">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <thead class="text-xs uppercase text-neutral-700 bg-gray-50">
                 <tr>
                     <th scope="col" class="p-4">
                         <div class="flex items-center">
-                            <input 
-                                id="checkbox-all" 
-                                type="checkbox" 
-                                x-model="selectAll"
-                                @click="toggleSelectAll"
-                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                            >
+                            <x-ui.chechbox  id="checkbox-all"  x-model="selectAll"
+                            @click="toggleSelectAll"  />
+                            
                             <label for="checkbox-all" class="sr-only">checkbox</label>
                         </div>
                     </th>
-                    <th scope="col" class="px-4 py-3 cursor-pointer" @click="sortBy('nom_agence')">                     
+                    <th scope="col" class="py-3 cursor-pointer " @click="sortBy('nom_agence')">                     
                       <div class="flex items-center">
-                        Agence
-                        
+                        <i data-lucide="building-2" class="mr-1 size-4 text-muted-foreground"></i>
+                        Agence                        
                       </div>                       
                     </th>
-                    <th scope="col" class="px-4 py-3 cursor-pointer" @click="sortBy('telephone')">                     
+                    <th scope="col" class="py-3 cursor-pointer " @click="sortBy('telephone')">                     
                       <div class="flex items-center">
-                        Téléphone
-                        
+                        <i data-lucide="phone" class="mr-1 size-4 text-muted-foreground"></i>
+                        Téléphone                        
                       </div>
                     </th>
-                    <th scope="col" class="px-4 py-3 cursor-pointer" @click="sortBy('email')">                       
+                    <th scope="col" class="py-3 cursor-pointer " @click="sortBy('email')">                       
                       <div class="flex items-center">
-                        Email
-                        
+                        <i data-lucide="mail" class="mr-1 size-4 text-muted-foreground"></i>
+                        Email                        
                       </div>                         
                     </th>
-                    <th scope="col" class="px-4 py-3 cursor-pointer" @click="sortBy('localisation')">                        
+                    <th scope="col" class="py-3 cursor-pointer " @click="sortBy('localisation')">                        
                       <div class="flex items-center">
+                        <i data-lucide="map-pin" class="flex-shrink-0 mr-1 size-4 text-muted-foreground"></i>
                         Emplacement                        
                       </div>                       
                     </th>
-                    <th scope="col" class="px-4 py-3">
+                    <th scope="col" class="py-3 ">
                         <span class="sr-only">Actions</span>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <template x-for="(agence, index) in filteredAgences" :key="agence.id">
-                    <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <tr class="border-b hover:bg-gray-100 ">
                         <td class="w-4 px-4 py-3">
-                            <div class="flex items-center">
+                            <div class="flex items-center">                               
                                 <input 
                                     :id="'checkbox-table-' + agence.id" 
                                     type="checkbox" 
                                     name="selected_agences[]"
                                     x-model="selectedAgences"
                                     :value="agence.id"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                                    class="default-checkbox"
                                 >
                                 <label :for="'checkbox-table-' + agence.id" class="sr-only">checkbox</label>
                             </div>
                         </td>
-                        <th scope="row" class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                            <div class="relative flex items-center justify-center w-10 h-10 mr-3 overflow-hidden bg-blue-100 rounded-full">
-                                <template x-if="agence.logo">
-                                    <img :src="'/storage/' + agence.logo" class="object-cover w-full h-full" :alt="agence.nom_agence">
-                                </template>
-                                <template x-if="!agence.logo">
-                                    <span class="font-bold text-blue-600" x-text="agence.initials"></span>
-                                </template>
+                        <th scope="row" class="flex items-center px-4 py-2 font-medium whitespace-nowrap">
+                            
+                            <div class="mr-3 avatar">
+                                <div class="rounded-full size-10">
+                                    <template x-if="agence.logo">
+                                        <img :src="'/storage/' + agence.logo" class="object-cover w-full h-full" :alt="agence.nom_agence">
+                                    </template>
+                                    <template x-if="!agence.logo">
+                                        <span class="font-bold text-blue-600" x-text="agence.initials"></span>
+                                    </template>
+                                </div>
                             </div>
+                            
                             <div>
                                 <span x-text="agence.nom_agence"></span>
                                 <div class="flex mt-1 space-x-2">
-                                    <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-800 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                                        <i data-lucide="party-popper" class="w-3 h-3 mr-1"></i>
+                                    <a href="{{ route('admin.eventHalls') }}" class="badge px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full ">
+                                        <i data-lucide="party-popper" class="mr-1 size-4"></i>
                                         <span x-text="agence.event_halls_count"></span>
-                                    </span>
-                                    <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-green-100 text-green-800 rounded-full dark:bg-green-900 dark:text-green-300">
-                                        <i data-lucide="home" class="w-3 h-3 mr-1"></i>
+                                    </a>
+                                    <a href="{{ route('admin.locations.index') }}" class="badge px-2 py-0.5 bg-green-100 text-green-800 rounded-full ">
+                                        <i data-lucide="home" class="mr-1 size-4"></i>
                                         <span x-text="agence.locations_count"></span>
-                                    </span>
+                                    </a>
                                 </div>
                             </div>
                         </th>
-                        <td class="px-4 py-2">
+                        <td class="">                                                        
+                            <span x-text="agence.telephone"></span>
+                        </td>
+                        <td class="">
+                            <span x-text="agence.email"></span>                            
+                        </td>
+                        <td class="">
                             <div class="flex items-center">
-                                <i data-lucide="phone" class="w-4 h-4 mr-1 text-gray-400"></i>
-                                <span x-text="agence.telephone"></span>
+                                <span x-text="agence.ville + (agence.localisation ? ', ' + agence.localisation : '')">
+                                    
+                                </span>
                             </div>
                         </td>
-                        <td class="px-4 py-2">
-                            <div class="flex items-center">
-                                <i data-lucide="mail" class="w-4 h-4 mr-1 text-gray-400"></i>
-                                <span x-text="agence.email"></span>
-                            </div>
-                        </td>
-                        <td class="px-4 py-2">
-                            <div class="flex items-center">
-                                <i data-lucide="map-pin" class="w-4 h-4 mr-1 text-gray-400"></i>
-                                <span x-text="agence.localisation || agence.ville"></span>
-                            </div>
-                        </td>
-                        <td class="px-4 py-2">
-                            <button 
-                                :id="'dropdownMenuButton-' + agence.id" 
-                                :data-dropdown-toggle="'dropdownMenu-' + agence.id" 
-                                class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" 
-                                type="button"
-                            >
-                                <i data-lucide="more-vertical" class="w-5 h-5"></i>
-                            </button>
-                            
-                            <!-- Dropdown menu -->
-                            <div :id="'dropdownMenu-' + agence.id" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" :aria-labelledby="'dropdownMenuButton-' + agence.id">
+                        <td class="">
+                            <div class="relative inline-flex dropdown">
+                                <button id="dropdown-menu-icon" type="button" class="btn-outline btn-dropdown-toggle btn btn-square" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                                  <i data-lucide="ellipsis" class="size-4"></i>
+                                </button>
+                                <ul class="hidden dropdown-menu dropdown-open:opacity-100 min-w-60" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-menu-icon">
                                     <li>
-                                        <a :href="'/admin/agences/' + agence.id" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <a :href="'/admin/agences/' + agence.id" class="dropdown-item">
                                             <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
                                             Voir détails
                                         </a>
                                     </li>
                                     <li>
-                                        <a 
-                                            @click="deleteAgence(agence.id, agence.nom_agence)" 
-                                            class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100"
-                                        >
-                                            <i data-lucide="trash-2" class="w-4 h-4 mr-2 text-red-500"></i>
-                                            Supprimer
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a :href="'/admin/event-halls/create/' + agence.id" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100">
+                                        <a :href="'/admin/event-halls/create/' + agence.id" class="dropdown-item">
                                             <i data-lucide="party-popper" class="w-4 h-4 mr-2 text-green-500"></i>
                                             Ajouter une salle
                                         </a>
                                     </li>
                                     <li>
-                                        <a :href="'/admin/locations/create/' + agence.id" class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                            <i data-lucide="home" class="w-4 h-4 mr-2 text-blue-500"></i>
+                                        <a :href="'/admin/locations/create/' + agence.id" class=" dropdown-item">
+                                            <i data-lucide="home" class="mr-2 text-blue-500 size-4"></i>
                                             Ajouter une location
                                         </a>
                                     </li>
+                                    <li class="gap-2 p-2 dropdown-footer">
+                                        <a 
+                                            @click="deleteAgence(agence.id, agence.nom_agence)" 
+                                            class="justify-start btn btn-error btn-soft btn-block"
+                                        >
+                                            <i data-lucide="trash-2" class="mr-2 size-4 "></i>
+                                            Supprimer
+                                        </a>
+                                    </li>
+                                    
                                 </ul>
-                            </div>
+                              </div>
+                          
                         </td>
                     </tr>
                 </template>
@@ -167,46 +158,8 @@
     
     <!-- Pagination -->
     <nav class="flex flex-col items-start justify-between p-4 space-y-3 md:flex-row md:items-center md:space-y-0" aria-label="Table navigation" x-show="filteredAgences.length > 0">
-        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-            Affichage
-            <span class="font-semibold text-gray-900 dark:text-white" x-text="paginationInfo.start + 1"></span>
-            -
-            <span class="font-semibold text-gray-900 dark:text-white" x-text="paginationInfo.end"></span>
-            sur
-            <span class="font-semibold text-gray-900 dark:text-white" x-text="filteredCount"></span>
-        </span>
-        <ul class="inline-flex items-stretch -space-x-px" x-show="totalPages > 1">
-            <li>
-                <a 
-                    @click="prevPage" 
-                    :class="{ 'cursor-not-allowed opacity-50': currentPage === 1 }"
-                    class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                    <span class="sr-only">Précédent</span>
-                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
-                </a>
-            </li>
-            <template x-for="page in totalPages" :key="page">
-                <li>
-                    <a 
-                        @click="goToPage(page)"
-                        :class="{ 'text-blue-600 bg-blue-50 border-blue-300 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white': currentPage === page }"
-                        class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 cursor-pointer hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                        x-text="page"
-                    ></a>
-                </li>
-            </template>
-            <li>
-                <a 
-                    @click="nextPage" 
-                    :class="{ 'cursor-not-allowed opacity-50': currentPage === totalPages }"
-                    class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                    <span class="sr-only">Suivant</span>
-                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
-                </a>
-            </li>
-        </ul>
+        @include('components.ui.data-display')
+        @include('components.ui.data-pagination')
     </nav>
 </div>
 
@@ -246,18 +199,14 @@
                 const end = Math.min(start + this.itemsPerPage, this.allFilteredAgences.length);
                 return { start, end };
             },
-            // Afficher les initiales du nom de l'agence
-        /*     getInitials(name) {
-                if (!name) return '';
-                return name.split(' ').map(word => word[0]).join('').toUpperCase();
-            }, */
-
+    
             // Selectionner tous les agences
             toggleSelectAll() {
             
               if (!this.selectAll) {
-                  const visibleAgenceIds = this.filteredAgences.map(agence => agence.id);
-                  this.selectedAgences = [...new Set([...this.selectedAgences, ...visibleAgenceIds])];
+
+                const visibleAgenceIds = this.filteredAgences.map(agence => agence.id);
+                this.selectedAgences = [...new Set([...this.selectedAgences, ...visibleAgenceIds])];
               } else {
                   this.selectedAgences = [];
               }              
@@ -359,18 +308,22 @@
                     .then(data => {
                       console.log(data)
                         if (data.success) {
-                            // Supprimer l'agence de la liste et rafraîchir l'affichage
-                            this.agences = this.agences.filter(agence => agence.id !== id);
-                            this.applyFiltersAndSort();
-                            
                             // Afficher un message de succès avec le composant toast
+                            // Je cree l'évènement
                             const toastEvent = new CustomEvent('show-toast', {
                                 detail: {
                                     type: 'success',
                                     message: `L'agence "${name}" a été supprimé avec succès.`
                                 }
                             });
+                            // Je déclenche l'évènement
                             window.dispatchEvent(toastEvent);
+                            window.location.reload();
+                            // Supprimer l'agence de la liste et rafraîchir l'affichage
+                            /* this.agences = this.agences.filter(agence => agence.id !== id);
+                            this.applyFiltersAndSort(); */
+                            
+                            
                         } else {
                             // Afficher un message d'erreur
                             const toastEvent = new CustomEvent('show-toast', {
@@ -395,6 +348,7 @@
                 }
             },
             
+            
             init() {
               console.log('selectedAgences', this.selectedAgences);
                 // Initialiser l'affichage avec tous les agences
@@ -416,9 +370,13 @@
                       window.lucide.createIcons();
                     }
                   },0);
+                     // **Ré-initialiser les dropdowns FlyonUI / Preline**
+                if (window.HSStaticMethods) {
+                window.HSStaticMethods.autoInit(['dropdown']);
+                }
                   // Notifier le changement de sélection
-                  this.notifySelectionChange();
-                  console.log('selectAll', this.selectAll);
+                this.notifySelectionChange();
+                console.log('selectAll', this.selectAll);
                 });
                 
                 this.$watch('selectedAgences', () => {

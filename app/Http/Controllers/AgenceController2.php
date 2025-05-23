@@ -64,8 +64,9 @@ class AgenceController2 extends Controller
      * @return RedirectResponse
      */
     public function store(StoreAgenceRequest $request){
+
+        DB::beginTransaction();
          try {
-            DB::beginTransaction();
             
             // Récupérer les données validées
             $data = $request->validated();
@@ -95,22 +96,11 @@ class AgenceController2 extends Controller
             if (isset($data['services'])) {
                 $data['services'] = json_encode($data['services']);
             }
-
             // Créer l'agence
             Agence::create($data);
-            
-             DB::commit();
- 
-            // Redirection avec message de succès
-            return redirect()->route('admin.agences')
-                ->with('success', [
-                    'type' => 'success',
-                    'message' => 'Agence créé avec succès!'
-                ]);
                 
-         } catch (\Exception $e) {
-            DB::rollBack();
-            
+        } catch (\Exception $e) {
+            DB::rollBack();            
             // Log l'erreur
             Log::error('Erreur lors de la création de l\'agence: ' . $e->getMessage());
             return redirect()->back(); 
@@ -120,6 +110,11 @@ class AgenceController2 extends Controller
                 ->withErrors(['general' => 'Une erreur est survenue lors de la création de l\'agence: ' . $e->getMessage()])
                 ->with('error','Une erreur est survenue lors de la création de l\'agence:');
         }
+        DB::commit(); 
+            // Redirection avec message de succès
+            return redirect()->route("admin.agences")
+                ->with('success','Agence créé avec succès!');       
+     
     }
 
     // Afficher les détails d'un agence
@@ -138,11 +133,8 @@ class AgenceController2 extends Controller
      */
     public function destroy(Agence $agence)
     {
-        
-        try {
-            DB::beginTransaction();
-        
-        
+        DB::beginTransaction();
+        try {        
         // Essayer de supprimer l'agence avec forceDelete pour ignorer la soft delete
         // Supprimer les locations
         $locationCount = Location::where('agence_id', $agence->id)->delete();
@@ -156,35 +148,23 @@ class AgenceController2 extends Controller
         $this->deleteAgenceImages($agence);
         
         // Supprimer l'agence en dernier
-        $deleted = $agence->forceDelete();
+        $deleted = $agence->delete();        
         
-        if (!$deleted) {
-            // Si la suppression normale échoue, utiliser une requête SQL directe
-            $forceDeleted = DB::table('agences')->where('id', $agence->id)->delete();
-            
-            if ($forceDeleted === 0) {
-                throw new Exception("La suppression forcée a échoué");
-            }
-            
-            Log::info("Agence ID:{$agence} supprimé avec succès (méthode SQL directe)");
-        } else {
-            Log::info("Agence ID:{$agence} supprimé avec succès (méthode normale)");
-        }
         
-        DB::commit();
-        
-        return response()->json([
-            'success' => true,
-            'message' => 'Agence supprimé avec succès.'
-        ]);
         } catch (\Exception $e) {
-            DB::rollBack();
-            
+            DB::rollBack();   
+            Log::error('Erreur lors de la suppression de l\'agence: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
                 'message' => 'Erreur lors de la suppression de l\'agence: ' . $e->getMessage()
             ], 500);
+            
         }
+        DB::commit();
+        return response()->json([
+            'success' => true,
+            'message' => 'Agence supprimé avec succès.'
+        ]);
     }
     
     /**
@@ -200,33 +180,33 @@ class AgenceController2 extends Controller
             'ids.*' => 'exists:agences,id'
         ]);
         
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             
             $agences = Agence::whereIn('id', $request->ids)->get();
             
             foreach ($agences as $agence) {
                 // Supprimer les images
-                $this->deleteAgenceImages($agence);
-                
+                $this->deleteAgenceImages($agence);                
                 // Supprimer l'agence
                 $agence->delete();
             }
-            
             DB::commit();
+        return response()->json([
+            'success' => true,
+            'message' => count($request->ids) . ' agences ont été supprimés avec succès.'
+        ]);
             
-            return response()->json([
-                'success' => true,
-                'message' => count($request->ids) . ' agences ont été supprimés avec succès.'
-            ]);
         } catch (\Exception $e) {
-            DB::rollBack();
-            
+            DB::rollBack();            
             return response()->json([
                 'success' => false,
                 'message' => 'Erreur lors de la suppression des agences: ' . $e->getMessage()
             ], 500);
+            
+
         }
+        
     }
     
     /**

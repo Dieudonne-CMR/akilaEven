@@ -5,12 +5,12 @@
     <div class="inline-flex p-1 rounded-full bg-white/20 backdrop-blur-md">
       <button type="button" id="venuesBtn" 
               @click="activeTab = 'venues'" 
-              :class="activeTab === 'venues' ? 'px-6 py-2 text-sm font-medium text-purple-700 transition-all duration-200 bg-white rounded-full shadow-sm' : 'px-6 py-2 text-sm font-medium text-white transition-all duration-200 rounded-full'">
+              :class="activeTab === 'venues' ? 'px-6 py-2 text-sm font-medium text-primary transition-all duration-200 bg-white rounded-full shadow-sm' : 'px-6 py-2 text-sm font-medium text-white transition-all duration-200 rounded-full'">
         Salles de fêtes
       </button>
       <button type="button" id="locationsBtn" 
               @click="activeTab = 'locations'" 
-              :class="activeTab === 'locations' ? 'px-6 py-2 text-sm font-medium text-purple-700 transition-all duration-200 bg-white rounded-full shadow-sm' : 'px-6 py-2 text-sm font-medium text-white transition-all duration-200 rounded-full'">
+              :class="activeTab === 'locations' ? 'px-6 py-2 text-sm font-medium text-primary transition-all duration-200 bg-white rounded-full shadow-sm' : 'px-6 py-2 text-sm font-medium text-white transition-all duration-200 rounded-full'">
         Locations
       </button>
     </div>

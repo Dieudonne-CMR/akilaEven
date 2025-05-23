@@ -61,7 +61,7 @@
                                                 class="d-flex flex-wrap align-items-center justify-content-between gap-1">
                                                 <div class="d-flex align-items-center flex-wrap gap-16">
                                                     <span
-                                                        class="mb-0 w-40-px h-40-px bg-primary-600 flex-shrink-0 text-white d-flex justify-content-center align-items-center rounded-circle h6 mb-0">
+                                                        class="mb-0 w-40-px h-40-px bg-primary-600 shrink-0 text-white d-flex justify-content-center align-items-center rounded-circle h6 mb-0">
                                                         <iconify-icon icon="flowbite:users-group-solid"
                                                             class="icon"></iconify-icon>
                                                     </span>
@@ -95,7 +95,7 @@
                                                 class="d-flex flex-wrap align-items-center justify-content-between gap-1">
                                                 <div class="d-flex align-items-center flex-wrap gap-16">
                                                     <span
-                                                        class="mb-0 w-40-px h-40-px bg-primary-600 flex-shrink-0 text-white d-flex justify-content-center align-items-center rounded-circle h6 mb-0">
+                                                        class="mb-0 w-40-px h-40-px bg-primary-600 shrink-0 text-white d-flex justify-content-center align-items-center rounded-circle h6 mb-0">
                                                         <iconify-icon icon="flowbite:users-group-solid"
                                                             class="icon"></iconify-icon>
                                                     </span>
@@ -129,7 +129,7 @@
                                                 class="d-flex flex-wrap align-items-center justify-content-between gap-1">
                                                 <div class="d-flex align-items-center flex-wrap gap-16">
                                                     <span
-                                                        class="mb-0 w-40-px h-40-px bg-primary-600 flex-shrink-0 text-white d-flex justify-content-center align-items-center rounded-circle h6 mb-0">
+                                                        class="mb-0 w-40-px h-40-px bg-primary-600 shrink-0 text-white d-flex justify-content-center align-items-center rounded-circle h6 mb-0">
                                                         <iconify-icon icon="flowbite:users-group-solid"
                                                             class="icon"></iconify-icon>
                                                     </span>
@@ -963,7 +963,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <img src="assets/images/nft/nft-items-img1.png"
                                                                     alt=""
-                                                                    class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                                    class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                                                 <div class="flex-grow-1">
                                                                     <h6 class="text-md mb-0 fw-semibold">Spanky &
                                                                         Friends</h6>
@@ -979,7 +979,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <img src="assets/images/nft/nft-offer-img1.png"
                                                                     alt=""
-                                                                    class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                                    class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                                                 <div class="flex-grow-1">
                                                                     <h6
                                                                         class="text-md mb-0 fw-semibold text-primary-light">
@@ -1005,7 +1005,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <img src="assets/images/nft/nft-items-img2.png"
                                                                     alt=""
-                                                                    class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                                    class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                                                 <div class="flex-grow-1">
                                                                     <h6 class="text-md mb-0 fw-semibold">Nike Air Shoe
                                                                     </h6>
@@ -1021,7 +1021,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <img src="assets/images/nft/nft-offer-img2.png"
                                                                     alt=""
-                                                                    class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                                    class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                                                 <div class="flex-grow-1">
                                                                     <h6
                                                                         class="text-md mb-0 fw-semibold text-primary-light">
@@ -1047,7 +1047,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <img src="assets/images/nft/nft-items-img3.png"
                                                                     alt=""
-                                                                    class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                                    class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                                                 <div class="flex-grow-1">
                                                                     <h6 class="text-md mb-0 fw-semibold">Woman Dresses
                                                                     </h6>
@@ -1063,7 +1063,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <img src="assets/images/nft/nft-offer-img3.png"
                                                                     alt=""
-                                                                    class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                                    class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                                                 <div class="flex-grow-1">
                                                                     <h6
                                                                         class="text-md mb-0 fw-semibold text-primary-light">
@@ -1089,7 +1089,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <img src="assets/images/nft/nft-items-img4.png"
                                                                     alt=""
-                                                                    class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                                    class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                                                 <div class="flex-grow-1">
                                                                     <h6 class="text-md mb-0 fw-semibold">Smart Watch
                                                                     </h6>
@@ -1105,7 +1105,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <img src="assets/images/nft/nft-offer-img4.png"
                                                                     alt=""
-                                                                    class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                                    class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                                                 <div class="flex-grow-1">
                                                                     <h6
                                                                         class="text-md mb-0 fw-semibold text-primary-light">
@@ -1131,7 +1131,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <img src="assets/images/nft/nft-items-img5.png"
                                                                     alt=""
-                                                                    class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                                    class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                                                 <div class="flex-grow-1">
                                                                     <h6 class="text-md mb-0 fw-semibold">Hoodie Rose
                                                                     </h6>
@@ -1147,7 +1147,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <img src="assets/images/nft/nft-offer-img5.png"
                                                                     alt=""
-                                                                    class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                                    class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                                                 <div class="flex-grow-1">
                                                                     <h6
                                                                         class="text-md mb-0 fw-semibold text-primary-light">
@@ -1173,7 +1173,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <img src="assets/images/nft/nft-items-img6.png"
                                                                     alt=""
-                                                                    class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                                    class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                                                 <div class="flex-grow-1">
                                                                     <h6 class="text-md mb-0 fw-semibold">Hoodie Rose
                                                                     </h6>
@@ -1189,7 +1189,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <img src="assets/images/nft/nft-offer-img6.png"
                                                                     alt=""
-                                                                    class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                                    class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                                                 <div class="flex-grow-1">
                                                                     <h6
                                                                         class="text-md mb-0 fw-semibold text-primary-light">
@@ -1215,7 +1215,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <img src="assets/images/nft/nft-items-img2.png"
                                                                     alt=""
-                                                                    class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                                    class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                                                 <div class="flex-grow-1">
                                                                     <h6 class="text-md mb-0 fw-semibold">Hoodie Rose
                                                                     </h6>
@@ -1231,7 +1231,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <img src="assets/images/nft/nft-offer-img7.png"
                                                                     alt=""
-                                                                    class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                                    class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                                                 <div class="flex-grow-1">
                                                                     <h6
                                                                         class="text-md mb-0 fw-semibold text-primary-light">
@@ -1335,7 +1335,7 @@
                                     <div class="d-flex align-items-center justify-content-between gap-8 flex-wrap">
                                         <div class="d-flex align-items-center">
                                             <img src="assets/images/nft/nft-items-img1.png" alt=""
-                                                class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                             <div class="flex-grow-1">
                                                 <h6 class="text-md mb-0 fw-semibold">Theresa Webb</h6>
                                                 <span class="text-sm text-secondary-light fw-normal">Owned by
@@ -1407,7 +1407,7 @@
                                         class="d-flex align-items-center justify-content-between gap-8 flex-wrap mb-32">
                                         <div class="d-flex align-items-center">
                                             <img src="assets/images/nft/creator-img1.png" alt=""
-                                                class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                             <div class="flex-grow-1">
                                                 <h6 class="text-md mb-0 fw-semibold">Theresa Webb</h6>
                                                 <span class="text-sm text-secondary-light fw-normal">@wishon</span>
@@ -1420,7 +1420,7 @@
                                         class="d-flex align-items-center justify-content-between gap-8 flex-wrap mb-32">
                                         <div class="d-flex align-items-center">
                                             <img src="assets/images/nft/creator-img2.png" alt=""
-                                                class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                             <div class="flex-grow-1">
                                                 <h6 class="text-md mb-0 fw-semibold">Arlene McCoy</h6>
                                                 <span class="text-sm text-secondary-light fw-normal">@nemccoy</span>
@@ -1433,7 +1433,7 @@
                                         class="d-flex align-items-center justify-content-between gap-8 flex-wrap mb-32">
                                         <div class="d-flex align-items-center">
                                             <img src="assets/images/nft/creator-img3.png" alt=""
-                                                class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                             <div class="flex-grow-1">
                                                 <h6 class="text-md mb-0 fw-semibold">Kathryn Murphy</h6>
                                                 <span
@@ -1447,7 +1447,7 @@
                                         class="d-flex align-items-center justify-content-between gap-8 flex-wrap mb-32">
                                         <div class="d-flex align-items-center">
                                             <img src="assets/images/nft/creator-img4.png" alt=""
-                                                class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                             <div class="flex-grow-1">
                                                 <h6 class="text-md mb-0 fw-semibold">Marvin McKinney</h6>
                                                 <span
@@ -1461,7 +1461,7 @@
                                         class="d-flex align-items-center justify-content-between gap-8 flex-wrap mb-0">
                                         <div class="d-flex align-items-center">
                                             <img src="assets/images/nft/creator-img5.png" alt=""
-                                                class="flex-shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
+                                                class="shrink-0 me-12 w-40-px h-40-px rounded-circle me-12">
                                             <div class="flex-grow-1">
                                                 <h6 class="text-md mb-0 fw-semibold">Dianne Russell</h6>
                                                 <span class="text-sm text-secondary-light fw-normal">@dinne_r</span>

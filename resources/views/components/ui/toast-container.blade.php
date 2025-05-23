@@ -20,7 +20,7 @@
             add(event.detail);
         })
     "
-    class="fixed space-y-4 z-[60] right-4 top-4"
+    class="fixed space-y-4 z-60 right-4 top-4"
 >
     <template x-for="toast in toasts" :key="toast.id">
         <div 

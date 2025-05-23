@@ -1,7 +1,7 @@
 <!-- Search and Toggle -->
 <form action="{{ route('site.locations') }}" method="GET" class="flex flex-col w-full gap-2 p-2 mb-4 bg-white rounded-lg shadow-md md:flex-row">
     <!-- Recherche de location -->
-    <div class="relative flex-[2]">
+    <div class="relative flex-2">
         <i data-lucide="search" class="absolute text-gray-400 transform -translate-y-1/2 size-4 left-3 top-1/2"></i>
         <input 
             type="text" 

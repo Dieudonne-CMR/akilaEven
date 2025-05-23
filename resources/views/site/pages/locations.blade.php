@@ -32,7 +32,7 @@
     <!-- Banner Section with Background Image -->
     @include("site.partials.locations.banner")
     <!-- Main Content -->
-    <div class="relative flex flex-col flex-grow max-w-full gap-8 px-4 py-8 sm:px-6 lg:px-8 lg:flex-row">
+    <div class="relative flex flex-col grow max-w-full gap-8 px-4 py-8 sm:px-6 lg:px-8 lg:flex-row">
       
       <!-- Main Listing Section -->
       <div id="listing" class="order-2 w-full lg:w-2/3 lg:order-1"> 
@@ -53,7 +53,7 @@
         <!-- 1. MOBILE: overlay + sidebar -->
         <div      
         x-show="showFilters"
-        class="fixed inset-0 z-[3000] lg:hidden"
+        class="fixed inset-0 z-3000 lg:hidden"
         style="display: none;"
         >
 
